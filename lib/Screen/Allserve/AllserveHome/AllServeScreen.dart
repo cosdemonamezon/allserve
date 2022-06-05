@@ -1,3 +1,4 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/RecruitScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Widgets/GridItemWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -12,21 +13,12 @@ class AllServeScreen extends StatefulWidget {
 class _AllServeScreenState extends State<AllServeScreen> {
   List<Map<String, dynamic>> listall = [
     {
-      "name":"City to the Local",
-      "imgurl":"assets/icons/CitytotheLocal.png",
+      "name": "City to the Local",
+      "imgurl": "assets/icons/CitytotheLocal.png",
     },
-    {
-      "name":"Recruit",
-      "imgurl":"assets/icons/Recruit.png"
-    },
-    {
-      "name":"Sales and CRM",
-      "imgurl":"assets/icons/SalesCRM.png"
-    },
-    {
-      "name":"Scrap Environment",
-      "imgurl":"assets/icons/ScrapEnvironment.png"
-    }
+    {"name": "Recruit", "imgurl": "assets/icons/Recruit.png"},
+    {"name": "Sales and CRM", "imgurl": "assets/icons/SalesCRM.png"},
+    {"name": "Scrap Environment", "imgurl": "assets/icons/ScrapEnvironment.png"}
   ];
   @override
   Widget build(BuildContext context) {
@@ -60,11 +52,17 @@ class _AllServeScreenState extends State<AllServeScreen> {
                     children: [
                       IconButton(
                         onPressed: () {},
-                        icon: Icon(Icons.format_list_bulleted, color: Colors.grey,),
+                        icon: Icon(
+                          Icons.format_list_bulleted,
+                          color: Colors.grey,
+                        ),
                       ),
                       IconButton(
                         onPressed: () {},
-                        icon: Icon(Icons.apps, color: Colors.deepOrangeAccent,),
+                        icon: Icon(
+                          Icons.apps,
+                          color: Colors.deepOrangeAccent,
+                        ),
                       ),
                     ],
                   ),
@@ -74,11 +72,17 @@ class _AllServeScreenState extends State<AllServeScreen> {
             MasonryGridView.count(
               primary: false,
               shrinkWrap: true,
-              crossAxisCount: MediaQuery.of(context).orientation == Orientation.portrait ? 2 : 4,
+              crossAxisCount:
+                  MediaQuery.of(context).orientation == Orientation.portrait
+                      ? 2
+                      : 4,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               itemCount: listall.length,
-              itemBuilder: (BuildContext context, int index){
-                return GridItemWidget(data: listall[index],);
+              itemBuilder: (BuildContext context, int index) {
+                return GridItemWidget(
+                  data: listall[index],
+                  press: () {},
+                );
               },
               mainAxisSpacing: 15.0,
               crossAxisSpacing: 15.0,

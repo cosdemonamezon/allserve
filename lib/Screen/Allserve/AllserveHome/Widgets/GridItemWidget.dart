@@ -1,15 +1,23 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/RecruitScreen.dart';
 import 'package:flutter/material.dart';
 
 class GridItemWidget extends StatelessWidget {
-  GridItemWidget({Key? key, required this.data}) : super(key: key);
+  GridItemWidget({Key? key, required this.data, required this.press})
+      : super(key: key);
   Map<String, dynamic> data;
+  VoidCallback press;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       highlightColor: Colors.transparent,
       splashColor: Colors.deepOrange.withOpacity(0.08),
-      onTap: () {},
+      onTap: () {
+        if (data['name'] == "Recruit") {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => RecruitScreen()));
+        }
+      },
       child: Container(
         decoration: BoxDecoration(),
         child: Wrap(
