@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+
+class GridItemWidget extends StatelessWidget {
+  GridItemWidget({Key? key, required this.data}) : super(key: key);
+  Map<String, dynamic> data;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      highlightColor: Colors.transparent,
+      splashColor: Colors.deepOrange.withOpacity(0.08),
+      onTap: () {},
+      child: Container(
+        decoration: BoxDecoration(),
+        child: Wrap(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [
+                      Colors.blue.withOpacity(1),
+                      Colors.blueAccent.withOpacity(0.1)
+                    ],
+                    begin: AlignmentDirectional.topStart,
+                    //const FractionalOffset(1, 0),
+                    end: AlignmentDirectional.bottomEnd,
+                    stops: [0.1, 0.9],
+                    tileMode: TileMode.clamp),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5), topRight: Radius.circular(5)),
+              ),
+              child: Image.asset(
+                data['imgurl'],
+                //color: Colors.blue,
+                height: 100,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    data['name'],
+                    style: Theme.of(context).textTheme.bodyText2,
+                    softWrap: false,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
