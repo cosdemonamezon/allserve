@@ -1,3 +1,5 @@
+import 'package:allserve/Screen/Alljob/Search/AddJobRecruitScreen.dart';
+import 'package:allserve/Screen/Alljob/Search/Widgets/CardJobList.dart';
 import 'package:allserve/Screen/Widgets/CardList.dart';
 import 'package:flutter/material.dart';
 
@@ -13,28 +15,36 @@ class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController searchController = TextEditingController();
   List<Map<String, dynamic>> productlist = [
     {
-      "imgurl":"assets/images/p1.png",
-      "title":"Dock Cleanning tooooo",
-      "subtitle":" Connector Gussikowski Ltd",
-      "address":"Spandauer Str. 1. 10178 Berlin",
-      "total":"105.5s",
-      "createAt":"2022-05-06 18:31:50.133920",
-      "hh":"18:31",
-      "dd":"06",
-      "mm":"Feb"
+      "imgurl": "assets/images/MockupALLZJOB.png",
+      "title": "รับสมัคร โปรแกรมเมอร์",
+      "subtitle": "เงินเดือน 3 หมื่น บริษัท อาชาเทคโนโลยี",
+      "address": "ที่อยู่ ลาดกระบัง กรุงเทพมหานคร",
+      "total": "105.5s",
+      "createAt": "2022-05-06 18:31:50.133920",
+      "hh": "18:31",
+      "dd": "06",
+      "mm": "Feb"
     }
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search'),
+        title: Text('ค้นหางาน'),
       ),
       body: ListView(
         children: [
           buildSearchBar(),
-          CardList(list: productlist[0]),
+          CardJobList(list: productlist[0]),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddJobRecruitScreen()));
+        },
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -76,7 +86,8 @@ class _SearchScreenState extends State<SearchScreen> {
             GestureDetector(
               onTap: () {},
               child: Container(
-                padding: const EdgeInsets.only(right: 10, left: 10, top: 10, bottom: 10),
+                padding: const EdgeInsets.only(
+                    right: 10, left: 10, top: 10, bottom: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   color: Colors.grey.withOpacity(0.1),
@@ -87,7 +98,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: [
                     Text(
                       "Filter",
-                      style: TextStyle(color: Colors.black), //TextStyle(color: Get.theme.hintColor),
+                      style: TextStyle(
+                          color: Colors
+                              .black), //TextStyle(color: Get.theme.hintColor),
                     ),
                     Icon(
                       Icons.filter_list,

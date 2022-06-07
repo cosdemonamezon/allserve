@@ -1,3 +1,4 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/AddRecruitScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Widgets/PeopleWidget.dart';
 import 'package:allserve/Screen/Widgets/SearchTextField.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +82,10 @@ class _RecruitScreenState extends State<RecruitScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddRecruitScreen()));
+        },
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
       ),
