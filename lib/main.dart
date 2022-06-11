@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
           centerTitle: true,
           titleTextStyle: TextStyle(
             color: Colors.black,
+            fontFamily: 'NotoSansThai',
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         backgroundColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
+        fontFamily: 'NotoSansThai',
         textSelectionTheme:
             TextSelectionThemeData(cursorColor: kThemeTextColor),
         visualDensity: VisualDensity.adaptivePlatformDensity,

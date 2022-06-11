@@ -44,211 +44,214 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
             SizedBox(
               height: 20,
             ),
-            Card(
-              margin: EdgeInsets.zero,
-              elevation: 0,
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Color(0xFFF3F3F3),
-                  width: 2.0,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Card(
+                margin: EdgeInsets.zero,
+                elevation: 0,
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    color: Color(0xFFF3F3F3),
+                    width: 2.0,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Form(
-                      key: addFormKey,
-                      child: Wrap(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              'ตำแหน่งงาน',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Form(
+                        key: addFormKey,
+                        child: Wrap(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                'ตำแหน่งงาน',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ),
-                          AddTextForm(
-                            controller: username,
-                            hintText: 'Username',
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              'การศึกษา',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
+                            AddTextForm(
+                              controller: username,
+                              hintText: 'Username',
                             ),
-                          ),
-                          AddTextForm(
-                            controller: username,
-                            hintText: 'Username',
-                          ),
-                          SizedBox(
-                            height: size.height * 0.02,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 10),
-                            child: Text(
-                              'เพศ',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                'การศึกษา',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 10),
-                            child: Row(
-                              children: [
-                                Radio(
-                                  value: 1,
-                                  groupValue: val,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      val = int.parse(value.toString());
-                                    });
-                                  },
-                                  activeColor: Colors.blue,
-                                ),
-                                Text("ชาย"),
-                                Radio(
-                                  value: 2,
-                                  groupValue: val,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      val = int.parse(value.toString());
-                                    });
-                                  },
-                                  activeColor: Colors.blue,
-                                ),
-                                Text("หญิง"),
-                              ],
+                            AddTextForm(
+                              controller: username,
+                              hintText: 'Username',
                             ),
-                          ),
-                          SizedBox(
-                            height: size.height * 0.02,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              'เบอร์โทรศัพ',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
+                            SizedBox(
+                              height: size.height * 0.02,
                             ),
-                          ),
-                          AddTextForm(
-                            controller: username,
-                            hintText: 'กรุณากรอกเบอร์โทรติดต่อ',
-                          ),
-                          SizedBox(
-                            height: size.height * 0.02,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              'เงินเดือน',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
+                              child: Text(
+                                'เพศ',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ),
-                          AddTextForm(
-                            controller: username,
-                            hintText: 'เงินเดือน',
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              'ที่อยู่',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          AddTextForm(
-                            controller: username,
-                            hintText: '',
-                            maxLines: 4,
-                          ),
-                          SizedBox(
-                            height: size.height * 0.02,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              'เกี่ยวกับบริษัท',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          AddTextForm(
-                            controller: username,
-                            hintText: '',
-                            maxLines: 4,
-                          ),
-                          SizedBox(height: 25),
-                          ButtonRounded(
-                            text: 'บันทึก',
-                            color: Colors.blue,
-                            textColor: Colors.white,
-                            onPressed: () {
-                              showCupertinoDialog(
-                                context: context,
-                                builder: (context) => CupertinoAlertDialog(
-                                  title: Text(
-                                    'ดำเนินการเรียบร้อย',
-                                    //style: TextStyle(fontFamily: fontFamily),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
+                              child: Row(
+                                children: [
+                                  Radio(
+                                    value: 1,
+                                    groupValue: val,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        val = int.parse(value.toString());
+                                      });
+                                    },
+                                    activeColor: Colors.blue,
                                   ),
-                                  content: Text(
-                                    'ต้องการออกจากหน้านี้หรือไม่',
-                                    //style: TextStyle(fontFamily: fontFamily),
+                                  Text("ชาย"),
+                                  Radio(
+                                    value: 2,
+                                    groupValue: val,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        val = int.parse(value.toString());
+                                      });
+                                    },
+                                    activeColor: Colors.blue,
                                   ),
-                                  actions: <CupertinoDialogAction>[
-                                    CupertinoDialogAction(
-                                      child: Text(
-                                        'ยกเลิก',
-                                        // style: TextStyle(
-                                        //   color: kThemeTextColor,
-                                        //   fontFamily: fontFamily,
-                                        //   fontWeight: FontWeight.bold,
-                                        // ),
-                                      ),
-                                      onPressed: () =>
-                                          Navigator.pop(context, true),
+                                  Text("หญิง"),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: size.height * 0.02,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                'เบอร์โทรศัพ',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            AddTextForm(
+                              controller: username,
+                              hintText: 'กรุณากรอกเบอร์โทรติดต่อ',
+                            ),
+                            SizedBox(
+                              height: size.height * 0.02,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                'เงินเดือน',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            AddTextForm(
+                              controller: username,
+                              hintText: 'เงินเดือน',
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                'ที่อยู่',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            AddTextForm(
+                              controller: username,
+                              hintText: '',
+                              maxLines: 4,
+                            ),
+                            SizedBox(
+                              height: size.height * 0.02,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                'เกี่ยวกับบริษัท',
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            AddTextForm(
+                              controller: username,
+                              hintText: '',
+                              maxLines: 4,
+                            ),
+                            SizedBox(height: 25),
+                            ButtonRounded(
+                              text: 'บันทึก',
+                              color: Colors.blue,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                showCupertinoDialog(
+                                  context: context,
+                                  builder: (context) => CupertinoAlertDialog(
+                                    title: Text(
+                                      'ดำเนินการเรียบร้อย',
+                                      //style: TextStyle(fontFamily: fontFamily),
                                     ),
-                                    CupertinoDialogAction(
-                                      child: Text(
-                                        'ตกลง',
-                                        // style: TextStyle(
-                                        //   color: kThemeTextColor,
-                                        //   fontFamily: fontFamily,
-                                        // ),
+                                    content: Text(
+                                      'ต้องการออกจากหน้านี้หรือไม่',
+                                      //style: TextStyle(fontFamily: fontFamily),
+                                    ),
+                                    actions: <CupertinoDialogAction>[
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'ยกเลิก',
+                                          // style: TextStyle(
+                                          //   color: kThemeTextColor,
+                                          //   fontFamily: fontFamily,
+                                          //   fontWeight: FontWeight.bold,
+                                          // ),
+                                        ),
+                                        onPressed: () =>
+                                            Navigator.pop(context, true),
                                       ),
-                                      onPressed: () => Navigator.of(context)
-                                        ..pop()
-                                        ..pop(),
-                                    )
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'ตกลง',
+                                          // style: TextStyle(
+                                          //   color: kThemeTextColor,
+                                          //   fontFamily: fontFamily,
+                                          // ),
+                                        ),
+                                        onPressed: () => Navigator.of(context)
+                                          ..pop()
+                                          ..pop(),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
