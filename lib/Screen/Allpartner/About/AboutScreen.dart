@@ -1,6 +1,9 @@
 import 'package:allserve/Screen/Alljob/Job/Widgets/ListJobCompanies.dart';
+import 'package:allserve/Screen/Login/Widgets/AppTextForm.dart';
 import 'package:allserve/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatefulWidget {
   AboutScreen({Key? key}) : super(key: key);
@@ -10,6 +13,37 @@ class AboutScreen extends StatefulWidget {
 }
 
 class _AboutScreenState extends State<AboutScreen> {
+  final GlobalKey<FormState> editFormKey = GlobalKey<FormState>();
+  final TextEditingController username = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  void launchEmailSubmission() async {
+    final Uri params = Uri(
+        scheme: 'mailto',
+        path: 'demonridercos@gmail.com',
+        queryParameters: {
+          'subject': 'Default Subject',
+          'body': 'Default body'
+        });
+    String url = params.toString();
+    // ignore: deprecated_member_use
+    if (await canLaunch(url)) {
+      // ignore: deprecated_member_use
+      await launch(url);
+    } else {
+      print('Could not launch $url');
+    }
+  }
+
+  void launchTel() async {
+    String url = 'tel://0922568260';
+    if (url != '') {
+      // ignore: deprecated_member_use
+      await launch(url);
+    } else {
+      print('Could not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -95,9 +129,9 @@ class _AboutScreenState extends State<AboutScreen> {
                     ),
                     Positioned(
                       top: 40,
-                      left: 190,
+                      left: 180,
                       child: Container(
-                        height: 160,
+                        height: 170,
                         width: 190,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,12 +159,18 @@ class _AboutScreenState extends State<AboutScreen> {
                             Row(
                               children: [
                                 IconButton(
-                                    onPressed: () {}, icon: Icon(Icons.email)),
+                                    onPressed: () {
+                                      launchEmailSubmission();
+                                    },
+                                    icon: Icon(Icons.email)),
                                 SizedBox(
                                   width: 10,
                                 ),
                                 IconButton(
-                                    onPressed: () {}, icon: Icon(Icons.phone)),
+                                    onPressed: () {
+                                      launchTel();
+                                    },
+                                    icon: Icon(Icons.phone)),
                               ],
                             ),
                           ],
@@ -181,37 +221,7 @@ class _AboutScreenState extends State<AboutScreen> {
               SizedBox(
                 height: 20,
               ),
-              // Row(
-              //   children: [
-              //     Container(
-              //       height: size.height * 0.08,
-              //       width: size.width * 0.30,
-              //       //color: Colors.red,
-              //       decoration: BoxDecoration(
-              //         border: Border.all(color: Colors.grey),
-              //         borderRadius: BorderRadius.only(
-              //             topLeft: Radius.circular(10),
-              //             topRight: Radius.circular(10)),
-              //       ),
-              //       child: Center(
-              //         child: Text('แผนที่'),
-              //       ),
-              //     ),
 
-              //   ],
-              // ),
-              // Container(
-              //   height: size.height * 0.25,
-              //   width: double.infinity,
-              //   child: Image.asset(
-              //     'assets/images/function.png',
-              //     fit: BoxFit.fill,
-              //   ),
-              //   //color: Colors.green,
-              //   // child: Center(
-              //   //   child: Text('Map', style: TextStyle(fontSize: 25),),
-              //   // ),
-              // ),
               SizedBox(
                 height: 30,
               ),

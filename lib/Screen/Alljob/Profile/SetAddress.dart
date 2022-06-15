@@ -1,3 +1,5 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/Widgets/AddTextForm.dart';
+import 'package:allserve/Screen/Widgets/ButtonRounded.dart';
 import 'package:flutter/material.dart';
 
 class SetAddress extends StatefulWidget {
@@ -8,6 +10,11 @@ class SetAddress extends StatefulWidget {
 }
 
 class _SetAddressState extends State<SetAddress> {
+  final GlobalKey<FormState> addFormKey = GlobalKey<FormState>();
+  final TextEditingController username = TextEditingController();
+  List address = [];
+  String _address =
+      '503/32 อาคาร เค.เอส.แอล. ทาวเวอร์, ชั้น 18, ถนนศรีอยุธยา แขวงถนนพญาไท เขตราชเทวี กรุงเทพมหานคร 10400';
   @override
   Widget build(BuildContext context) {
     final padding = EdgeInsets.symmetric(vertical: 5, horizontal: 20);
@@ -46,12 +53,15 @@ class _SetAddressState extends State<SetAddress> {
                         size: 35,
                       ),
                       title: Text('บริษัท ทดลอง จำกัด'),
-                      subtitle: Text(
-                          '503/32 อาคาร เค.เอส.แอล. ทาวเวอร์, ชั้น 18, ถนนศรีอยุธยา แขวงถนนพญาไท เขตราชเทวี กรุงเทพมหานคร 10400'),
+                      subtitle: Text(_address),
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        _dialogAddress();
+                      },
                       child: Center(
                         child: Text(
                           '+ เพิ่มที่อยู่',
@@ -66,6 +76,55 @@ class _SetAddressState extends State<SetAddress> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _dialogAddress() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('เพิ่มที่อยู่'),
+          content: SingleChildScrollView(
+            child: Form(
+              key: addFormKey,
+              child: Wrap(
+                children: [
+                  AddTextForm(
+                    controller: username,
+                    hintText: '',
+                    maxLines: 4,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ButtonRounded(
+                  text: 'ยกเลิก',
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                SizedBox(width: 5,),
+                ButtonRounded(
+                  text: 'บันทึก',
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  onPressed: () {},
+                ),
+                
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -1,4 +1,7 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/Widgets/AddTextForm.dart';
 import 'package:allserve/Screen/Login/Widgets/AppTextForm.dart';
+import 'package:allserve/Screen/Widgets/ButtonRounded.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddProductPartner extends StatefulWidget {
@@ -49,7 +52,7 @@ class _AddProductPartnerState extends State<AddProductPartner> {
                       Card(
                         margin: EdgeInsets.zero,
                         elevation: 0,
-                        color: Color.fromARGB(255, 218, 216, 216),
+                        color: Colors.white,
                         shape: RoundedRectangleBorder(
                           side: BorderSide(
                             color: Color(0xFFF3F3F3),
@@ -78,6 +81,83 @@ class _AddProductPartnerState extends State<AddProductPartner> {
                                 controller: username,
                                 hintText: 'ใส่ชื่อสินค้า',
                               ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                child: Text(
+                                  'ชนิดสินค้า',
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              AppTextForm(
+                                controller: username,
+                                hintText: 'ชนิดสินค้า',
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                child: Text(
+                                  'รายละเอียด',
+                                  style: TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              AddTextForm(
+                                controller: username,
+                                hintText: '',
+                                maxLines: 4,
+                              ),
+                              SizedBox(height: 25),
+                              ButtonRounded(
+                                text: 'บันทึก',
+                                color: Colors.blue,
+                                textColor: Colors.white,
+                                onPressed: () {
+                                  showCupertinoDialog(
+                                    context: context,
+                                    builder: (context) => CupertinoAlertDialog(
+                                      title: Text(
+                                        'ดำเนินการเรียบร้อย',
+                                        //style: TextStyle(fontFamily: fontFamily),
+                                      ),
+                                      content: Text(
+                                        'ต้องการออกจากหน้านี้หรือไม่',
+                                        //style: TextStyle(fontFamily: fontFamily),
+                                      ),
+                                      actions: <CupertinoDialogAction>[
+                                        CupertinoDialogAction(
+                                          child: Text(
+                                            'ยกเลิก',
+                                            // style: TextStyle(
+                                            //   color: kThemeTextColor,
+                                            //   fontFamily: fontFamily,
+                                            //   fontWeight: FontWeight.bold,
+                                            // ),
+                                          ),
+                                          onPressed: () =>
+                                              Navigator.pop(context, true),
+                                        ),
+                                        CupertinoDialogAction(
+                                          child: Text(
+                                            'ตกลง',
+                                            // style: TextStyle(
+                                            //   color: kThemeTextColor,
+                                            //   fontFamily: fontFamily,
+                                            // ),
+                                          ),
+                                          onPressed: () => Navigator.of(context)
+                                            ..pop()
+                                            ..pop(),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                              SizedBox(
+                                height: 10,
+                              )
                             ],
                           ),
                         ),

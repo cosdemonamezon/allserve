@@ -1,3 +1,4 @@
+import 'package:allserve/Screen/Allpartner/About/AboutScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/AllServeScreen.dart';
 import 'package:allserve/Screen/Allserve/Profile/SetProfile.dart';
 import 'package:allserve/Screen/Allserve/Search/SearchAllservScreen.dart';
@@ -31,6 +32,7 @@ class _AllServeHomeState extends State<AllServeHome> {
         children: [
           AllServeScreen(),
           SearchAllservScreen(),
+          AboutScreen(),
           SetProfileScreen(),
         ],
       ),
@@ -56,6 +58,13 @@ class _AllServeHomeState extends State<AllServeHome> {
                 activeIcon: Image.asset('assets/icons/navi3_active.png',
                     height: size.height * 0.025),
                 label: 'ไมโครซอฟ',
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset('assets/icons/navi3.png',
+                    height: size.height * 0.025),
+                activeIcon: Image.asset('assets/icons/navi3_active.png',
+                    height: size.height * 0.025),
+                label: 'เกี่ยวกับบริษัท',
               ),
               BottomNavigationBarItem(
                 icon: Image.asset('assets/icons/navi5.png',
