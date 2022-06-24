@@ -1,5 +1,9 @@
 import 'package:allserve/Screen/Alljob/Job/Widgets/ListJobCompanies.dart';
+import 'package:allserve/Screen/Allpartner/About/ActivityScreen.dart';
+import 'package:allserve/Screen/Allpartner/About/VisionScreen.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/Widgets/AddTextForm.dart';
 import 'package:allserve/Screen/Login/Widgets/AppTextForm.dart';
+import 'package:allserve/Screen/Widgets/ButtonRounded.dart';
 import 'package:allserve/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -146,7 +150,196 @@ class _AboutScreenState extends State<AboutScreen> {
                                       color: Color(0xFF363f93)),
                                 ),
                                 IconButton(
-                                    onPressed: () {}, icon: Icon(Icons.edit)),
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        builder: (BuildContext context) =>
+                                            SizedBox(
+                                          height: size.height * 0.90,
+                                          child: DecoratedBox(
+                                            decoration: BoxDecoration(
+                                              color: Color.fromARGB(
+                                                  255, 221, 218, 218),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10, vertical: 10),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Form(
+                                                    key: editFormKey,
+                                                    child: Wrap(
+                                                      children: [
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  vertical: 10),
+                                                          child: Text(
+                                                            'ชื่อบริษัท',
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.blue,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ),
+                                                        AddTextForm(
+                                                          controller: username,
+                                                          hintText:
+                                                              'บริษัท อาชาเทค',
+                                                        ),
+                                                        SizedBox(
+                                                          height: size.height *
+                                                              0.02,
+                                                        ),
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  vertical: 10),
+                                                          child: Text(
+                                                            'เกี่ยวกับบริษัท',
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.blue,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ),
+                                                        AddTextForm(
+                                                          controller: username,
+                                                          hintText:
+                                                              'รับเขียนโปแกรม แอพพลิเคชั่น โมบาย, งานไอทีและเทคโนโลยีทุกรูปแบบ',
+                                                          maxLines: 4,
+                                                        ),
+                                                        SizedBox(
+                                                          height: size.height *
+                                                              0.02,
+                                                        ),
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  vertical: 10),
+                                                          child: Text(
+                                                            'อีมล',
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.blue,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ),
+                                                        AddTextForm(
+                                                          controller: username,
+                                                          hintText:
+                                                              'amazonrider@gmail.com',
+                                                        ),
+                                                        SizedBox(
+                                                          height: size.height *
+                                                              0.02,
+                                                        ),
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  vertical: 10),
+                                                          child: Text(
+                                                            'เบอร์โทร',
+                                                            style: TextStyle(
+                                                                color:
+                                                                    Colors.blue,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ),
+                                                        AddTextForm(
+                                                          controller: username,
+                                                          hintText:
+                                                              '0922568260',
+                                                        ),
+                                                        SizedBox(
+                                                          height: size.height *
+                                                              0.02,
+                                                        ),
+                                                        Padding(
+                                                          padding: EdgeInsets
+                                                              .symmetric(
+                                                                  vertical: 30),
+                                                          child: ButtonRounded(
+                                                            text: 'บันทึก',
+                                                            color: Colors.blue,
+                                                            textColor:
+                                                                Colors.white,
+                                                            onPressed: () {
+                                                              showCupertinoDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) =>
+                                                                        CupertinoAlertDialog(
+                                                                  title: Text(
+                                                                    'ดำเนินการเรียบร้อย',
+                                                                    //style: TextStyle(fontFamily: fontFamily),
+                                                                  ),
+                                                                  content: Text(
+                                                                    'ต้องการออกจากหน้านี้หรือไม่',
+                                                                    //style: TextStyle(fontFamily: fontFamily),
+                                                                  ),
+                                                                  actions: <
+                                                                      CupertinoDialogAction>[
+                                                                    CupertinoDialogAction(
+                                                                      child:
+                                                                          Text(
+                                                                        'ยกเลิก',
+                                                                        // style: TextStyle(
+                                                                        //   color: kThemeTextColor,
+                                                                        //   fontFamily: fontFamily,
+                                                                        //   fontWeight: FontWeight.bold,
+                                                                        // ),
+                                                                      ),
+                                                                      onPressed: () => Navigator.pop(
+                                                                          context,
+                                                                          true),
+                                                                    ),
+                                                                    CupertinoDialogAction(
+                                                                      child:
+                                                                          Text(
+                                                                        'ตกลง',
+                                                                        // style: TextStyle(
+                                                                        //   color: kThemeTextColor,
+                                                                        //   fontFamily: fontFamily,
+                                                                        // ),
+                                                                      ),
+                                                                      onPressed: () => Navigator.of(
+                                                                          context)
+                                                                        ..pop()
+                                                                        ..pop(),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(Icons.edit)),
                               ],
                             ),
                             Text(
@@ -192,7 +385,140 @@ class _AboutScreenState extends State<AboutScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('การกำกับดูแลกิจการ'),
-                          IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+                          IconButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (BuildContext context) => SizedBox(
+                                    height: size.height * 0.90,
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        color:
+                                            Color.fromARGB(255, 221, 218, 218),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 10),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Form(
+                                              key: editFormKey,
+                                              child: Wrap(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 10),
+                                                    child: Text(
+                                                      'หัวข้อ',
+                                                      style: TextStyle(
+                                                          color: Colors.blue,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                  AddTextForm(
+                                                    controller: username,
+                                                    hintText:
+                                                        'การกำกับดูแลกิจการ',
+                                                  ),
+                                                  SizedBox(
+                                                    height: size.height * 0.02,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 10),
+                                                    child: Text(
+                                                      'รายละเอียด',
+                                                      style: TextStyle(
+                                                          color: Colors.blue,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                  AddTextForm(
+                                                    controller: username,
+                                                    hintText: comData,
+                                                    maxLines: 4,
+                                                  ),
+                                                  SizedBox(
+                                                    height: size.height * 0.02,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 30),
+                                                    child: ButtonRounded(
+                                                      text: 'บันทึก',
+                                                      color: Colors.blue,
+                                                      textColor: Colors.white,
+                                                      onPressed: () {
+                                                        showCupertinoDialog(
+                                                          context: context,
+                                                          builder: (context) =>
+                                                              CupertinoAlertDialog(
+                                                            title: Text(
+                                                              'ดำเนินการเรียบร้อย',
+                                                              //style: TextStyle(fontFamily: fontFamily),
+                                                            ),
+                                                            content: Text(
+                                                              'ต้องการออกจากหน้านี้หรือไม่',
+                                                              //style: TextStyle(fontFamily: fontFamily),
+                                                            ),
+                                                            actions: <
+                                                                CupertinoDialogAction>[
+                                                              CupertinoDialogAction(
+                                                                child: Text(
+                                                                  'ยกเลิก',
+                                                                  // style: TextStyle(
+                                                                  //   color: kThemeTextColor,
+                                                                  //   fontFamily: fontFamily,
+                                                                  //   fontWeight: FontWeight.bold,
+                                                                  // ),
+                                                                ),
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        context,
+                                                                        true),
+                                                              ),
+                                                              CupertinoDialogAction(
+                                                                child: Text(
+                                                                  'ตกลง',
+                                                                  // style: TextStyle(
+                                                                  //   color: kThemeTextColor,
+                                                                  //   fontFamily: fontFamily,
+                                                                  // ),
+                                                                ),
+                                                                onPressed: () =>
+                                                                    Navigator.of(
+                                                                        context)
+                                                                      ..pop()
+                                                                      ..pop(),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.edit)),
                         ],
                       ),
                       subtitle: Text(
@@ -214,7 +540,19 @@ class _AboutScreenState extends State<AboutScreen> {
                     .map((data) => ListJobCompanies(
                           companydata: data,
                           use: true,
-                          press: () {},
+                          press: () {
+                            if (data['rating'] == '4.8') {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VisionScreen()));
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ActivityScreen()));
+                            }
+                          },
                         ))
                     .toList(),
               ),

@@ -24,7 +24,7 @@ class _NewsScreenState extends State<NewsScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                Container(
+                SizedBox(
                     height: size.height * 0.2,
                     width: double.infinity,
                     child: Image.asset(
