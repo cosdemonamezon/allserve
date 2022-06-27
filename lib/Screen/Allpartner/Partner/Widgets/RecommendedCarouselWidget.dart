@@ -10,7 +10,7 @@ class RecommendedCarouselWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 360,
+      height: 280,
       color: Colors.white,
       child: ListView.builder(
         padding: EdgeInsets.only(bottom: 10),
@@ -32,8 +32,8 @@ class RecommendedCarouselWidget extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                       color: Colors.blueAccent.withOpacity(0.1),
-                      blurRadius: 10,
-                      offset: Offset(0, 5)),
+                      blurRadius: 1,
+                      offset: Offset(0, 0)),
                 ],
               ),
               child: Column(

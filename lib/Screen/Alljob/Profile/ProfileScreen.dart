@@ -8,9 +8,11 @@ import 'package:allserve/Screen/Alljob/Profile/SetPayment.dart';
 import 'package:allserve/Screen/Alljob/Profile/Widgets/CustomButton.dart';
 import 'package:allserve/Screen/Alljob/Profile/Widgets/SettingMenu.dart';
 import 'package:allserve/Screen/Login/WelcomeScreen.dart';
+import 'package:allserve/Screen/Widgets/ButtonRounded.dart';
 import 'package:allserve/appTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key}) : super(key: key);
@@ -153,6 +155,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+      // bottomNavigationBar: ButtonRounded(
+      //   text: 'ออกจากระบบ',
+      //   color: Colors.blue,
+      //   textColor: Colors.white,
+      //   onPressed: (){
+      //           Navigator.pushAndRemoveUntil(
+      //         context,
+      //         MaterialPageRoute(
+      //           builder: (BuildContext context) => WelcomeScreen(),
+      //         ),
+      //         (route) => false,
+      //       );
+      //   },
+      // ),
       bottomNavigationBar: Container(
         margin: EdgeInsets.only(left: 25, right: 25, bottom: 10),
         child: CustomButton(
@@ -160,16 +176,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
           borderOnly: true,
           text: 'ออกจากระบบ',
           onPressed: () async {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => WelcomeScreen(),
-              ),
-              (route) => false,
-            );
+            logOut(context);
+            // Navigator.pushAndRemoveUntil(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (BuildContext context) => WelcomeScreen(),
+            //   ),
+            //   (route) => false,
+            // );
           },
         ),
       ),
+    );
+  }
+
+  logOut(context) async {
+    final _prefs = await SharedPreferences.getInstance();
+    await _prefs.clear();
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => WelcomeScreen(),
+      ),
+      (route) => false,
     );
   }
 }

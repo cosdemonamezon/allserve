@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:allserve/Screen/Alljob/Job/SendHistoryFile.dart';
 import 'package:allserve/Screen/Alljob/Job/ShortHistory.dart';
 import 'package:allserve/Screen/Alljob/Job/Widgets/ListJobCompanies.dart';
+import 'package:allserve/Screen/Allpartner/About/ActivityScreen.dart';
+import 'package:allserve/Screen/Allpartner/About/VisionScreen.dart';
 import 'package:allserve/Screen/Widgets/ButtonJobSelect.dart';
 import 'package:allserve/constants.dart';
 import 'package:flutter/material.dart';
@@ -834,7 +836,7 @@ class _JobDetailState extends State<JobDetail> with TickerProviderStateMixin {
                               )),
                           Positioned(
                             top: 0,
-                            left: 20,
+                            left: 15,
                             child: Card(
                               elevation: 10,
                               shadowColor: Colors.grey.withOpacity(0.5),
@@ -843,7 +845,7 @@ class _JobDetailState extends State<JobDetail> with TickerProviderStateMixin {
                               ),
                               child: Container(
                                 height: 200,
-                                width: 150,
+                                width: 130,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10.0),
                                   image: DecorationImage(
@@ -856,7 +858,7 @@ class _JobDetailState extends State<JobDetail> with TickerProviderStateMixin {
                           ),
                           Positioned(
                             top: 40,
-                            left: 190,
+                            left: 155,
                             child: Container(
                               height: 150,
                               width: 190,
@@ -926,7 +928,19 @@ class _JobDetailState extends State<JobDetail> with TickerProviderStateMixin {
                           .map((data) => ListJobCompanies(
                                 companydata: data,
                                 use: true,
-                                press: () {},
+                                press: () {
+                                  if (data['rating'] == '4.8') {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VisionScreen()));
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ActivityScreen()));
+                            }
+                                },
                               ))
                           .toList(),
                     ),

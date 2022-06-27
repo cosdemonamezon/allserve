@@ -1,7 +1,3 @@
-import 'dart:developer';
-
-import 'package:allserve/Screen/Alljob/AlljobHome.dart';
-import 'package:allserve/Screen/Register/RegisterApi.dart';
 import 'package:allserve/Screen/Register/Widgets/RegisTextField.dart';
 import 'package:allserve/Screen/Widgets/BackButtonWithOrIcon.dart';
 import 'package:allserve/Screen/Widgets/ButtonRounded.dart';
@@ -10,14 +6,14 @@ import 'package:allserve/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class RegisterScreen extends StatefulWidget {
-  RegisterScreen({Key? key}) : super(key: key);
+class RegisterAllserveScreen extends StatefulWidget {
+  RegisterAllserveScreen({Key? key}) : super(key: key);
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<RegisterAllserveScreen> createState() => _RegisterAllserveScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterAllserveScreenState extends State<RegisterAllserveScreen> {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
   final TextEditingController email = TextEditingController();
@@ -27,7 +23,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController lastname = TextEditingController();
   final TextEditingController phone = TextEditingController();
   bool isLoadding = false;
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -37,8 +32,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SingleChildScrollView(
         child: isLoadding == true
             ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     width: size.width / 1.5,
@@ -68,7 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               BackButtonWithOrIcon(),
                               SizedBox(height: 22),
                               Text(
-                                'สมัครสมาชิก',
+                                'สมัครสมาชิก AllServe',
                                 style: TextStyle(
                                   fontSize: appFontSize?.title,
                                   fontWeight: FontWeight.bold,
@@ -173,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         textColor: Colors.white,
                                         onPressed: () async {
                                           if (password.text != '') {
-                                            register(context);
+                                            //register(context);
                                           } else {}
 
                                           // FocusScope.of(context)
@@ -200,34 +195,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
       ),
     );
-  }
-
-  void register(context) async {
-    final SharedPreferences prefs = await _prefs;
-    setState(() {
-      isLoadding = true;
-    });
-    final response = await RegisterApi.register(
-        email: email.text,
-        password: password.text,
-        firstname: firstname.text,
-        lastname: lastname.text);
-    if (response['status_api']) {
-      inspect(response);
-      await prefs.setString('token', response['token']);
-      Future.delayed(Duration(seconds: 3), () {
-        setState(() {
-          isLoadding = false;
-        });
-        Navigator.pushReplacement<void, void>(
-          context,
-          MaterialPageRoute<void>(
-            builder: (BuildContext context) => AlljobHome(),
-          ),
-        );
-      });
-    } else {
-      print(response);
-    }
   }
 }

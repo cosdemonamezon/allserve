@@ -36,7 +36,7 @@ class CustomButton extends StatelessWidget {
         ),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
-            side: canPress ? BorderSide(color: Colors.greenAccent) : BorderSide.none,
+            side: canPress ? BorderSide(color: Color.fromARGB(255, 105, 150, 240)) : BorderSide.none,
             borderRadius: BorderRadius.all(Radius.circular(8)),
           ),
         ),

@@ -1,8 +1,17 @@
+import 'package:allserve/Screen/Allserve/AllServeHome.dart';
 import 'package:allserve/Screen/Login/WelcomeScreen.dart';
 import 'package:allserve/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+String token = '';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final SharedPreferences prefs = await _prefs;
+  String tokenString = await prefs.getString('token').toString();
+  if (tokenString != '') token = tokenString;
   runApp(const MyApp());
 }
 
@@ -35,7 +44,8 @@ class MyApp extends StatelessWidget {
             TextSelectionThemeData(cursorColor: kThemeTextColor),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: WelcomeScreen(),
+      // ignore: unnecessary_null_comparison
+      home: token != "null"? AllServeHome():WelcomeScreen(),
     );
   }
 }

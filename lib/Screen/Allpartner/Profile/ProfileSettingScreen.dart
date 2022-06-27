@@ -11,6 +11,7 @@ import 'package:allserve/Screen/Login/WelcomeScreen.dart';
 import 'package:allserve/appTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileSettingScreen extends StatefulWidget {
   ProfileSettingScreen({Key? key}) : super(key: key);
@@ -158,16 +159,21 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
           borderOnly: true,
           text: 'ออกจากระบบ',
           onPressed: () async {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => WelcomeScreen(),
-              ),
-              (route) => false,
-            );
+            logOut(context);
           },
         ),
       ),
+    );
+  }
+  logOut(context) async {
+    final _prefs = await SharedPreferences.getInstance();
+    await _prefs.clear();
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => WelcomeScreen(),
+      ),
+      (route) => false,
     );
   }
 }

@@ -111,7 +111,7 @@ class _AboutScreenState extends State<AboutScreen> {
                         )),
                     Positioned(
                       top: 0,
-                      left: 20,
+                      left: 15,
                       child: Card(
                         elevation: 10,
                         shadowColor: Colors.grey.withOpacity(0.5),
@@ -120,7 +120,7 @@ class _AboutScreenState extends State<AboutScreen> {
                         ),
                         child: Container(
                           height: 200,
-                          width: 150,
+                          width: 130,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                             image: DecorationImage(
@@ -133,7 +133,7 @@ class _AboutScreenState extends State<AboutScreen> {
                     ),
                     Positioned(
                       top: 40,
-                      left: 180,
+                      left: 155,
                       child: Container(
                         height: 170,
                         width: 190,

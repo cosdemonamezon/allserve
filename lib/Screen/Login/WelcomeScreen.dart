@@ -1,5 +1,6 @@
 import 'package:allserve/Screen/Login/LoginScreen.dart';
 import 'package:allserve/Screen/Register/RegisterScreen.dart';
+import 'package:allserve/Screen/Register/SeleteRegister.dart';
 import 'package:allserve/Screen/Widgets/ButtonRounded.dart';
 import 'package:allserve/constants.dart';
 import 'package:flutter/material.dart';
@@ -48,10 +49,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             SizedBox(height: 8),
             ButtonRounded(
               text: 'Register',
-              color: Colors.white,
+              color: Color.fromARGB(255, 247, 244, 244),
               textColor: Colors.blue,
               onPressed: () async {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> RegisterScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> SelectRegister()));
               },
             ),
           ],
