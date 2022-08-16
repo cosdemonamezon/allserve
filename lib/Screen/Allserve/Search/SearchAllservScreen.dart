@@ -1,6 +1,6 @@
 import 'package:allserve/Screen/Allserve/Search/Widgets/ListMicrosoft.dart';
-import 'package:allserve/Screen/Widgets/CardList.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SearchAllservScreen extends StatefulWidget {
   SearchAllservScreen({Key? key}) : super(key: key);
@@ -74,7 +74,9 @@ class _SearchAllservScreenState extends State<SearchAllservScreen> {
               children: allservlist
                   .map((data) => ListMicrosoft(
                         companydata: data,
-                        press: () {},
+                        press: () {
+                          launchUrl(Uri.parse('https://www.microsoft.com/th-th/microsoft-365/free-office-online-for-the-web'));
+                        },
                       ))
                   .toList(),
             )

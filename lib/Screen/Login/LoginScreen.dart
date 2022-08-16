@@ -100,7 +100,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.blue,
                       textColor: Colors.white,
                       onPressed: () {
-                        login(context);
+                        //login(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AllServeHome()));
                       },
                     ),
                     SizedBox(height: 25),
@@ -127,28 +131,26 @@ class _LoginScreenState extends State<LoginScreen> {
     final response =
         await LoginApi.login(email: email.text, password: password.text);
     if (response['status_api']) {
-      await prefs.setString('token', response['token']);      
-        
-        Future.delayed(Duration(seconds: 3), () {
-          setState(() {
-              isLoadding = false;
-            });
-          if (response['data']['firstName'] == 'allserve') {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => AllServeHome()));
-            } else if (response['data']['firstName'] == 'alljob') {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => AlljobHome()));
-            } else if (response['data']['firstName'] == 'allpartner') {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => AllPartnerHome()));
-            } else {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => AllPartnerHome()));
-            }
-          
+      await prefs.setString('token', response['token']);
+
+      Future.delayed(Duration(seconds: 3), () {
+        setState(() {
+          isLoadding = false;
         });
-      
+        if (response['data']['firstName'] == 'allserve') {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => AllServeHome()));
+        } else if (response['data']['firstName'] == 'alljob') {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => AlljobHome()));
+        } else if (response['data']['firstName'] == 'allpartner') {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => AllPartnerHome()));
+        } else {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => AllPartnerHome()));
+        }
+      });
     } else {
       print(response);
     }
