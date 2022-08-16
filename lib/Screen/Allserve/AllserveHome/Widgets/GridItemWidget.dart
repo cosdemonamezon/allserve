@@ -1,4 +1,6 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/LogisticScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/RecruitScreen.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/ScrapScreen.dart';
 import 'package:flutter/material.dart';
 
 class GridItemWidget extends StatelessWidget {
@@ -16,7 +18,14 @@ class GridItemWidget extends StatelessWidget {
         if (data['name'] == "Recruit") {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => RecruitScreen()));
+        }else if(data['name'] == "Scrap Environment"){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ScrapScreen()));
+        }else if(data['name'] == "Logistic"){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => LogisticScreen()));
         }
+        else{}
       },
       child: Container(
         decoration: BoxDecoration(),
