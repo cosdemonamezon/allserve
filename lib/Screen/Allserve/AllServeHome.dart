@@ -2,6 +2,7 @@ import 'package:allserve/Screen/Allpartner/About/AboutScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/AllServeScreen.dart';
 import 'package:allserve/Screen/Allserve/Profile/SetProfile.dart';
 import 'package:allserve/Screen/Allserve/Search/SearchAllservScreen.dart';
+import 'package:allserve/Screen/Allserve/Search/SearchScreen.dart';
 import 'package:flutter/material.dart';
 
 class AllServeHome extends StatefulWidget {
@@ -32,6 +33,7 @@ class _AllServeHomeState extends State<AllServeHome> {
         children: [
           AllServeScreen(),
           SearchAllservScreen(),
+          SearchScreen(),
           AboutScreen(),
           SetProfileScreen(),
         ],
@@ -58,6 +60,13 @@ class _AllServeHomeState extends State<AllServeHome> {
                 activeIcon: Image.asset('assets/icons/navi3_active.png',
                     height: size.height * 0.025),
                 label: 'ไมโครซอฟ',
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset('assets/icons/navi4.png',
+                    height: size.height * 0.025),
+                activeIcon: Image.asset('assets/icons/navi4_active.png',
+                    height: size.height * 0.025),
+                label: 'ค้นหา',
               ),
               BottomNavigationBarItem(
                 icon: Image.asset('assets/icons/navi3.png',

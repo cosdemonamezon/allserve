@@ -54,12 +54,12 @@ class _SearchAllservScreenState extends State<SearchAllservScreen> {
         ),
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        // ),
       ),
       body: SingleChildScrollView(
         child: Column(

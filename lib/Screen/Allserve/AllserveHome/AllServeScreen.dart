@@ -1,3 +1,4 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/ResponseListScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Widgets/GridItemWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -13,7 +14,10 @@ class _AllServeScreenState extends State<AllServeScreen> {
   List<Map<String, dynamic>> listall = [
     {"name": "Recruit", "imgurl": "assets/icons/Recruit.png"},
     {"name": "Sales and CRM", "imgurl": "assets/icons/SalesCRM.png"},
-    {"name": "Scrap Environment", "imgurl": "assets/icons/ScrapEnvironment.png"},
+    {
+      "name": "Scrap Environment",
+      "imgurl": "assets/icons/ScrapEnvironment.png"
+    },
     {"name": "Logistic", "imgurl": "assets/icons/LogisticB.png"}
   ];
   @override
@@ -46,19 +50,37 @@ class _AllServeScreenState extends State<AllServeScreen> {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.format_list_bulleted,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.apps,
-                          color: Colors.deepOrangeAccent,
-                        ),
+                      // IconButton(
+                      //   onPressed: () {},
+                      //   icon: Icon(
+                      //     Icons.format_list_bulleted,
+                      //     color: Colors.grey,
+                      //   ),
+                      // ),
+                      Stack(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ResponseListScreen()));
+                            },
+                            icon: Icon(
+                              Icons.notifications,
+                              color: Colors.blueAccent,
+                            ),
+                          ),
+                          Positioned(
+                              right: 4,
+                              top: 5,
+                              child: CircleAvatar(
+                                radius: 10,
+                                backgroundColor: Colors.redAccent,
+                                child: Center(child: Text('2')),
+                              )),
+                        ],
                       ),
                     ],
                   ),
