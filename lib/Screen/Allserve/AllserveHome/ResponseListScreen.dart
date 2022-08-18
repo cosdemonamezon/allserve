@@ -1,4 +1,10 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:allserve/Screen/Allserve/AllserveHome/ScrapPDF.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ResponseListScreen extends StatefulWidget {
   ResponseListScreen({Key? key}) : super(key: key);
@@ -8,6 +14,42 @@ class ResponseListScreen extends StatefulWidget {
 }
 
 class _ResponseListScreenState extends State<ResponseListScreen> {
+
+  String pathPDF = "";
+  String landscapePathPdf = "";
+  String remotePDFpath = "";
+  String corruptedPathPDF = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fromAsset('assets/images/reciept.pdf', 'reciept.pdf').then((f) {
+      setState(() {
+        corruptedPathPDF = f.path;
+      });
+    });
+  }
+
+  Future<File> fromAsset(String asset, String filename) async {
+    // To open from assets, you can copy them to the app storage folder, and the access them "locally"
+    Completer<File> completer = Completer();
+
+    try {
+      var dir = await getApplicationDocumentsDirectory();
+      File file = File("${dir.path}/$filename");
+      var data = await rootBundle.load(asset);
+      var bytes = data.buffer.asUint8List();
+      await file.writeAsBytes(bytes, flush: true);
+      completer.complete(file);
+    } catch (e) {
+      throw Exception('Error parsing asset file!');
+    }
+
+    return completer.future;
+  }
+
+
+
   List<Map<String, dynamic>> comtlist = [
     {
       "title": "บริษัท อาชาเทค สาขา A",
@@ -62,16 +104,24 @@ class _ResponseListScreenState extends State<ResponseListScreen> {
                               subtitle: Text('ราคา ' +
                                   comtlist[index]['subtitle'] +
                                   ' บาท'),
-                              trailing: Container(
-                                height: size.height * 0.04,
-                                width: size.width * 0.08,
-                                color: Colors.blueAccent,
-                                child: Center(
-                                    child: Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 28,
-                                  color: Colors.white,
-                                )),
+                              trailing: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ScrapPDF(path: corruptedPathPDF,)));
+                                },
+                                child: Container(
+                                  height: size.height * 0.04,
+                                  width: size.width * 0.08,
+                                  color: Colors.blueAccent,
+                                  child: Center(
+                                      child: Icon(
+                                    Icons.arrow_drop_down,
+                                    size: 28,
+                                    color: Colors.white,
+                                  )),
+                                ),
                               ),
                             ),
                             Divider(

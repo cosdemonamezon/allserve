@@ -259,6 +259,25 @@ class _DetailProductsState extends State<DetailProducts> {
                           ),
                         ],
                       ),
+                      SizedBox(
+                        height: size.height * 0.03,
+                      ),
+                      Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Text('โน๊ต :'),
+                          ),
+                      Row(
+                        children: [
+                          
+                          SizedBox(
+                            width: size.width*0.88,
+                            child: RecordTextForm(
+                              hintText: '',
+                              maxLine: 3,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -285,11 +304,11 @@ class _DetailProductsState extends State<DetailProducts> {
                         context: context,
                         builder: (context) => CupertinoAlertDialog(
                           title: Text(
-                            'ดำเนินการเรียบร้อย',
+                            'ยืนยันรายการสั่งซื้อ',
                             //style: TextStyle(fontFamily: fontFamily),
                           ),
                           content: Text(
-                            'ต้องการออกจากหน้านี้หรือไม่',
+                            'ถ้าต้องการยืนยันให้กด ตกลง',
                             //style: TextStyle(fontFamily: fontFamily),
                           ),
                           actions: <CupertinoDialogAction>[

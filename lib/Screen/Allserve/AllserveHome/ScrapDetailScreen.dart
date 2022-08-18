@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ScrapDetailScreen extends StatefulWidget {
@@ -250,17 +251,57 @@ class _ScrapDetailScreenState extends State<ScrapDetailScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.of(context)..pop()..pop();
+                          showCupertinoDialog(
+                            context: context,
+                            builder: (context) => CupertinoAlertDialog(
+                              title: Text(
+                                'ยืนยันขอใบเสนอราคา',
+                                //style: TextStyle(fontFamily: fontFamily),
+                              ),
+                              content: Text(
+                                'หากต้องการขอใบเสนอราคากด ตกลง',
+                                //style: TextStyle(fontFamily: fontFamily),
+                              ),
+                              actions: <CupertinoDialogAction>[
+                                CupertinoDialogAction(
+                                  child: Text(
+                                    'ยกเลิก',
+                                    // style: TextStyle(
+                                    //   color: kThemeTextColor,
+                                    //   fontFamily: fontFamily,
+                                    //   fontWeight: FontWeight.bold,
+                                    // ),
+                                  ),
+                                  onPressed: () => Navigator.pop(context, true),
+                                ),
+                                CupertinoDialogAction(
+                                  child: Text(
+                                    'ตกลง',
+                                    // style: TextStyle(
+                                    //   color: kThemeTextColor,
+                                    //   fontFamily: fontFamily,
+                                    // ),
+                                  ),
+                                  onPressed: () => Navigator.of(context)
+                                    ..pop()
+                                    ..pop()
+                                    ..pop(),
+                                )
+                              ],
+                            ),
+                          );
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: size.height*0.04),
+                          padding: EdgeInsets.symmetric(
+                              vertical: size.height * 0.04),
                           child: Container(
                             height: size.height * 0.06,
                             width: size.width * 0.32,
                             //color: Colors.red,
                             decoration: BoxDecoration(
                               color: Colors.blue,
-                              borderRadius: BorderRadius.all(Radius.circular(30)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30)),
                             ),
                             child: Center(
                                 child: Text(

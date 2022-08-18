@@ -78,7 +78,7 @@ class _AllServeScreenState extends State<AllServeScreen> {
                               child: CircleAvatar(
                                 radius: 10,
                                 backgroundColor: Colors.redAccent,
-                                child: Center(child: Text('2')),
+                                child: Center(child: Text('4')),
                               )),
                         ],
                       ),
