@@ -31,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'ค้นหา Vendor',
+          'ค้นหา ผู้ขาย',
           //style: TextStyle(color: Colors.deepOrange),
         ),
         backgroundColor: Colors.transparent,
