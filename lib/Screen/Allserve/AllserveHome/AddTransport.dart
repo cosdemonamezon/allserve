@@ -328,7 +328,8 @@ class _AddTransportState extends State<AddTransport> {
                         EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
-                        SizedBox(width: size.width * 0.10, child: Text('จำนวน')),
+                        SizedBox(
+                            width: size.width * 0.10, child: Text('จำนวน')),
                       ],
                     ),
                   ),
@@ -395,6 +396,7 @@ class _AddTransportState extends State<AddTransport> {
                   ),
                 ],
               ),
+              
             ],
           ),
         ),
@@ -411,44 +413,43 @@ class _AddTransportState extends State<AddTransport> {
               InkWell(
                 onTap: () {
                   showCupertinoDialog(
-                              context: context,
-                              builder: (context) => CupertinoAlertDialog(
-                                title: Text(
-                                  'บันทึกข้อมูลสำเร็จ',
-                                  //style: TextStyle(fontFamily: fontFamily),
-                                ),
-                                content: Text(
-                                  'กด ตกลง เพื่อดำเนินการต่อ',
-                                  //style: TextStyle(fontFamily: fontFamily),
-                                ),
-                                actions: <CupertinoDialogAction>[
-                                  CupertinoDialogAction(
-                                    child: Text(
-                                      'ยกเลิก',
-                                      // style: TextStyle(
-                                      //   color: kThemeTextColor,
-                                      //   fontFamily: fontFamily,
-                                      //   fontWeight: FontWeight.bold,
-                                      // ),
-                                    ),
-                                    onPressed: () =>
-                                        Navigator.pop(context, true),
-                                  ),
-                                  CupertinoDialogAction(
-                                    child: Text(
-                                      'ตกลง',
-                                      // style: TextStyle(
-                                      //   color: kThemeTextColor,
-                                      //   fontFamily: fontFamily,
-                                      // ),
-                                    ),
-                                    onPressed: () => Navigator.of(context)
-                                      ..pop()
-                                      ..pop(),
-                                  )
-                                ],
-                              ),
-                            );
+                    context: context,
+                    builder: (context) => CupertinoAlertDialog(
+                      title: Text(
+                        'บันทึกข้อมูลสำเร็จ',
+                        //style: TextStyle(fontFamily: fontFamily),
+                      ),
+                      content: Text(
+                        'กด ตกลง เพื่อดำเนินการต่อ',
+                        //style: TextStyle(fontFamily: fontFamily),
+                      ),
+                      actions: <CupertinoDialogAction>[
+                        CupertinoDialogAction(
+                          child: Text(
+                            'ยกเลิก',
+                            // style: TextStyle(
+                            //   color: kThemeTextColor,
+                            //   fontFamily: fontFamily,
+                            //   fontWeight: FontWeight.bold,
+                            // ),
+                          ),
+                          onPressed: () => Navigator.pop(context, true),
+                        ),
+                        CupertinoDialogAction(
+                          child: Text(
+                            'ตกลง',
+                            // style: TextStyle(
+                            //   color: kThemeTextColor,
+                            //   fontFamily: fontFamily,
+                            // ),
+                          ),
+                          onPressed: () => Navigator.of(context)
+                            ..pop()
+                            ..pop(),
+                        )
+                      ],
+                    ),
+                  );
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),

@@ -1,3 +1,4 @@
+import 'package:allserve/Screen/Allserve/About/AboutScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/AddTransport.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/DetailTransport.dart';
 import 'package:allserve/Screen/Widgets/SearchTextField.dart';
@@ -76,7 +77,13 @@ class _LogisticScreenState extends State<LogisticScreen>
                     ListTile(
                       title: Text('1. บริษัท A ขนส่ง'),
                       trailing: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.remove_red_eye)),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AboutScreen()));
+                          },
+                          icon: Icon(Icons.remove_red_eye)),
                     ),
                     Divider(
                       thickness: 2,
@@ -84,7 +91,13 @@ class _LogisticScreenState extends State<LogisticScreen>
                     ListTile(
                       title: Text('2. บริษัท B ขนส่ง'),
                       trailing: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.remove_red_eye)),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AboutScreen()));
+                          },
+                          icon: Icon(Icons.remove_red_eye)),
                     ),
                     Divider(
                       thickness: 2,
@@ -92,7 +105,13 @@ class _LogisticScreenState extends State<LogisticScreen>
                     ListTile(
                       title: Text('3. บริษัท C ขนส่ง'),
                       trailing: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.remove_red_eye)),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AboutScreen()));
+                          },
+                          icon: Icon(Icons.remove_red_eye)),
                     ),
                     Divider(
                       thickness: 2,
@@ -100,7 +119,13 @@ class _LogisticScreenState extends State<LogisticScreen>
                     ListTile(
                       title: Text('4. บริษัท D ขนส่ง'),
                       trailing: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.remove_red_eye)),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AboutScreen()));
+                          },
+                          icon: Icon(Icons.remove_red_eye)),
                     ),
                     Divider(
                       thickness: 2,
@@ -108,7 +133,13 @@ class _LogisticScreenState extends State<LogisticScreen>
                     ListTile(
                       title: Text('5. บริษัท E ขนส่ง'),
                       trailing: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.remove_red_eye)),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AboutScreen()));
+                          },
+                          icon: Icon(Icons.remove_red_eye)),
                     ),
                     Divider(
                       thickness: 2,
