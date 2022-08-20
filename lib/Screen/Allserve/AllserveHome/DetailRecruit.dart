@@ -1,4 +1,5 @@
 import 'package:allserve/Screen/Allserve/AllserveHome/Detailsapplicant.dart';
+import 'package:allserve/Screen/Allserve/Search/Widgets/RecordTexForm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -332,88 +333,109 @@ class _ShowAlertState extends State<ShowAlert> {
         'เลือกวันที่',
         //style: TextStyle(fontFamily: fontFamily),
       ),
-      content: Row(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            width: size.width * 0.15,
-            child: DropdownButton(
-              value: dayvalue,
-              isExpanded: true,
-              icon: const Icon(Icons.keyboard_arrow_down),
-              elevation: 16,
-              style: const TextStyle(color: Colors.black),
-              underline: Container(
-                height: 2,
-                color: Colors.grey,
+          Row(
+            children: [
+              SizedBox(
+                width: size.width * 0.15,
+                child: DropdownButton(
+                  value: dayvalue,
+                  isExpanded: true,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.black),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.grey,
+                  ),
+                  items: dropdownDay.map((String items) {
+                    return DropdownMenuItem(
+                      value: items,
+                      child: Text(items),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dayvalue = newValue!;
+                    });
+                  },
+                ),
               ),
-              items: dropdownDay.map((String items) {
-                return DropdownMenuItem(
-                  value: items,
-                  child: Text(items),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  dayvalue = newValue!;
-                });
-              },
+              SizedBox(
+                width: size.width * 0.01,
+              ),
+              SizedBox(
+                width: size.width * 0.20,
+                child: DropdownButton(
+                  value: mounthvalue,
+                  isExpanded: true,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.black),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.grey,
+                  ),
+                  items: dropdownMounth.map((String items2) {
+                    return DropdownMenuItem(
+                      value: items2,
+                      child: Text(items2),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      mounthvalue = newValue!;
+                    });
+                  },
+                ),
+              ),
+              SizedBox(
+                width: size.width * 0.01,
+              ),
+              SizedBox(
+                width: size.width * 0.20,
+                child: DropdownButton(
+                  value: yearvalue,
+                  isExpanded: true,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.black),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.grey,
+                  ),
+                  items: dropdownYear.map((String items3) {
+                    return DropdownMenuItem(
+                      value: items3,
+                      child: Text(items3),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      yearvalue = newValue!;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
+            child: Row(
+              children: [
+                Text(
+                  'โน๊ต',
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w400),
+                ),
+              ],
             ),
           ),
-          SizedBox(
-            width: size.width * 0.01,
-          ),
-          SizedBox(
-            width: size.width * 0.20,
-            child: DropdownButton(
-              value: mounthvalue,
-              isExpanded: true,
-              icon: const Icon(Icons.keyboard_arrow_down),
-              elevation: 16,
-              style: const TextStyle(color: Colors.black),
-              underline: Container(
-                height: 2,
-                color: Colors.grey,
-              ),
-              items: dropdownMounth.map((String items2) {
-                return DropdownMenuItem(
-                  value: items2,
-                  child: Text(items2),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  mounthvalue = newValue!;
-                });
-              },
-            ),
-          ),
-          SizedBox(
-            width: size.width * 0.01,
-          ),
-          SizedBox(
-            width: size.width * 0.20,
-            child: DropdownButton(
-              value: yearvalue,
-              isExpanded: true,
-              icon: const Icon(Icons.keyboard_arrow_down),
-              elevation: 16,
-              style: const TextStyle(color: Colors.black),
-              underline: Container(
-                height: 2,
-                color: Colors.grey,
-              ),
-              items: dropdownYear.map((String items3) {
-                return DropdownMenuItem(
-                  value: items3,
-                  child: Text(items3),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  yearvalue = newValue!;
-                });
-              },
-            ),
+          RecordTextForm(
+            hintText: '',
+            maxLine: 4,
           ),
         ],
       ),
