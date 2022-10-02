@@ -18,7 +18,11 @@ class BackButtonWithOrIcon extends StatelessWidget {
             height: appFontSize?.bigSize,
           ),
         ),
-        Image.asset('assets/images/ALLZOffice.png', height: 50)
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:
+              Image.asset('assets/images/ALLZERVE.png', width: 120, height: 50),
+        )
       ],
     );
   }

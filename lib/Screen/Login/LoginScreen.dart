@@ -8,6 +8,15 @@ import 'package:allserve/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:flutter/cupertino.dart';
+import 'package:allserve/Screen/Widgets/cupertinoAlertDialog.dart';
+
+import 'package:allserve/constants/constants.dart';
+import 'package:allserve/Screen/Register/RegisterController.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
+
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
 
@@ -67,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 10),
                             child: Text(
-                              'Email',
+                              'อีเมล',
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold),
@@ -75,12 +84,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           AppTextForm(
                             controller: email,
-                            hintText: 'Email',
+                            hintText: 'อีเมล',
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Text(
-                              'Password',
+                              'รหัสผ่าน',
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold),
@@ -88,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           AppTextForm(
                             controller: password,
-                            hintText: 'Password',
+                            hintText: 'รหัสผ่าน',
                             isPassword: true,
                           ),
                         ],
@@ -96,22 +105,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     SizedBox(height: 25),
                     ButtonRounded(
-                      text: 'Login',
+                      text: 'เข้าสู่ระบบ',
                       color: Colors.blue,
                       textColor: Colors.white,
                       onPressed: () {
-                        //login(context);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AllServeHome()));
+                        signIn(email: email.text, password: password.text);
                       },
                     ),
                     SizedBox(height: 25),
                     GestureDetector(
                       onTap: () {},
                       child: Text(
-                        'ForgotPassword',
+                        'ลืมรหัสผ่าน',
                         style: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.bold),
                       ),
@@ -121,6 +126,52 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
       ),
     );
+  }
+
+  Future<bool?> signIn({
+    required String email,
+    required String password,
+  }) async {
+    final url = Uri.https(publicUrl, 'api/public/api/login');
+    final response = await http.post(url, body: {
+      'username': email,
+      'password': password,
+    });
+    if (response.statusCode == 200) {
+      final data = convert.jsonDecode(response.body);
+
+      final SharedPreferences prefs = await _prefs;
+
+      if (data != null) {
+        await prefs.setString('token', data['token']);
+        await prefs.setString('uid', data['data']['id'].toString());
+      }
+
+      showCupertinoDialog(
+          context: context,
+          builder: (context) => CupertinoQuestion(
+                title: 'การเข้าสู่ระบบ',
+                content: 'ยินดีต้อนรับ เข้าสู่ระบบสำเร็จ',
+                press: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AllServeHome()));
+                },
+              ));
+      return true;
+    } else {
+      final error = convert.jsonDecode(response.body);
+
+      showCupertinoDialog(
+          context: context,
+          builder: (context) => CupertinoQuestion(
+                title: 'การเข้าสู่ระบบไม่สำเร็จ',
+                content: error['message'].toString(),
+                press: () {
+                  Navigator.pop(context, true);
+                },
+              ));
+      return null;
+    }
   }
 
   void login(context) async {

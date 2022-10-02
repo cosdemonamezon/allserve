@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 String token = '';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final SharedPreferences prefs = await _prefs;
@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'AllZerve',
       theme: ThemeData(
         appBarTheme: AppBarTheme(
           elevation: 0,
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       // ignore: unnecessary_null_comparison
-      home: token != "null"? AllServeHome():WelcomeScreen(),
+      home: token != "null" ? AllServeHome() : WelcomeScreen(),
     );
   }
 }

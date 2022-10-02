@@ -37,8 +37,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: SingleChildScrollView(
         child: isLoadding == true
             ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     width: size.width / 1.5,
@@ -163,13 +163,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 height: size.height / 7,
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 20),
+                                      vertical: 5, horizontal: 0),
                                   child: Column(
                                     children: [
                                       SizedBox(height: 8),
                                       ButtonRounded(
                                         text: 'สมัครสมาชิก',
-                                        color: kThemeTextColor,
+                                        color: Colors.blue,
                                         textColor: Colors.white,
                                         onPressed: () async {
                                           if (password.text != '') {
@@ -208,6 +208,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       isLoadding = true;
     });
     final response = await RegisterApi.register(
+        phone: phone.text,
         email: email.text,
         password: password.text,
         firstname: firstname.text,

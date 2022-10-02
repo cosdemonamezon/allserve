@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:allserve/constants/constants.dart';
 
 import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
 class RegisterApi {
   const RegisterApi();
@@ -10,33 +12,30 @@ class RegisterApi {
     required String password,
     required String firstname,
     required String lastname,
+    required String phone,
   }) async {
     try {
-      var headers = {'Content-Type': 'application/json'};
-      var request = http.Request(
-          'POST', Uri.parse('http://localhost:3000/api/auth/sign-up'));
-      request.body = json.encode({
-        "email": email,
-        "password": password,
-        "firstName": firstname,
-        "lastName": lastname
+      final url = Uri.https(publicUrl, 'api/public/api/user_job');
+      final response = await http.post(url, body: {
+        'permission_id': '1',
+        'username': email,
+        'password': password,
+        'name': firstname + ' ' + lastname,
+        'email': email,
+        'phone': phone,
+        'type': "customer",
+        'line_token': "",
       });
-      request.headers.addAll(headers);
-      http.StreamedResponse response = await request.send();
       if (response.statusCode == 200) {
-        final resdata = await response.stream.bytesToString();
-        Map<String, dynamic> response_json = json.decode(resdata);
-        response_json['status_api'] = true;
-        return response_json;
+        final data = convert.jsonDecode(response.body);
+
+        return data;
         //print(await response.stream.bytesToString());
       } else {
-        final resdata = await response.stream.bytesToString();
-        Map<String, dynamic> response_json = json.decode(resdata);
-        response_json['status_api'] = false;
-        return response_json;
+        final error = convert.jsonDecode(response.body);
+        return error;
         //print(response.reasonPhrase);
       }
     } catch (e) {}
-    
   }
 }

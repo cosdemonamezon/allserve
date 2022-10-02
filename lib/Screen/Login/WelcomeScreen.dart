@@ -22,7 +22,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/screen1.png'),
+            image: AssetImage('assets/images/welcome-screen.jpg'),
             fit: BoxFit.fill,
           ),
           gradient: LinearGradient(
@@ -39,20 +39,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ButtonRounded(
-              text: 'Login',
+              text: 'เข้าสู่ระบบ',
               color: Colors.blue,
               textColor: Colors.white,
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
               },
             ),
             SizedBox(height: 8),
             ButtonRounded(
-              text: 'Register',
+              text: 'ลงทะเบียน',
               color: Color.fromARGB(255, 247, 244, 244),
               textColor: Colors.blue,
               onPressed: () async {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> SelectRegister()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SelectRegister()));
               },
             ),
           ],

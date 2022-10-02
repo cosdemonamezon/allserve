@@ -12,19 +12,16 @@ class AllServeScreen extends StatefulWidget {
 
 class _AllServeScreenState extends State<AllServeScreen> {
   List<Map<String, dynamic>> listall = [
-    {"name": "Recruit", "imgurl": "assets/icons/Recruit.png"},
-    {"name": "Sales and CRM", "imgurl": "assets/icons/SalesCRM.png"},
-    {
-      "name": "Scrap Environment",
-      "imgurl": "assets/icons/ScrapEnvironment.png"
-    },
-    {"name": "Logistic", "imgurl": "assets/icons/LogisticB.png"}
+    {"name": "สรรหาคน", "imgurl": "assets/icons/Recruit.png"},
+    {"name": "การขายและการตลาด", "imgurl": "assets/icons/SalesCRM.png"},
+    {"name": "จำหน่ายของเสีย", "imgurl": "assets/icons/ScrapEnvironment.png"},
+    {"name": "ขนส่ง", "imgurl": "assets/icons/LogisticB.png"}
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('AllServe Page'),
+        title: Text('AllZerve'),
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
       ),
@@ -41,7 +38,7 @@ class _AllServeScreenState extends State<AllServeScreen> {
                 children: [
                   Expanded(
                     child: Text(
-                      "AllServe of services",
+                      "บริการหลักของเรา",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.headline5,

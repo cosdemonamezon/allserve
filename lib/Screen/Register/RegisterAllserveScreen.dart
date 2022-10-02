@@ -1,3 +1,5 @@
+import 'package:allserve/Models/Login.dart';
+import 'package:allserve/Screen/Login/WelcomeScreen.dart';
 import 'package:allserve/Screen/Register/Widgets/RegisTextField.dart';
 import 'package:allserve/Screen/Widgets/BackButtonWithOrIcon.dart';
 import 'package:allserve/Screen/Widgets/ButtonRounded.dart';
@@ -5,6 +7,13 @@ import 'package:allserve/appTheme.dart';
 import 'package:allserve/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:allserve/Screen/Widgets/cupertinoAlertDialog.dart';
+import 'package:allserve/constants/constants.dart';
+import 'package:allserve/Screen/Register/RegisterController.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
 class RegisterAllserveScreen extends StatefulWidget {
   RegisterAllserveScreen({Key? key}) : super(key: key);
@@ -38,7 +47,7 @@ class _RegisterAllserveScreenState extends State<RegisterAllserveScreen> {
                   SizedBox(
                     width: size.width / 1.5,
                     height: 140,
-                    child: Image.asset("assets/images/645bf.gif"),
+                    child: Image.asset("assets/images/ALLZERVE.png"),
                   ),
                 ],
               )
@@ -63,13 +72,13 @@ class _RegisterAllserveScreenState extends State<RegisterAllserveScreen> {
                               BackButtonWithOrIcon(),
                               SizedBox(height: 22),
                               Text(
-                                'สมัครสมาชิก AllServe',
+                                'สมัครสมาชิก AllZerve',
                                 style: TextStyle(
                                   fontSize: appFontSize?.title,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 50),
+                              SizedBox(height: 20),
                               Text(
                                 'อีเมล',
                                 style: TextStyle(fontSize: appFontSize?.body),
@@ -158,22 +167,70 @@ class _RegisterAllserveScreenState extends State<RegisterAllserveScreen> {
                                 height: size.height / 7,
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 20),
+                                      vertical: 5, horizontal: 0),
                                   child: Column(
                                     children: [
                                       SizedBox(height: 8),
                                       ButtonRounded(
                                         text: 'สมัครสมาชิก',
-                                        color: kThemeTextColor,
+                                        color: Colors.blue,
                                         textColor: Colors.white,
                                         onPressed: () async {
-                                          if (password.text != '') {
-                                            //register(context);
-                                          } else {}
+                                          final url = Uri.https(
+                                              publicUrl, 'api/public/api/user');
+                                          final response =
+                                              await http.post(url, body: {
+                                            'permission_id': '16',
+                                            'username': email.text,
+                                            'password': password.text,
+                                            'name': firstname.text +
+                                                ' ' +
+                                                lastname.text,
+                                            'email': email.text,
+                                            'phone': phone.text,
+                                            'type': "customer",
+                                            "line_token": '-'
+                                          });
+                                          if (response.statusCode == 200) {
+                                            final data = convert
+                                                .jsonDecode(response.body);
 
-                                          // FocusScope.of(context)
-                                          //     .requestFocus(FocusNode());
-                                          // Navigator.pop(context);
+                                            showCupertinoDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    CupertinoQuestion(
+                                                      title: 'ลงทะเบียนใช้งาน',
+                                                      content:
+                                                          'การลงทะเบียนสำเร็จ',
+                                                      press: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        WelcomeScreen()));
+                                                      },
+                                                    ));
+                                            return data;
+                                          } else {
+                                            final error = convert
+                                                .jsonDecode(response.body);
+
+                                            showCupertinoDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    CupertinoQuestion(
+                                                      title:
+                                                          'ลงทะเบียนไม่สำเร็จ',
+                                                      content: error['message']
+                                                          .toString(),
+                                                      press: () {
+                                                        Navigator.pop(
+                                                            context, true);
+                                                      },
+                                                    ));
+                                            return null;
+                                          }
                                         },
                                       )
                                     ],
