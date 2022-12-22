@@ -17,6 +17,8 @@ import 'package:allserve/Screen/Register/RegisterController.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import '../Widgets/LoadingDialog.dart';
+
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
 
@@ -77,9 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: EdgeInsets.symmetric(vertical: 10),
                             child: Text(
                               'อีเมล',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                             ),
                           ),
                           AppTextForm(
@@ -90,9 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Text(
                               'รหัสผ่าน',
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                             ),
                           ),
                           AppTextForm(
@@ -117,8 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () {},
                       child: Text(
                         'ลืมรหัสผ่าน',
-                        style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -132,31 +129,34 @@ class _LoginScreenState extends State<LoginScreen> {
     required String email,
     required String password,
   }) async {
-    final url = Uri.https(publicUrl, 'api/public/api/login');
+    final url = Uri.parse('$baseUrl/api/login');
     final response = await http.post(url, body: {
       'username': email,
       'password': password,
     });
     if (response.statusCode == 200) {
       final data = convert.jsonDecode(response.body);
+      LoadingDialog.open(context);
 
       final SharedPreferences prefs = await _prefs;
 
       if (data != null) {
         await prefs.setString('token', data['token']);
-        await prefs.setString('uid', data['data']['id'].toString());
+        await prefs.setString('member_id', data['data']['id'].toString());
+        print(data);
       }
 
+      LoadingDialog.close(context);
       showCupertinoDialog(
           context: context,
           builder: (context) => CupertinoQuestion(
                 title: 'การเข้าสู่ระบบ',
                 content: 'ยินดีต้อนรับ เข้าสู่ระบบสำเร็จ',
                 press: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AllServeHome()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AllServeHome()));
                 },
               ));
+
       return true;
     } else {
       final error = convert.jsonDecode(response.body);
@@ -179,8 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       isLoadding = true;
     });
-    final response =
-        await LoginApi.login(email: email.text, password: password.text);
+    final response = await LoginApi.login(email: email.text, password: password.text);
     if (response['status_api']) {
       await prefs.setString('token', response['token']);
 
@@ -189,17 +188,13 @@ class _LoginScreenState extends State<LoginScreen> {
           isLoadding = false;
         });
         if (response['data']['firstName'] == 'allserve') {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => AllServeHome()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AllServeHome()));
         } else if (response['data']['firstName'] == 'alljob') {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => AlljobHome()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AlljobHome()));
         } else if (response['data']['firstName'] == 'allpartner') {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => AllPartnerHome()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AllPartnerHome()));
         } else {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => AllPartnerHome()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AllPartnerHome()));
         }
       });
     } else {

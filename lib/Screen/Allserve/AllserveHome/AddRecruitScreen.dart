@@ -1,10 +1,16 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/AllServeService.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Widgets/AddTextForm.dart';
 import 'package:allserve/Screen/Widgets/ButtonRounded.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../Widgets/LoadingDialog.dart';
+import 'AllServeController.dart';
 
 class AddRecruitScreen extends StatefulWidget {
-  AddRecruitScreen({Key? key}) : super(key: key);
+  AddRecruitScreen({Key? key, required this.id}) : super(key: key);
+  final int id;
 
   @override
   State<AddRecruitScreen> createState() => _AddRecruitScreenState();
@@ -13,7 +19,13 @@ class AddRecruitScreen extends StatefulWidget {
 class _AddRecruitScreenState extends State<AddRecruitScreen> {
   @override
   final GlobalKey<FormState> addFormKey = GlobalKey<FormState>();
-  final TextEditingController username = TextEditingController();
+  final TextEditingController position = TextEditingController();
+  final TextEditingController degree = TextEditingController();
+  final TextEditingController major = TextEditingController();
+  final TextEditingController salary = TextEditingController();
+  final TextEditingController exp = TextEditingController();
+  final TextEditingController qty = TextEditingController();
+  final TextEditingController description = TextEditingController();
   int val = 0;
   String dayvalue = 'วัน';
   String mounthvalue = 'เดือน';
@@ -72,131 +84,141 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                               padding: EdgeInsets.symmetric(vertical: 10),
                               child: Text(
                                 'ตำแหน่งงาน',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                               ),
                             ),
                             AddTextForm(
-                              controller: username,
-                              hintText: 'Username',
+                              controller: position,
+                              hintText: '',
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
                               child: Text(
-                                'การศึกษา',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
+                                'วุฒิการศึกษา',
+                                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                               ),
                             ),
                             AddTextForm(
-                              controller: username,
-                              hintText: 'Username',
+                              controller: degree,
+                              hintText: '',
                             ),
                             SizedBox(
                               height: size.height * 0.02,
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              child: Text(
-                                'เพศ',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              child: Row(
-                                children: [
-                                  Radio(
-                                    value: 1,
-                                    groupValue: val,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        val = int.parse(value.toString());
-                                      });
-                                    },
-                                    activeColor: Colors.blue,
-                                  ),
-                                  Text("ชาย"),
-                                  Radio(
-                                    value: 2,
-                                    groupValue: val,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        val = int.parse(value.toString());
-                                      });
-                                    },
-                                    activeColor: Colors.blue,
-                                  ),
-                                  Text("หญิง"),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(
+                            //       vertical: 10, horizontal: 10),
+                            //   child: Text(
+                            //     'เพศ',
+                            //     style: TextStyle(
+                            //         color: Colors.blue,
+                            //         fontWeight: FontWeight.bold),
+                            //   ),
+                            // ),
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(
+                            //       vertical: 10, horizontal: 10),
+                            //   child: Row(
+                            //     children: [
+                            //       Radio(
+                            //         value: 1,
+                            //         groupValue: val,
+                            //         onChanged: (value) {
+                            //           setState(() {
+                            //             val = int.parse(value.toString());
+                            //           });
+                            //         },
+                            //         activeColor: Colors.blue,
+                            //       ),
+                            //       Text("ชาย"),
+                            //       Radio(
+                            //         value: 2,
+                            //         groupValue: val,
+                            //         onChanged: (value) {
+                            //           setState(() {
+                            //             val = int.parse(value.toString());
+                            //           });
+                            //         },
+                            //         activeColor: Colors.blue,
+                            //       ),
+                            //       Text("หญิง"),
+                            //     ],
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: size.height * 0.02,
+                            // ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
                               child: Text(
-                                'เบอร์โทรศัพ',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
+                                'สาขา',
+                                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                               ),
                             ),
                             AddTextForm(
-                              controller: username,
-                              hintText: 'กรุณากรอกเบอร์โทรติดต่อ',
+                              controller: major,
+                              hintText: '',
                             ),
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
+                            // SizedBox(
+                            //   height: size.height * 0.02,
+                            // ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
                               child: Text(
                                 'เงินเดือน',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                               ),
                             ),
                             AddTextForm(
-                              controller: username,
-                              hintText: 'เงินเดือน',
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              child: Text(
-                                'ที่อยู่',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            AddTextForm(
-                              controller: username,
+                              controller: salary,
                               hintText: '',
-                              maxLines: 4,
-                            ),
-                            SizedBox(
-                              height: size.height * 0.02,
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
                               child: Text(
-                                'เกี่ยวกับบริษัท',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold),
+                                'ประสบการณ์',
+                                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                               ),
                             ),
                             AddTextForm(
-                              controller: username,
+                              controller: exp,
+                              hintText: '',
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                'จำนวนที่รับ',
+                                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            AddTextForm(
+                              controller: qty,
+                              hintText: '',
+                            ),
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(vertical: 10),
+                            //   child: Text(
+                            //     'ที่อยู่',
+                            //     style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                            //   ),
+                            // ),
+                            // AddTextForm(
+                            //   controller: username,
+                            //   hintText: '',
+                            //   maxLines: 4,
+                            // ),
+                            // SizedBox(
+                            //   height: size.height * 0.02,
+                            // ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                'แนะนำเกี่ยวกับงาน',
+                                style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            AddTextForm(
+                              controller: description,
                               hintText: '',
                               maxLines: 4,
                             ),
@@ -227,8 +249,7 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                                           //   fontWeight: FontWeight.bold,
                                           // ),
                                         ),
-                                        onPressed: () =>
-                                            Navigator.pop(context, true),
+                                        onPressed: () => Navigator.pop(context),
                                       ),
                                       CupertinoDialogAction(
                                         child: Text(
@@ -238,9 +259,32 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                                           //   fontFamily: fontFamily,
                                           // ),
                                         ),
-                                        onPressed: () => Navigator.of(context)
-                                          ..pop()
-                                          ..pop(),
+                                        onPressed: () async {
+                                          LoadingDialog.open(context);
+                                          final String position1 = position.text;
+                                          final String degree1 = degree.text;
+                                          final String major1 = major.text;
+                                          final String salary1 = salary.text;
+                                          final String exp1 = exp.text;
+                                          final String qty1 = qty.text;
+                                          final String description1 = description.text;
+                                          await JobService().postRecruitment(
+                                              user_id: widget.id.toString(),
+                                              position: position1,
+                                              degree: degree1,
+                                              major: major1,
+                                              salary: salary1,
+                                              exp: exp1,
+                                              qty: qty1,
+                                              description: description1);
+                                          await context.read<JobController>().loadPositionCompay(Id: widget.id);
+                                          LoadingDialog.close(context);
+                                          if (mounted) {
+                                            Navigator.of(context)
+                                              ..pop()
+                                              ..pop();
+                                          }
+                                        },
                                       )
                                     ],
                                   ),

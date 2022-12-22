@@ -5,6 +5,8 @@ import 'package:allserve/Screen/Widgets/ButtonRounded.dart';
 import 'package:allserve/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../Register/RegisterAllserveScreen.dart';
+
 class WelcomeScreen extends StatefulWidget {
   WelcomeScreen({Key? key}) : super(key: key);
 
@@ -43,8 +45,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               color: Colors.blue,
               textColor: Colors.white,
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
               },
             ),
             SizedBox(height: 8),
@@ -53,8 +54,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               color: Color.fromARGB(255, 247, 244, 244),
               textColor: Colors.blue,
               onPressed: () async {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SelectRegister()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterAllserveScreen()));
               },
             ),
           ],

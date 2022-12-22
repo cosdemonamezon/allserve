@@ -1,7 +1,11 @@
+import 'dart:developer';
 import 'package:allserve/Screen/Allserve/AllserveHome/Detailsapplicant.dart';
 import 'package:allserve/Screen/Allserve/Search/Widgets/RecordTexForm.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../app/AppController.dart';
+import 'AllServeController.dart';
 
 class DetailRecruit extends StatefulWidget {
   DetailRecruit({Key? key}) : super(key: key);
@@ -10,14 +14,20 @@ class DetailRecruit extends StatefulWidget {
   State<DetailRecruit> createState() => _DetailRecruitState();
 }
 
-class _DetailRecruitState extends State<DetailRecruit>
-    with TickerProviderStateMixin {
+class _DetailRecruitState extends State<DetailRecruit> with TickerProviderStateMixin {
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _loadItem();
+    ;
+  }
+
+  Future _loadItem() async {
+    await context.read<JobController>().loadUserAllJob();
+    await context.read<AppController>().initialize();
   }
 
   @override
@@ -29,208 +39,194 @@ class _DetailRecruitState extends State<DetailRecruit>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'หาโปรแกรมเมอร์',
-            //style: TextStyle(color: Colors.deepOrange),
+    final user = context.read<AppController>().user;
+    inspect(user);
+    return Consumer<JobController>(
+      builder: (context, controller, child) => DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'หาโปรแกรมเมอร์',
+              //style: TextStyle(color: Colors.deepOrange),
+            ),
+            bottom: TabBar(
+              //isScrollable: true,
+              controller: _tabController,
+              labelColor: Colors.black,
+              unselectedLabelColor: Colors.grey,
+              indicatorColor: Colors.blue,
+              labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
+              tabs: [
+                Tab(text: 'ผู้น่าสนใจ'),
+                Tab(text: 'ผู้ยื่นสมัคร'),
+              ],
+            ),
+            backgroundColor: Colors.transparent,
+            automaticallyImplyLeading: false,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
-          bottom: TabBar(
-            //isScrollable: true,
+          body: TabBarView(
             controller: _tabController,
-            labelColor: Colors.black,
-            unselectedLabelColor: Colors.grey,
-            indicatorColor: Colors.blue,
-            labelStyle: TextStyle(
-                fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
-            tabs: [
-              Tab(text: 'ผู้น่าสนใจ'),
-              Tab(text: 'ผู้ยื่นสมัคร'),
+            children: [
+              //Tab1
+              SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: size.height * 0.05,
+                      ),
+                      ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: controller.uesrAllJob.length,
+                          itemBuilder: (_, index) {
+                            final yearUser = controller.uesrAllJob[index].age;
+                            return ListTile(
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(controller.uesrAllJob[index].name!),
+                                  Text('อายุ ${yearUser ?? ''} ปี'),
+                                ],
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  controller.uesrAllJob[index].user_job_detail!.isNotEmpty
+                                      ? Text(
+                                          'ระดับการศึกษา: ${controller.uesrAllJob[index].user_job_detail?[0].degree ?? ''}')
+                                      : Text('ระดับการศึกษา:'),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  controller.uesrAllJob[index].user_job_detail!.isNotEmpty
+                                      ? Text('สาขา: ${controller.uesrAllJob[index].user_job_detail?[0].major ?? ''}')
+                                      : Text('สาขา:'),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      controller.uesrAllJob[index].user_job_detail!.isNotEmpty
+                                          ? Text(
+                                              'สถานศึกษา: ${controller.uesrAllJob[index].user_job_detail?[0].location_of_educate ?? ''} ')
+                                          : Text('สถานศึกษา:'),
+                                      IconButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => DetailsApplicant(
+                                                          id: controller.uesrAllJob[index].id!,
+                                                        )));
+                                            print(controller.uesrAllJob[index].id!);
+                                          },
+                                          icon: Icon(Icons.remove_red_eye)),
+                                    ],
+                                  ),
+                                  Divider(
+                                    thickness: 2,
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+              //Tab2
+              SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: size.height * 0.05,
+                      ),
+                      ListTile(
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('1. นายสมชาย สายชม'),
+                            Text('อายุ 20 ปี'),
+                          ],
+                        ),
+                        subtitle: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text('การศึกษา: ปริญญาตรี.'),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('เทคโนโลยีลาดกระบัง'),
+                                IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => ShowAlert(),
+                                      );
+                                    },
+                                    icon: Icon(Icons.calendar_today)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(
+                        thickness: 2,
+                      ),
+                      ListTile(
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('2. นายประวุธ ไกลบุตร'),
+                            Text('อายุ 25 ปี'),
+                          ],
+                        ),
+                        subtitle: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text('การศึกษา: ปริญญาตรี.'),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('เทคโนโลยี-ปทุม'),
+                                IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => ShowAlert(),
+                                      );
+                                    },
+                                    icon: Icon(Icons.calendar_today)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(
+                        thickness: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            //Tab1
-            SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: size.height * 0.05,
-                    ),
-                    ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('1. นายอานน ธง'),
-                          Text('อายุ 20 ปี'),
-                        ],
-                      ),
-                      subtitle: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text('ปริญญาตรี เทคโนโลยีสาระสนเทศ'),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('เอเบค'),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DetailsApplicant()));
-                                  },
-                                  icon: Icon(Icons.remove_red_eye)),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      thickness: 2,
-                    ),
-                    ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('2. นายพินัย ไกลบุตร'),
-                          Text('อายุ 25 ปี'),
-                        ],
-                      ),
-                      subtitle: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text('ปริญญาตรี เทคโนโลยีสาระสนเทศ'),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('รามคำแหง'),
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DetailsApplicant()));
-                                  },
-                                  icon: Icon(Icons.remove_red_eye)),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      thickness: 2,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            //Tab2
-            SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: size.height * 0.05,
-                    ),
-                    ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('1. นายสมชาย สายชม'),
-                          Text('อายุ 20 ปี'),
-                        ],
-                      ),
-                      subtitle: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text('การศึกษา: ปริญญาตรี.'),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('เทคโนโลยีลาดกระบัง'),
-                              IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => ShowAlert(),
-                                    );
-                                  },
-                                  icon: Icon(Icons.calendar_today)),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      thickness: 2,
-                    ),
-                    ListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('2. นายประวุธ ไกลบุตร'),
-                          Text('อายุ 25 ปี'),
-                        ],
-                      ),
-                      subtitle: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text('การศึกษา: ปริญญาตรี.'),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('เทคโนโลยี-ปทุม'),
-                              IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => ShowAlert(),
-                                    );
-                                  },
-                                  icon: Icon(Icons.calendar_today)),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      thickness: 2,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -427,8 +423,7 @@ class _ShowAlertState extends State<ShowAlert> {
               children: [
                 Text(
                   'โน๊ต',
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w400),
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
                 ),
               ],
             ),

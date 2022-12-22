@@ -1,8 +1,12 @@
 import 'package:allserve/Screen/Allserve/Search/Widgets/RecordTexForm.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'AllServeController.dart';
 
 class DetailsApplicant extends StatefulWidget {
-  DetailsApplicant({Key? key}) : super(key: key);
+  DetailsApplicant({Key? key, required this.id}) : super(key: key);
+  final int id;
 
   @override
   State<DetailsApplicant> createState() => _DetailsApplicantState();
@@ -10,165 +14,200 @@ class DetailsApplicant extends StatefulWidget {
 
 class _DetailsApplicantState extends State<DetailsApplicant> {
   @override
+  void initState() {
+    super.initState();
+    _loadItem();
+  }
+
+  Future _loadItem() async {
+    await context.read<JobController>().detailUser(widget.id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'รายละเอียดผู้สมัคร',
-          //style: TextStyle(color: Colors.deepOrange),
-        ),
-        backgroundColor: Colors.transparent,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              Card(
-                margin: EdgeInsets.zero,
-                elevation: 0,
-                color: Color.fromARGB(255, 224, 224, 224),
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(
-                    color: Color(0xFFF3F3F3),
-                    width: 2.0,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: size.height * 0.02,
-                      vertical: size.width * 0.02),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                              height: size.height * 0.07,
-                              width: size.width * 0.15,
-                              child: Image.asset('assets/icons/user.png')),
-                          SizedBox(
-                            width: size.width * 0.03,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('ชื่อ: นายอานน ธง'),
-                              Text('ชื่อเล่น: อานน')
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: size.height * 0.05,
-                      ),
-                      Row(
-                        children: [
-                          Text('อายุ: 20 ปี'),
-                        ],
-                      ),
-                      SizedBox(
-                        width: size.height * 0.05,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                              child: Text(
-                                  'ที่อยู่: เลขที่ 6/4 ชั้น 2 ปาก ซ.13 4 ถนน ลาดกระบัง ลาดกระบัง เขตลาดกระบัง กรุงเทพมหานคร 10520')),
-                        ],
-                      ),
-                      SizedBox(
-                        width: size.height * 0.05,
-                      ),
-                      Divider(
-                        thickness: 3,
-                      ),
-                      Row(
-                        children: [
-                          Text('การศึกษา: ปริญญาตรี.'),
-                        ],
-                      ),
-                      SizedBox(
-                        width: size.height * 0.05,
-                      ),
-                      Row(
-                        children: [
-                          Text('สาขา: เทคโนโลยีสาระสนเทศ'),
-                        ],
-                      ),
-                      SizedBox(
-                        width: size.height * 0.05,
-                      ),
-                      Row(
-                        children: [
-                          Text('จบปี: 2554 - 2559'),
-                        ],
-                      ),
-                      SizedBox(
-                        width: size.height * 0.05,
-                      ),
-                      Row(
-                        children: [
-                          Text('เกรดเฉลี่ย: 3.12'),
-                        ],
-                      ),
-                      SizedBox(
-                        width: size.height * 0.05,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+    return Consumer<JobController>(
+      builder: (context, controller, child) => Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'รายละเอียดผู้สมัคร',
+            //style: TextStyle(color: Colors.deepOrange),
+          ),
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
         ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        clipBehavior: Clip.hardEdge,
-        //shape: CircularNotchedRectangle(),
-        elevation: 25,
-        child: Container(
-          height: size.height * 0.10,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => ShowAlertFrom(),
-                  );
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Container(
-                    height: size.height * 0.06,
-                    width: size.width * 0.32,
-                    //color: Colors.red,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(30)),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                controller.userDetail == null
+                    ? Center(child: CircularProgressIndicator())
+                    : Card(
+                        margin: EdgeInsets.zero,
+                        elevation: 0,
+                        color: Color.fromARGB(255, 224, 224, 224),
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Color(0xFFF3F3F3),
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: size.height * 0.03, vertical: size.width * 0.05),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                      height: size.height * 0.07,
+                                      width: size.width * 0.15,
+                                      child: Image.asset('assets/icons/user.png')),
+                                  SizedBox(
+                                    width: size.width * 0.03,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [Text(controller.userDetail?.name ?? ''), Text('ชื่อเล่น: อานน')],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Text('เพศ: ${controller.userDetail?.gender ?? '-'} '),
+                              Text('วันเกิด: ${controller.userDetail?.birthday ?? '-'} '),
+                              Text('อายุ: ${controller.userDetail?.age ?? '-'} ปี'),
+                              Text('เบอร์: ${controller.userDetail?.phone ?? '-'} '),
+                              Text('สถานะ: ${controller.userDetail?.marital ?? '-'} '),
+                              SizedBox(
+                                width: size.height * 0.05,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(child: Text('ที่อยู่: ${controller.userDetail?.address ?? '-'} ')),
+                                ],
+                              ),
+                              SizedBox(
+                                width: size.height * 0.05,
+                              ),
+                              Divider(
+                                thickness: 3,
+                              ),
+                              controller.userDetail!.user_job_detail!.isNotEmpty
+                                  ? Text(
+                                      'สถานศึกษา: ${controller.userDetail?.user_job_detail?[0].location_of_educate ?? ''}')
+                                  : Text('สถานศึกษา:'),
+                              SizedBox(
+                                width: size.height * 0.05,
+                              ),
+                              controller.userDetail!.user_job_detail!.isNotEmpty
+                                  ? Text('การศึกษา: ${controller.userDetail?.user_job_detail?[0].degree ?? ''}')
+                                  : Text('การศึกษา:'),
+                              SizedBox(
+                                width: size.height * 0.05,
+                              ),
+                              controller.userDetail!.user_job_detail!.isNotEmpty
+                                  ? Text('สาขา: ${controller.userDetail?.user_job_detail?[0].major ?? ''}')
+                                  : Text('สาขา:'),
+                              SizedBox(
+                                width: size.height * 0.05,
+                              ),
+                              controller.userDetail!.user_job_detail!.isNotEmpty
+                                  ? Text('จบปี: ${controller.userDetail?.user_job_detail?[0].finished ?? ''}')
+                                  : Text('จบปี:'),
+                              SizedBox(
+                                width: size.height * 0.05,
+                              ),
+                              controller.userDetail!.user_job_detail!.isNotEmpty
+                                  ? Text('เกรดเฉลี่ย: ${controller.userDetail?.user_job_detail?[0].grade ?? ''}')
+                                  : Text('เกรดเฉลี่ย:'),
+                              controller.userDetail!.user_job_detail!.isNotEmpty
+                                  ? Text(
+                                      'ตำแหน่งที่ต้องการ: ${controller.userDetail?.user_job_detail?[0].position ?? ''}')
+                                  : Text('ตำแหน่งที่ต้องการ:'),
+                              controller.userDetail!.user_job_detail!.isNotEmpty
+                                  ? Text('ระดับภาษาไทย: ${controller.userDetail?.user_job_detail?[0].thai ?? ''}')
+                                  : SizedBox.shrink(),
+                              controller.userDetail!.user_job_detail!.isNotEmpty
+                                  ? Text('ระดับภาษาอังกฤษ: ${controller.userDetail?.user_job_detail?[0].english ?? ''}')
+                                  : SizedBox.shrink(),
+                              controller.userDetail!.user_job_detail!.isNotEmpty
+                                  ? Text('ระดับภาษาจีน: ${controller.userDetail?.user_job_detail?[0].china ?? ''}')
+                                  : SizedBox.shrink(),
+                              controller.userDetail!.user_job_detail!.isNotEmpty
+                                  ? Text('ระดับภาษาญี่ปุ่น: ${controller.userDetail?.user_job_detail?[0].japan ?? ''}')
+                                  : SizedBox.shrink(),
+                              SizedBox(
+                                width: size.height * 0.05,
+                              ),
+                              controller.userDetail!.user_job_detail!.isNotEmpty
+                                  ? Text('ประสบการณ์: ${controller.userDetail?.user_job_detail?[0].exp ?? ''}')
+                                  : Text('ประสบการณ์:'),
+                              SizedBox(
+                                width: size.height * 0.05,
+                              ),
+                              controller.userDetail!.user_job_detail!.isNotEmpty
+                                  ? Text('แนะนำ: ${controller.userDetail?.user_job_detail?[0].remark ?? ''}')
+                                  : Text('แนะนำ:'),
+                              SizedBox(
+                                width: size.height * 0.05,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+              ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          clipBehavior: Clip.hardEdge,
+          //shape: CircularNotchedRectangle(),
+          elevation: 25,
+          child: Container(
+            height: size.height * 0.10,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => ShowAlertFrom(),
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Container(
+                      height: size.height * 0.06,
+                      width: size.width * 0.32,
+                      //color: Colors.red,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(30)),
+                      ),
+                      child: Center(
+                          child: Text(
+                        'เชิญ',
+                        style: TextStyle(color: Colors.white),
+                      )),
                     ),
-                    child: Center(
-                        child: Text(
-                      'เชิญ',
-                      style: TextStyle(color: Colors.white),
-                    )),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -361,7 +400,7 @@ class _ShowAlertFromState extends State<ShowAlertFrom> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: size.height*0.02),
+            padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
             child: Row(
               children: [
                 Text(
