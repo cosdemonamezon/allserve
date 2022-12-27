@@ -23,7 +23,9 @@ class PeopleWidget extends StatelessWidget {
                 image: AssetImage('assets/images/promotionBG.png'),
                 fit: BoxFit.fill,
               ),
-              boxShadow: const [BoxShadow(offset: Offset(0, 2), color: Color.fromRGBO(0, 78, 179, 0.05), blurRadius: 10)],
+              boxShadow: const [
+                BoxShadow(offset: Offset(0, 2), color: Color.fromRGBO(0, 78, 179, 0.05), blurRadius: 10)
+              ],
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
@@ -57,7 +59,6 @@ class PeopleWidget extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           SizedBox(height: 4),
-                          
                         ],
                       ),
                     ),

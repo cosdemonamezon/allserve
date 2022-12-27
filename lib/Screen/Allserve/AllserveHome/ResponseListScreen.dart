@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:allserve/Screen/Allserve/AllserveHome/ScrapPDF.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -14,7 +13,6 @@ class ResponseListScreen extends StatefulWidget {
 }
 
 class _ResponseListScreenState extends State<ResponseListScreen> {
-
   String pathPDF = "";
   String landscapePathPdf = "";
   String remotePDFpath = "";
@@ -47,8 +45,6 @@ class _ResponseListScreenState extends State<ResponseListScreen> {
 
     return completer.future;
   }
-
-
 
   List<Map<String, dynamic>> comtlist = [
     {
@@ -101,15 +97,15 @@ class _ResponseListScreenState extends State<ResponseListScreen> {
                           children: [
                             ListTile(
                               title: Text(comtlist[index]['title']),
-                              subtitle: Text('ราคา ' +
-                                  comtlist[index]['subtitle'] +
-                                  ' บาท'),
+                              subtitle: Text('ราคา ' + comtlist[index]['subtitle'] + ' บาท'),
                               trailing: InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ScrapPDF(path: corruptedPathPDF,)));
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => ScrapPDF(
+                                  //               path: corruptedPathPDF,
+                                  //             )));
                                 },
                                 child: Container(
                                   height: size.height * 0.04,

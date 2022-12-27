@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:allserve/Screen/Widgets/PhoneFieldWidget.dart';
 import 'package:allserve/Screen/Widgets/TextFieldWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/AppController.dart';
@@ -20,7 +25,8 @@ class _ProfilePratnerScreenState extends State<ProfilePratnerScreen> {
   final TextEditingController email = TextEditingController();
   final TextEditingController phonenumber = TextEditingController();
   final TextEditingController address = TextEditingController();
-
+  File? _selectedFile;
+  String? userImage;
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -29,6 +35,62 @@ class _ProfilePratnerScreenState extends State<ProfilePratnerScreen> {
 
   Future<void> _firstInstall() async {
     await context.read<AppController>().initialize();
+    final user = await context.read<AppController>().user?.image;
+    userImage = await user;
+  }
+
+  Widget getImageWidget() {
+    if (_selectedFile != null) {
+      return CircleAvatar(
+        backgroundColor: Colors.transparent,
+        radius: 80,
+        child: ClipOval(
+          child: Image.file(
+            _selectedFile!,
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    } else {
+      return CircleAvatar(
+        backgroundColor: Colors.transparent,
+        radius: 80,
+        child: ClipOval(
+            child: userImage != null
+                ? Image.network(
+                    userImage!,
+                    fit: BoxFit.cover,
+                  )
+                : Center(child: CircularProgressIndicator())
+            // : Image.asset(
+            //     'assets/icons/user.png',
+            //     fit: BoxFit.cover,
+            //   ),
+            ),
+      );
+    }
+  }
+
+  Future<void> getImage(ImageSource source) async {
+    try {
+      final XFile? image = await ImagePicker().pickImage(source: source);
+      if (image != null) {
+        final cropped = await ImageCropper().cropImage(
+          sourcePath: image.path,
+          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+          compressQuality: 90,
+          maxHeight: 500,
+          maxWidth: 500,
+          compressFormat: ImageCompressFormat.jpg,
+        );
+
+        setState(() {
+          _selectedFile = File(cropped!.path);
+        });
+      }
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
   }
 
   @override
@@ -139,20 +201,41 @@ class _ProfilePratnerScreenState extends State<ProfilePratnerScreen> {
                     spacing: 5,
                     runSpacing: 8,
                     children: [
-                      Center(
-                        child: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          radius: 100,
-                          child: ClipOval(
-                              child: Image.network(
-                            user!.image!,
-                            width: 200,
-                            height: 200,
-                            errorBuilder: (context, error, stackTrace) => Center(
-                              child: Image.asset('assets/images/No_Image_Available.jpg'),
+                      Stack(
+                        children: [
+                          Center(
+                            child: CircleAvatar(backgroundColor: Colors.transparent, radius: 80, child: getImageWidget()
+                                // ClipOval(
+                                //     child: Image.network(
+                                //   user!.image!,
+                                //   width: 200,
+                                //   height: 200,
+                                //   errorBuilder: (context, error, stackTrace) => Center(
+                                //     child: Image.asset('assets/images/No_Image_Available.jpg'),
+                                //   ),
+                                // )),
+                                ),
+                          ),
+                          Positioned(
+                            top: 130,
+                            left: 225,
+                            child: GestureDetector(
+                              onTap: () {
+                                getImage(ImageSource.gallery);
+                              },
+                              child: Container(
+                                  height: 30,
+                                  width: 30,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                                    color: Colors.grey,
+                                  ),
+                                  child: Icon(
+                                    Icons.add_a_photo_outlined,
+                                  )),
                             ),
-                          )),
-                        ),
+                          ),
+                        ],
                       ),
                       // Center(
                       //   child: ClipRRect(
@@ -172,7 +255,7 @@ class _ProfilePratnerScreenState extends State<ProfilePratnerScreen> {
                   onSaved: (input) => username.text = input!,
                   validator: (input) => input!.length < 3 ? "Should be more than 3 letters" : null,
                   initialValue: username.text,
-                  hintText: user.name,
+                  hintText: user?.name,
                   labelText: "Company",
                   iconData: Icons.person_outline,
                 ),
@@ -180,13 +263,13 @@ class _ProfilePratnerScreenState extends State<ProfilePratnerScreen> {
                   onSaved: (input) => email.text = input!,
                   validator: (input) => !input!.contains('@') ? "Should be a valid email" : null,
                   initialValue: email.text,
-                  hintText: user.email,
+                  hintText: user?.email,
                   labelText: "Email",
                   iconData: Icons.alternate_email,
                 ),
                 PhoneFieldWidget(
                     labelText: "Phone Number",
-                    hintText: user.phone,
+                    hintText: user?.phone,
                     initialCountryCode: 'TH',
                     initialValue: phonenumber.text,
                     // onSaved: (phone) {

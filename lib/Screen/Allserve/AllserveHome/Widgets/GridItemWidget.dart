@@ -1,11 +1,11 @@
-import 'package:allserve/Screen/Allserve/AllserveHome/LogisticScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/RecruitScreen.dart';
-import 'package:allserve/Screen/Allserve/AllserveHome/ScrapScreen.dart';
 import 'package:flutter/material.dart';
 
+import '../Logistic/LogisticScreen.dart';
+import '../Scrap/ScrapScreen.dart';
+
 class GridItemWidget extends StatelessWidget {
-  GridItemWidget({Key? key, required this.data, required this.press})
-      : super(key: key);
+  GridItemWidget({Key? key, required this.data, required this.press}) : super(key: key);
   Map<String, dynamic> data;
   VoidCallback press;
 
@@ -16,16 +16,12 @@ class GridItemWidget extends StatelessWidget {
       splashColor: Colors.deepOrange.withOpacity(0.08),
       onTap: () {
         if (data['name'] == "Recruit") {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => RecruitScreen()));
-        }else if(data['name'] == "Scrap Environment"){
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ScrapScreen()));
-        }else if(data['name'] == "Logistic"){
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => LogisticScreen()));
-        }
-        else{}
+          Navigator.push(context, MaterialPageRoute(builder: (context) => RecruitScreen()));
+        } else if (data['name'] == "Scrap Environment") {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ScrapScreen()));
+        } else if (data['name'] == "Logistic") {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => LogisticScreen()));
+        } else {}
       },
       child: Container(
         decoration: BoxDecoration(),
@@ -36,17 +32,13 @@ class GridItemWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [
-                      Colors.blue.withOpacity(1),
-                      Colors.blueAccent.withOpacity(0.1)
-                    ],
+                    colors: [Colors.blue.withOpacity(1), Colors.blueAccent.withOpacity(0.1)],
                     begin: AlignmentDirectional.topStart,
                     //const FractionalOffset(1, 0),
                     end: AlignmentDirectional.bottomEnd,
                     stops: [0.1, 0.9],
                     tileMode: TileMode.clamp),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(5), topRight: Radius.circular(5)),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5)),
               ),
               child: Image.asset(
                 data['imgurl'],

@@ -1,22 +1,22 @@
-// import 'package:allserve/Screen/Alljob/Job/Widgets/ListJobCompanies.dart';
-// import 'package:allserve/Screen/Allpartner/About/ActivityScreen.dart';
-// import 'package:allserve/Screen/Allpartner/About/VisionScreen.dart';
-// import 'package:allserve/Screen/Allserve/AllserveHome/Widgets/AddTextForm.dart';
-// import 'package:allserve/Screen/Login/Widgets/AppTextForm.dart';
-// import 'package:allserve/Screen/Widgets/ButtonRounded.dart';
-// import 'package:allserve/constants.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
-// class AboutScreen extends StatefulWidget {
-//   AboutScreen({Key? key}) : super(key: key);
+// import '../../../constants.dart';
+// import '../../Alljob/Job/Widgets/ListJobCompanies.dart';
+// import '../../Allserve/About/ActivityScreen.dart';
+// import '../../Allserve/About/VisionScreen.dart';
+// import '../../Allserve/AllserveHome/Widgets/AddTextForm.dart';
+// import '../../Widgets/ButtonRounded.dart';
+
+// class AboutCompanyPage extends StatefulWidget {
+//   const AboutCompanyPage({super.key});
 
 //   @override
-//   State<AboutScreen> createState() => _AboutScreenState();
+//   State<AboutCompanyPage> createState() => _AboutCompanyPageState();
 // }
 
-// class _AboutScreenState extends State<AboutScreen> {
+// class _AboutCompanyPageState extends State<AboutCompanyPage> {
 //   final GlobalKey<FormState> editFormKey = GlobalKey<FormState>();
 //   final TextEditingController username = TextEditingController();
 //   final TextEditingController password = TextEditingController();
@@ -52,8 +52,16 @@
 //       appBar: AppBar(
 //         title: Text(
 //           'เกี่ยวกับบริษัท',
+//           //style: TextStyle(color: Colors.deepOrange),
 //         ),
 //         backgroundColor: Colors.transparent,
+//         automaticallyImplyLeading: false,
+//         // leading: IconButton(
+//         //   icon: Icon(Icons.arrow_back_ios, color: Colors.grey),
+//         //   onPressed: () {
+//         //     Navigator.pop(context);
+//         //   },
+//         // ),
 //       ),
 //       body: SingleChildScrollView(
 //         child: Padding(

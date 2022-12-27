@@ -15,6 +15,7 @@ class RegisTextField extends StatefulWidget {
     this.isHideCounter = false,
     this.inputFormatters,
     this.controller,
+    this.readOnly,
   }) : super(key: key);
 
   final String hintText;
@@ -27,6 +28,7 @@ class RegisTextField extends StatefulWidget {
   final bool isHideCounter;
   final List<TextInputFormatter>? inputFormatters;
   final TextEditingController? controller;
+  final bool? readOnly;
 
   @override
   State<RegisTextField> createState() => _RegisTextFieldState();
@@ -47,6 +49,7 @@ class _RegisTextFieldState extends State<RegisTextField> {
       keyboardType: widget.keyboardType,
       maxLength: widget.maxLength,
       inputFormatters: widget.inputFormatters,
+      readOnly: widget.readOnly ?? false,
       decoration: InputDecoration(
         counterText: widget.isHideCounter ? '' : null,
         errorText: widget.errorText,
@@ -91,9 +94,7 @@ class _RegisTextFieldState extends State<RegisTextField> {
                 onTap: () {
                   setState(() => isObscureText = !isObscureText);
                 },
-                child: Icon(!isObscureText
-                    ? Icons.visibility_outlined
-                    : Icons.visibility_off_outlined),
+                child: Icon(!isObscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined),
               )
             : null,
       ),

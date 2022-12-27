@@ -1,15 +1,14 @@
 import 'dart:developer';
 
 import 'package:allserve/Screen/Allserve/AllserveHome/ResponseListScreen.dart';
-import 'package:allserve/Screen/Allserve/AllserveHome/Widgets/GridItemWidget.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/purchase/purchasePage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../app/AppController.dart';
-import 'LogisticScreen.dart';
+import 'Logistic/LogisticPage.dart';
 import 'RecruitScreen.dart';
-import 'ScrapScreen.dart';
+import 'Scrap/companyScrapPage.dart';
 
 class AllServeScreen extends StatefulWidget {
   AllServeScreen({Key? key}) : super(key: key);
@@ -180,9 +179,9 @@ class _AllServeScreenState extends State<AllServeScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          //   Navigator.push(context, MaterialPageRoute(builder: ((context) {
-                          //   return RecruitScreen();
-                          // })));
+                          Navigator.push(context, MaterialPageRoute(builder: ((context) {
+                            return PurchasePage();
+                          })));
                         },
                         child: Container(
                           width: double.infinity,
@@ -233,7 +232,7 @@ class _AllServeScreenState extends State<AllServeScreen> {
                       InkWell(
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(builder: ((context) {
-                            return ScrapScreen();
+                            return CompanyScrapPage();
                           })));
                         },
                         child: Container(
@@ -285,7 +284,7 @@ class _AllServeScreenState extends State<AllServeScreen> {
                       InkWell(
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(builder: ((context) {
-                            return LogisticScreen();
+                            return LogisticPage();
                           })));
                         },
                         child: Container(

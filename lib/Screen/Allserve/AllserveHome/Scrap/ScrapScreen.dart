@@ -1,4 +1,3 @@
-import 'package:allserve/Screen/Allserve/AllserveHome/ScrapDetailScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Widgets/AppTextForm.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -45,8 +44,7 @@ class _ScrapScreenState extends State<ScrapScreen> {
                 children: List.generate(
                     a,
                     (index) => Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: size.height * 0.01),
+                          padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
                           child: Card(
                             margin: EdgeInsets.zero,
                             elevation: 0,
@@ -59,8 +57,7 @@ class _ScrapScreenState extends State<ScrapScreen> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 15),
+                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                               child: Column(
                                 children: [
                                   Row(
@@ -110,13 +107,10 @@ class _ScrapScreenState extends State<ScrapScreen> {
                                   Container(
                                     height: size.height * 0.05,
                                     width: size.width,
-                                    color: file != null
-                                        ? Colors.blueAccent
-                                        : Color.fromARGB(255, 124, 124, 124),
+                                    color: file != null ? Colors.blueAccent : Color.fromARGB(255, 124, 124, 124),
                                     child: InkWell(
                                       onTap: () async {
-                                        result = await FilePicker.platform
-                                            .pickFiles();
+                                        result = await FilePicker.platform.pickFiles();
                                         setState(() {
                                           if (result != null) {
                                             file = result!.files.first;
@@ -187,10 +181,10 @@ class _ScrapScreenState extends State<ScrapScreen> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ScrapDetailScreen()));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => ScrapDetailScreen()));
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),

@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../appTheme.dart';
 import '../../app/AppController.dart';
 import 'AllServeController.dart';
+import 'DetailsApplicant.dart';
 
 class RecruitScreen extends StatefulWidget {
   RecruitScreen({Key? key}) : super(key: key);
@@ -110,7 +111,7 @@ class _RecruitScreenState extends State<RecruitScreen> with TickerProviderStateM
                       ),
                       Container(
                           padding: EdgeInsets.all(15),
-                          child: controller.uesrAllJob == null
+                          child: controller.uesrAllJob.isEmpty
                               ? Center(child: CircularProgressIndicator())
                               : ListView.builder(
                                   shrinkWrap: true,
@@ -123,7 +124,15 @@ class _RecruitScreenState extends State<RecruitScreen> with TickerProviderStateM
                                         : Stack(
                                             children: [
                                               InkWell(
-                                                onTap: () {},
+                                                onTap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) => DetailsApplicant(
+                                                                id: controller.uesrAllJob[index].id!,
+                                                                titie: 'DetailJob',
+                                                              )));
+                                                },
                                                 child: Container(
                                                   width: size.width,
                                                   margin: EdgeInsets.only(right: 25, left: 25, top: 15),
@@ -261,8 +270,13 @@ class _RecruitScreenState extends State<RecruitScreen> with TickerProviderStateM
                                                 'ประสบการณ์ ${controller.positionCompany[0].recruitment_companies?[index2].exp ?? ''} ปี'),
                                             IconButton(
                                                 onPressed: () {
-                                                  Navigator.push(context,
-                                                      MaterialPageRoute(builder: (context) => DetailRecruit()));
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) => DetailRecruit(
+                                                                idPosition: controller.positionCompany[0]
+                                                                    .recruitment_companies![index2].id!,
+                                                              )));
                                                 },
                                                 icon: Icon(Icons.remove_red_eye)),
                                           ],

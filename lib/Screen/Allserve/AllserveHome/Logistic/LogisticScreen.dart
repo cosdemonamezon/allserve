@@ -1,8 +1,9 @@
 import 'package:allserve/Screen/Allserve/About/AboutScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/AddTransport.dart';
-import 'package:allserve/Screen/Allserve/AllserveHome/DetailTransport.dart';
 import 'package:allserve/Screen/Widgets/SearchTextField.dart';
 import 'package:flutter/material.dart';
+
+import 'DetailTransport.dart';
 
 class LogisticScreen extends StatefulWidget {
   LogisticScreen({Key? key}) : super(key: key);
@@ -11,8 +12,7 @@ class LogisticScreen extends StatefulWidget {
   State<LogisticScreen> createState() => _LogisticScreenState();
 }
 
-class _LogisticScreenState extends State<LogisticScreen>
-    with TickerProviderStateMixin {
+class _LogisticScreenState extends State<LogisticScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   @override
   void initState() {
@@ -40,8 +40,7 @@ class _LogisticScreenState extends State<LogisticScreen>
             labelColor: Colors.black,
             unselectedLabelColor: Colors.grey,
             indicatorColor: Colors.blue,
-            labelStyle: TextStyle(
-                fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
+            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
             tabs: [
               Tab(text: 'ผู้ให้บริการ'),
               Tab(text: 'รายการขนส่ง'),
@@ -78,10 +77,7 @@ class _LogisticScreenState extends State<LogisticScreen>
                       title: Text('1. บริษัท A ขนส่ง'),
                       trailing: IconButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AboutScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AboutScreen()));
                           },
                           icon: Icon(Icons.remove_red_eye)),
                     ),
@@ -92,10 +88,7 @@ class _LogisticScreenState extends State<LogisticScreen>
                       title: Text('2. บริษัท B ขนส่ง'),
                       trailing: IconButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AboutScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AboutScreen()));
                           },
                           icon: Icon(Icons.remove_red_eye)),
                     ),
@@ -106,10 +99,7 @@ class _LogisticScreenState extends State<LogisticScreen>
                       title: Text('3. บริษัท C ขนส่ง'),
                       trailing: IconButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AboutScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AboutScreen()));
                           },
                           icon: Icon(Icons.remove_red_eye)),
                     ),
@@ -120,10 +110,7 @@ class _LogisticScreenState extends State<LogisticScreen>
                       title: Text('4. บริษัท D ขนส่ง'),
                       trailing: IconButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AboutScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AboutScreen()));
                           },
                           icon: Icon(Icons.remove_red_eye)),
                     ),
@@ -134,10 +121,7 @@ class _LogisticScreenState extends State<LogisticScreen>
                       title: Text('5. บริษัท E ขนส่ง'),
                       trailing: IconButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AboutScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AboutScreen()));
                           },
                           icon: Icon(Icons.remove_red_eye)),
                     ),
@@ -173,11 +157,7 @@ class _LogisticScreenState extends State<LogisticScreen>
                             ),
                             trailing: IconButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              DetailTransport()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailTransport()));
                                 },
                                 icon: Icon(Icons.remove_red_eye)),
                           ),
@@ -196,11 +176,7 @@ class _LogisticScreenState extends State<LogisticScreen>
                             ),
                             trailing: IconButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              DetailTransport()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailTransport()));
                                 },
                                 icon: Icon(Icons.remove_red_eye)),
                           ),
@@ -221,10 +197,7 @@ class _LogisticScreenState extends State<LogisticScreen>
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AddTransport()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => AddTransport()));
                             },
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10),
@@ -234,8 +207,7 @@ class _LogisticScreenState extends State<LogisticScreen>
                                 //color: Colors.red,
                                 decoration: BoxDecoration(
                                   color: Colors.blue,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30)),
+                                  borderRadius: BorderRadius.all(Radius.circular(30)),
                                 ),
                                 child: Center(
                                     child: Text(

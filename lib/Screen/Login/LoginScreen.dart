@@ -45,7 +45,11 @@ class _LoginScreenState extends State<LoginScreen> {
     final padding = MediaQuery.of(context).padding;
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      //extendBody: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      extendBody: true,
       body: SafeArea(
         child: isLoadding == true
             ? Center(
@@ -56,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               )
             : SingleChildScrollView(
-                padding: EdgeInsets.all(30.0),
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                 child: Column(
                   children: [
                     Row(
@@ -107,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.blue,
                       textColor: Colors.white,
                       onPressed: () {
+                        LoadingDialog.open(context);
                         signIn(email: email.text, password: password.text);
                       },
                     ),
@@ -136,7 +141,6 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     if (response.statusCode == 200) {
       final data = convert.jsonDecode(response.body);
-      LoadingDialog.open(context);
 
       final SharedPreferences prefs = await _prefs;
 
@@ -161,6 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       final error = convert.jsonDecode(response.body);
 
+      LoadingDialog.close(context);
       showCupertinoDialog(
           context: context,
           builder: (context) => CupertinoQuestion(

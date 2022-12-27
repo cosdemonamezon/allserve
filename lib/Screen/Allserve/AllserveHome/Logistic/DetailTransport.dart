@@ -1,6 +1,7 @@
-import 'package:allserve/Screen/Allserve/AllserveHome/DetailStatus.dart';
 import 'package:allserve/Screen/Allserve/Search/Widgets/RecordTexForm.dart';
 import 'package:flutter/material.dart';
+
+import 'DetailStatus.dart';
 
 class DetailTransport extends StatefulWidget {
   DetailTransport({Key? key}) : super(key: key);
@@ -51,12 +52,10 @@ class _DetailTransportState extends State<DetailTransport> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
-                        SizedBox(
-                            width: size.width * 0.10, child: Text('กว้าง')),
+                        SizedBox(width: size.width * 0.10, child: Text('กว้าง')),
                       ],
                     ),
                   ),
@@ -67,8 +66,7 @@ class _DetailTransportState extends State<DetailTransport> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         Text('เมตร'),
@@ -84,8 +82,7 @@ class _DetailTransportState extends State<DetailTransport> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         SizedBox(width: size.width * 0.10, child: Text('ยาว')),
@@ -99,8 +96,7 @@ class _DetailTransportState extends State<DetailTransport> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         Text('เมตร'),
@@ -116,8 +112,7 @@ class _DetailTransportState extends State<DetailTransport> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         SizedBox(width: size.width * 0.10, child: Text('หนัก')),
@@ -131,8 +126,7 @@ class _DetailTransportState extends State<DetailTransport> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         Text('กิโล..'),
@@ -148,12 +142,10 @@ class _DetailTransportState extends State<DetailTransport> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
-                        SizedBox(
-                            width: size.width * 0.10, child: Text('จำนวน')),
+                        SizedBox(width: size.width * 0.10, child: Text('จำนวน')),
                       ],
                     ),
                   ),
@@ -164,8 +156,7 @@ class _DetailTransportState extends State<DetailTransport> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         Text('กล่อง'),
@@ -292,8 +283,7 @@ class _DetailTransportState extends State<DetailTransport> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => DetailStatus()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailStatus()));
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),

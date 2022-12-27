@@ -1,4 +1,5 @@
 import 'package:allserve/Models/User/user.dart';
+import 'package:allserve/Models/meetings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,6 +15,7 @@ class JobController extends ChangeNotifier {
   List<UserJob> uesrAllJob = [];
   UserJob? userDetail;
   List<User> positionCompany = [];
+  List<Meetings> meetings = [];
 
 //โหลด User มาแสดงทั้งหมด
   Future<void> loadUserAllJob() async {
@@ -41,6 +43,16 @@ class JobController extends ChangeNotifier {
   }) async {
     final _loadPosition = await JobService.getPosition(companyId: Id);
     positionCompany = (_loadPosition);
+
+    notifyListeners();
+  }
+
+  // DetailUserJob
+  Future<void> getMeetings(
+    int id,
+  ) async {
+    final _loadMeetings = await JobService.getMeetings(companyId: id);
+    meetings = (_loadMeetings);
 
     notifyListeners();
   }

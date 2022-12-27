@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Screen/Allserve/AllserveHome/AllServeController.dart';
 import 'Screen/Allserve/AllserveHome/RecruitScreen.dart';
+import 'Screen/Allserve/Search/Controller.dart';
 import 'Screen/app/AppController.dart';
 
 String token = '';
@@ -19,6 +20,7 @@ void main() {
     providers: [
       ChangeNotifierProvider(create: (_) => AppController()),
       ChangeNotifierProvider(create: (_) => JobController()),
+      ChangeNotifierProvider(create: (_) => SearchController()),
     ],
     child: const MyApp(),
   ));
