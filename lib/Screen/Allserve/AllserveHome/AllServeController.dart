@@ -3,6 +3,7 @@ import 'package:allserve/Models/meetings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../Models/Company/compay.dart';
 import '../../../Models/UserJob/userJob.dart';
 import 'AllServeService.dart';
 
@@ -13,9 +14,27 @@ class JobController extends ChangeNotifier {
   String? token;
   SharedPreferences? pref;
   List<UserJob> uesrAllJob = [];
+  List<Compay> logoCompay = [];
   UserJob? userDetail;
   List<User> positionCompany = [];
   List<Meetings> meetings = [];
+
+  Future<void> loadLogoCompay() async {
+    logoCompay.clear();
+    final _loadItem = await JobService.listCompany();
+
+    // for (var company in _loadItem) {
+    //   final positions = await JobService.getPosition(companyId: company.id!);
+    //   inspect(positions[0].recruitment_companies);
+    //   if (positions[0].recruitment_companies!.isNotEmpty) {
+    //     logoCompay.add(company);
+    //   }
+    // }
+
+    logoCompay = (_loadItem);
+
+    notifyListeners();
+  }
 
 //โหลด User มาแสดงทั้งหมด
   Future<void> loadUserAllJob() async {
@@ -47,7 +66,7 @@ class JobController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // DetailUserJob
+  // DetailMeetings
   Future<void> getMeetings(
     int id,
   ) async {

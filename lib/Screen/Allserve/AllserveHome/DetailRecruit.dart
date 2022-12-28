@@ -279,7 +279,7 @@ class _DetailRecruitState extends State<DetailRecruit> with TickerProviderStateM
                                       //   ),
                                       // ),
                                       SizedBox(
-                                        width: 170,
+                                        width: 220,
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
@@ -288,12 +288,30 @@ class _DetailRecruitState extends State<DetailRecruit> with TickerProviderStateM
                                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                                             ),
                                             Text(
+                                              'คุณ ${controller.meetings[i].user_job?[0].name ?? ''}',
+                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            Text(
+                                              'เบอร์ ${controller.meetings[i].user_job?[0].phone ?? ''}',
+                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            Text(
+                                              'อีเมลล์ ${controller.meetings[i].user_job?[0].email ?? ''}',
+                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            Text(
                                               'วันที่ ${controller.meetings[i].start_time}',
-                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5),
                                             ),
                                             Text(
                                               'เวลา ${controller.meetings[i].agenda}',
-                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5),
                                             ),
                                           ],
                                         ),

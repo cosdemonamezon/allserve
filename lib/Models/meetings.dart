@@ -1,5 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'User/user.dart';
+import 'UserJob/userJob.dart';
+
 part 'meetings.g.dart';
 
 @JsonSerializable()
@@ -19,6 +22,8 @@ class Meetings {
     this.agenda,
     this.join_url,
     this.status,
+    this.user,
+    this.user_job,
   });
 
   int? id;
@@ -35,6 +40,8 @@ class Meetings {
   String? agenda;
   String? join_url;
   String? status;
+  List<User>? user;
+  List<UserJob>? user_job;
 
   factory Meetings.fromJson(Map<String, dynamic> json) => _$MeetingsFromJson(json);
 

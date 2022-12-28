@@ -51,8 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 children: [
                   Positioned.fill(
                     child: GestureDetector(
-                      onTap: () =>
-                          FocusScope.of(context).requestFocus(FocusNode()),
+                      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
                     ),
                   ),
                   SafeArea(
@@ -158,12 +157,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               SizedBox(height: 16),
                               Container(
-                                padding:
-                                    EdgeInsets.only(bottom: padding.bottom),
+                                padding: EdgeInsets.only(bottom: padding.bottom),
                                 height: size.height / 7,
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 0),
+                                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
                                   child: Column(
                                     children: [
                                       SizedBox(height: 8),
@@ -186,9 +183,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                               SizedBox(
-                                height:
-                                    MediaQuery.of(context).viewInsets.bottom *
-                                        0.4,
+                                height: MediaQuery.of(context).viewInsets.bottom * 0.4,
                               )
                             ],
                           ),

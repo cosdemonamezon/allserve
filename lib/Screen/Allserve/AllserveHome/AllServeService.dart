@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import '../../../Models/Company/compay.dart';
 import '../../../Models/User/recruitmentcompanies.dart';
 import '../../../Models/UserJob/userJob.dart';
 import '../../../constants/constants.dart';
@@ -159,6 +160,26 @@ class JobService {
       final list = data['data'] as List;
 
       return list.map((e) => Meetings.fromJson(e)).toList();
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
+// บริษัททั้งหมด
+  static Future<List<Compay>> listCompany() async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/get_user_company');
+
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer ${token}', 'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final list = data['data'] as List;
+
+      return list.map((e) => Compay.fromJson(e)).toList();
     } else {
       final data = convert.jsonDecode(response.body);
       throw Exception(data['message']);
