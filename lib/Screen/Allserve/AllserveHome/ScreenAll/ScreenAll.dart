@@ -92,7 +92,7 @@ class _ScreenAllState extends State<ScreenAll> {
                   },
                 ),
                 Manu(
-                  name: "city to the Locla",
+                  name: "City to the locla",
                   image: 'assets/City to the Local_512px.png',
                   onTap: () {
                     showDialog(
