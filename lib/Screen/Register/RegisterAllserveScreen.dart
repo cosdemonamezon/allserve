@@ -292,47 +292,48 @@ class _RegisterAllserveScreenState extends State<RegisterAllserveScreen> {
                                         color: Colors.blue,
                                         textColor: Colors.white,
                                         onPressed: () async {
-                                          final userCompany = await RegisterService().setInformation(
-                                            permission_id: '1',
-                                            username: email.text,
-                                            password: password.text,
-                                            name: firstname.text,
-                                            email: email.text,
-                                            phone: phone.text,
-                                            type: 'customer',
-                                            line_token: '-',
-                                            image: _selectedFile!,
-                                          );
-                                          // try {
-                                          if (userCompany != null) {
-                                            return showCupertinoDialog(
-                                                context: context,
-                                                builder: (context) => CupertinoQuestion(
-                                                      title: 'ลงทะเบียนใช้งาน',
-                                                      content: 'การลงทะเบียนสำเร็จ',
-                                                      press: () {
-                                                        Navigator.push(context,
-                                                            MaterialPageRoute(builder: (context) => WelcomeScreen()));
-                                                      },
-                                                    ));
+                                          if (_selectedFile != null) {
+                                            final userCompany = await RegisterService().setInformation(
+                                              permission_id: '1',
+                                              username: email.text,
+                                              password: password.text,
+                                              name: firstname.text,
+                                              email: email.text,
+                                              phone: phone.text,
+                                              type: 'customer',
+                                              line_token: '-',
+                                              image: _selectedFile!,
+                                            );
+                                            // try {
+                                            if (userCompany != null) {
+                                              return showCupertinoDialog(
+                                                  context: context,
+                                                  builder: (context) => CupertinoQuestion(
+                                                        title: 'ลงทะเบียนใช้งาน',
+                                                        content: 'การลงทะเบียนสำเร็จ',
+                                                        press: () {
+                                                          Navigator.push(context,
+                                                              MaterialPageRoute(builder: (context) => WelcomeScreen()));
+                                                        },
+                                                      ));
+                                            }
                                           }
-                                          // } catch (e) {
-                                          //   showDialog(
-                                          //     context: context,
-                                          //     builder: (context) => AlertDialog(
-                                          //       backgroundColor: Colors.blueAccent,
-                                          //       title: Text("Error", style: TextStyle(color: Colors.white)),
-                                          //       content: Text(e.toString(), style: TextStyle(color: Colors.white)),
-                                          //       actions: [
-                                          //         TextButton(
-                                          //             onPressed: () {
-                                          //               Navigator.pop(context);
-                                          //             },
-                                          //             child: Text('OK', style: TextStyle(color: Colors.white)))
-                                          //       ],
-                                          //     ),
-                                          //   );
-                                          // }
+                                          return showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                              backgroundColor: Colors.blueAccent,
+                                              title: Text("Error", style: TextStyle(color: Colors.white)),
+                                              content:
+                                                  Text('กรุณาใส่ให้ครบทุกช่อง', style: TextStyle(color: Colors.white)),
+                                              actions: [
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('OK', style: TextStyle(color: Colors.white)))
+                                              ],
+                                            ),
+                                          );
                                         },
                                         // onPressed: () async {
                                         //   final url = Uri.parse('$baseUrl//api/user');

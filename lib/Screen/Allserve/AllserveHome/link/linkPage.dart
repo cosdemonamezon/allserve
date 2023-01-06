@@ -98,6 +98,7 @@ class _LinkPageState extends State<LinkPage> {
         url,
         forceSafariVC: inApp,
         forceWebView: inApp,
+        enableDomStorage: true,
         enableJavaScript: true,
       );
     }

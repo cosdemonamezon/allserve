@@ -137,8 +137,6 @@ class _DetailRecruitState extends State<DetailRecruit> with TickerProviderStateM
                                                                 titie: 'meetings',
                                                                 idPosition: widget.idPosition,
                                                               )));
-                                                  print(controller.uesrAllJob[index].id!);
-                                                  print(widget.idPosition);
                                                 },
                                                 icon: Icon(Icons.remove_red_eye)),
                                           ],

@@ -213,7 +213,7 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
                               child: Text(
-                                'แนะนำเกี่ยวกับงาน',
+                                'ลักษณะงาน',
                                 style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                               ),
                             ),

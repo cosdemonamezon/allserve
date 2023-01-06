@@ -157,7 +157,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 title: 'การเข้าสู่ระบบ',
                 content: 'ยินดีต้อนรับ เข้าสู่ระบบสำเร็จ',
                 press: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AllServeHome()));
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
+                    return AllServeHome();
+                  }), (route) => false);
                 },
               ));
 
@@ -179,31 +181,31 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void login(context) async {
-    final SharedPreferences prefs = await _prefs;
-    setState(() {
-      isLoadding = true;
-    });
-    final response = await LoginApi.login(email: email.text, password: password.text);
-    if (response['status_api']) {
-      await prefs.setString('token', response['token']);
+  // void login(context) async {
+  //   final SharedPreferences prefs = await _prefs;
+  //   setState(() {
+  //     isLoadding = true;
+  //   });
+  //   final response = await LoginApi.login(email: email.text, password: password.text);
+  //   if (response['status_api']) {
+  //     await prefs.setString('token', response['token']);
 
-      Future.delayed(Duration(seconds: 3), () {
-        setState(() {
-          isLoadding = false;
-        });
-        if (response['data']['firstName'] == 'allserve') {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AllServeHome()));
-        } else if (response['data']['firstName'] == 'alljob') {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AlljobHome()));
-        } else if (response['data']['firstName'] == 'allpartner') {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AllPartnerHome()));
-        } else {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AllPartnerHome()));
-        }
-      });
-    } else {
-      print(response);
-    }
-  }
+  //     Future.delayed(Duration(seconds: 3), () {
+  //       setState(() {
+  //         isLoadding = false;
+  //       });
+  //       if (response['data']['firstName'] == 'allserve') {
+  //         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AllServeHome()));
+  //       } else if (response['data']['firstName'] == 'alljob') {
+  //         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AlljobHome()));
+  //       } else if (response['data']['firstName'] == 'allpartner') {
+  //         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AllPartnerHome()));
+  //       } else {
+  //         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AllPartnerHome()));
+  //       }
+  //     });
+  //   } else {
+  //     print(response);
+  //   }
+  // }
 }

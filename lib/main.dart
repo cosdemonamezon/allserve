@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:allserve/Screen/Allserve/AllServeHome.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:allserve/Screen/Login/WelcomeScreen.dart';
@@ -66,8 +68,65 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       // ignore: unnecessary_null_comparison
-      home: WelcomeScreen(),
+      home: SplashScreen(),
       // home: token != "null" ? AllServeHome() : WelcomeScreen(),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 3),
+        () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WelcomeScreen())));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [
+            Color(0xFFffffff),
+            Color(0xFFd5e8f9),
+          ]),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Column(
+              children: [
+                Image.asset(
+                  "assets/images/ALLZERVE.png",
+                  height: 300.0,
+                  width: 300.0,
+                ),
+                Text(
+                  "ยินดีต้อนรับเข้าสู่ระบบ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),
+                ),
+              ],
+            ),
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
