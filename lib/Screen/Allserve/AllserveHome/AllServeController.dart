@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:allserve/Models/User/user.dart';
 import 'package:allserve/Models/meetings.dart';
 import 'package:flutter/material.dart';
@@ -58,11 +60,12 @@ class JobController extends ChangeNotifier {
 
 //โหลดPosition ของUser
   Future<void> loadPositionCompay({
-    required int Id,
+    required int id,
   }) async {
-    final _loadPosition = await JobService.getPosition(companyId: Id);
+    positionCompany.clear();
+    final _loadPosition = await JobService.getPosition(companyId: id);
     positionCompany = (_loadPosition);
-
+    positionCompany[0].recruitment_companies!.sort((a, b) => b.id!.compareTo(a.id!));
     notifyListeners();
   }
 

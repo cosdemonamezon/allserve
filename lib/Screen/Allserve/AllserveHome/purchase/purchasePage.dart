@@ -1,3 +1,4 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/purchase/purchaseController.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ class PurchasePage extends StatefulWidget {
 
 class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMixin {
   late TabController _tabController;
+  final _controller = ScrollController();
   List companydata = [
     // {
     //   "title": "Amazon.com",
@@ -78,23 +80,28 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
     super.initState();
     _loadItem();
     _tabController = TabController(length: 2, vsync: this);
+    _controller.addListener(() {
+      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+        _loadItem();
+      }
+    });
   }
 
   Future _loadItem() async {
-    await context.read<JobController>().loadLogoCompay();
+    await context.read<PurchaseController>().loadCompanyPurchase();
   }
 
   @override
   Widget build(BuildContext context) {
     final appFontSize = AppFontSize.of(context);
     final size = MediaQuery.of(context).size;
-    return Consumer<JobController>(
+    return Consumer<PurchaseController>(
       builder: (context, controller, child) => DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
-              'Scrap',
+              'Purchase',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
@@ -134,100 +141,109 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                       ),
                       Container(
                         padding: EdgeInsets.all(15),
-                        child: controller.logoCompay.isEmpty
+                        child: controller.listCompanyPurchase.isEmpty
                             ? Center(child: CircularProgressIndicator())
                             : ListView.builder(
-                                // controller: _controller,
+                                controller: _controller,
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: controller.logoCompay.length,
+                                itemCount: controller.listCompanyPurchase.length + 1,
                                 itemBuilder: (_, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) => DetailCompany(
-                                        //               id: controller.logoCompay[index].id!,
-                                        //               name: controller.logoCompay[index].name!,
-                                        //             )));
-                                      },
-                                      child: Container(
-                                        width: size.width,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: AssetImage('assets/images/promotionBG.png'),
-                                            fit: BoxFit.fill,
+                                  if (index < controller.listCompanyPurchase.length) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) => DetailCompany(
+                                          //               id: controller.logoCompay[index].id!,
+                                          //               name: controller.logoCompay[index].name!,
+                                          //             )));
+                                        },
+                                        child: Container(
+                                          width: size.width,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage('assets/images/promotionBG.png'),
+                                              fit: BoxFit.fill,
+                                            ),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                  offset: Offset(0, 2),
+                                                  color: Color.fromRGBO(0, 78, 179, 0.05),
+                                                  blurRadius: 10)
+                                            ],
                                           ),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                                offset: Offset(0, 2),
-                                                color: Color.fromRGBO(0, 78, 179, 0.05),
-                                                blurRadius: 10)
-                                          ],
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                flex: 2,
-                                                child: controller.logoCompay[index].image != null
-                                                    ? Image.network(
-                                                        "${controller.logoCompay[index].image}",
-                                                        height: size.height / 17,
-                                                        errorBuilder: (context, error, stackTrace) =>
-                                                            Image.asset('assets/No_Image_Available.jpg'),
-                                                      )
-                                                    : Image.asset('assets/No_Image_Available.jpg'),
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                flex: 8,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        controller.logoCompay[index].name ?? '',
-                                                        style: TextStyle(
-                                                            fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
-                                                      ),
-                                                      SizedBox(height: 5),
-                                                      Text(
-                                                        'เบอร์โทรศัพท์ ${controller.logoCompay[index].phone ?? ''}',
-                                                        style: TextStyle(fontSize: appFontSize?.body2),
-                                                        overflow: TextOverflow.ellipsis,
-                                                      ),
-                                                      SizedBox(height: 4),
-                                                      Text(
-                                                        'อีเมลล์ ${controller.logoCompay[index].email ?? ''} ',
-                                                        style: TextStyle(fontSize: appFontSize?.body2),
-                                                        overflow: TextOverflow.ellipsis,
-                                                      ),
-                                                      SizedBox(height: 4),
-                                                      // Text(
-                                                      //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
-                                                      //   style: TextStyle(fontSize: appFontSize?.body2),
-                                                      //   // overflow: TextOverflow.ellipsis,
-                                                      // ),
-                                                      // SizedBox(height: 4),
-                                                    ],
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                            child: Row(
+                                              children: [
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: controller.listCompanyPurchase[index].image != null
+                                                      ? Image.network(
+                                                          "${controller.listCompanyPurchase[index].image}",
+                                                          height: size.height / 17,
+                                                          errorBuilder: (context, error, stackTrace) =>
+                                                              Image.asset('assets/No_Image_Available.jpg'),
+                                                        )
+                                                      : Image.asset('assets/No_Image_Available.jpg'),
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Expanded(
+                                                  flex: 8,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          controller.listCompanyPurchase[index].name ?? '',
+                                                          style: TextStyle(
+                                                              fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
+                                                        ),
+                                                        SizedBox(height: 5),
+                                                        Text(
+                                                          'เบอร์โทร ${controller.listCompanyPurchase[index].phone ?? ''}',
+                                                          style: TextStyle(fontSize: appFontSize?.body2),
+                                                          overflow: TextOverflow.ellipsis,
+                                                        ),
+                                                        SizedBox(height: 4),
+                                                        Text(
+                                                          'อีเมลล์ ${controller.listCompanyPurchase[index].email ?? ''} ',
+                                                          style: TextStyle(fontSize: appFontSize?.body2),
+                                                          overflow: TextOverflow.ellipsis,
+                                                        ),
+                                                        SizedBox(height: 4),
+                                                        // Text(
+                                                        //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
+                                                        //   style: TextStyle(fontSize: appFontSize?.body2),
+                                                        //   // overflow: TextOverflow.ellipsis,
+                                                        // ),
+                                                        // SizedBox(height: 4),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  );
+                                    );
+                                  } else {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 30),
+                                      child: Center(
+                                        child: controller.hasmore ? const CircularProgressIndicator() : const Text(''),
+                                      ),
+                                    );
+                                  }
                                 }),
                       ),
                     ],

@@ -111,6 +111,63 @@ class JobService {
     }
   }
 
+// แก้ไขตำแหน่งงาน
+  Future<Recruitmentcompanies?> updatePosition({
+    required int positionId,
+    required String user_id,
+    required String position,
+    required String salary,
+    required String exp,
+    required String major,
+    required String degree,
+    required String qty,
+    required String description,
+  }) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/recruitment/$positionId');
+    final response = await http.put(url,
+        body: jsonEncode({
+          "user_id": user_id,
+          "position": position,
+          "salary": salary,
+          "exp": exp,
+          "major": major,
+          "degree": degree,
+          "qty": qty,
+          "description": description,
+        }),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+          'Content-Type': 'application/json',
+        });
+    if (response.statusCode == 200) {
+      final responseString = jsonDecode(response.body);
+      return Recruitmentcompanies.fromJson(responseString["data"]);
+    } else {
+      final responseString = jsonDecode(response.body);
+      throw responseString['message'];
+    }
+  }
+
+  // ลบตำแหน่งาน
+  static Future<void> deletePosition({
+    required int recruitmentId,
+  }) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/recruitment/$recruitmentId');
+
+    final response =
+        await http.delete(url, headers: {'Authorization': 'Bearer ${token}', 'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+    } else {
+      final data = jsonDecode(response.body);
+      throw data['message'];
+    }
+  }
+
 // นัดหมายMeeting
   static Future<void> meetings({
     String? user_id,

@@ -36,6 +36,15 @@ class _ScreenAllState extends State<ScreenAll> {
               crossAxisCount: 4,
               children: [
                 Manu(
+                  name: "Recruit",
+                  image: 'assets/icons/Recruit.png',
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: ((context) {
+                      return RecruitScreen();
+                    })));
+                  },
+                ),
+                Manu(
                   name: "Scrap & Environment",
                   image: "assets/icons/ScrapEnvironment.png",
                   onTap: () {
@@ -54,17 +63,8 @@ class _ScreenAllState extends State<ScreenAll> {
                   },
                 ),
                 Manu(
-                  name: "Recruit",
-                  image: 'assets/icons/Recruit.png',
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: ((context) {
-                      return RecruitScreen();
-                    })));
-                  },
-                ),
-                Manu(
-                  name: "Sales & CRM",
-                  image: "assets/icons/SalesCRM.png",
+                  name: "Purchase",
+                  image: 'assets/Purchase_512px.png',
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: ((context) {
                       return PurchasePage();
@@ -72,8 +72,8 @@ class _ScreenAllState extends State<ScreenAll> {
                   },
                 ),
                 Manu(
-                  name: "Purchase",
-                  image: 'assets/Purchase_512px.png',
+                  name: "Sales & CRM",
+                  image: "assets/icons/SalesCRM.png",
                   onTap: () {
                     showDialog(
                       context: context,

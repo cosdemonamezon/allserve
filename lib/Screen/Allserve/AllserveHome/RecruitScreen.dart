@@ -1,12 +1,17 @@
 import 'package:allserve/Screen/Allserve/AllserveHome/AddJobScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/AddRecruitScreen.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/AllServeService.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/DetailRecruit.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/EditRecruitScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Widgets/PeopleWidget.dart';
 import 'package:allserve/Screen/Widgets/SearchTextField.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 import '../../../appTheme.dart';
+import '../../Widgets/LoadingDialog.dart';
 import '../../app/AppController.dart';
 import 'AllServeController.dart';
 import 'DetailsApplicant.dart';
@@ -47,7 +52,7 @@ class _RecruitScreenState extends State<RecruitScreen> with TickerProviderStateM
   Future _loadItem() async {
     final userId = await context.read<AppController>().user!.id;
     await context.read<JobController>().loadUserAllJob();
-    await context.read<JobController>().loadPositionCompay(Id: userId!);
+    await context.read<JobController>().loadPositionCompay(id: userId!);
   }
 
   @override
@@ -61,6 +66,7 @@ class _RecruitScreenState extends State<RecruitScreen> with TickerProviderStateM
     final size = MediaQuery.of(context).size;
     final appFontSize = AppFontSize.of(context);
     final userId = context.read<AppController>().user!.id;
+    final user = context.read<AppController>().user;
     return Consumer<JobController>(
       builder: (context, controller, child) => DefaultTabController(
         length: 2,
@@ -232,9 +238,76 @@ class _RecruitScreenState extends State<RecruitScreen> with TickerProviderStateM
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        SizedBox(
-                          height: size.height * 0.03,
+                        // SizedBox(
+                        //   height: size.height * 0.03,
+                        // ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                user!.name!,
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                              ),
+                              Container(
+                                alignment: Alignment.bottomCenter,
+                                height: size.height * 0.07,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => AddRecruitScreen(
+                                                      id: userId!,
+                                                    )));
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 10),
+                                        child: Container(
+                                          height: size.height * 0.05,
+                                          width: size.width * 0.20,
+                                          //color: Colors.red,
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                                          ),
+                                          child: Center(
+                                              child: Text(
+                                            'เพิ่มรายการ',
+                                            style: TextStyle(color: Colors.white),
+                                          )),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                        SizedBox(
+                          height: size.height * 0.015,
+                        ),
+                        Divider(
+                          thickness: 2,
+                        ),
+                        // FloatingActionButton(
+                        //   elevation: 10,
+                        //   onPressed: () {
+                        //     Navigator.push(
+                        //         context,
+                        //         MaterialPageRoute(
+                        //             builder: (context) => AddRecruitScreen(
+                        //                   id: userId!,
+                        //                 )));
+                        //   },
+                        //   backgroundColor: Colors.blue,
+                        //   child: const Icon(Icons.add),
+                        // ),
                         controller.positionCompany.isNotEmpty
                             ? ListView.builder(
                                 shrinkWrap: true,
@@ -242,89 +315,308 @@ class _RecruitScreenState extends State<RecruitScreen> with TickerProviderStateM
                                 physics: NeverScrollableScrollPhysics(),
                                 itemCount: controller.positionCompany[0].recruitment_companies!.length,
                                 itemBuilder: (_, index2) {
-                                  return ListTile(
-                                    title: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  return Slidable(
+                                    endActionPane: ActionPane(
+                                      motion: ScrollMotion(),
                                       children: [
-                                        Text(controller.positionCompany[0].recruitment_companies?[index2].position ??
-                                            ''),
-                                        Text(
-                                            '${controller.positionCompany[0].recruitment_companies?[index2].qty ?? ''} ตำแหน่ง'),
+                                        SlidableAction(
+                                          onPressed: ((context) async {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                              return EditRecruitScreen(
+                                                idCompany: userId!,
+                                                idPosition:
+                                                    controller.positionCompany[0].recruitment_companies?[index2].id,
+                                                position: controller
+                                                    .positionCompany[0].recruitment_companies?[index2].position,
+                                                degree:
+                                                    controller.positionCompany[0].recruitment_companies?[index2].degree,
+                                                major:
+                                                    controller.positionCompany[0].recruitment_companies?[index2].major,
+                                                salary:
+                                                    controller.positionCompany[0].recruitment_companies?[index2].salary,
+                                                exp: controller.positionCompany[0].recruitment_companies?[index2].exp,
+                                                qty: controller.positionCompany[0].recruitment_companies?[index2].qty,
+                                                description: controller
+                                                    .positionCompany[0].recruitment_companies?[index2].description,
+                                              );
+                                            }));
+                                            //เช็คการกด
+                                            // if (selectedRadio == index) {
+                                            //   final checkaddress = await Navigator.push(
+                                            //       context,
+                                            //       MaterialPageRoute(
+                                            //         builder: (context) => editaddress(
+                                            //           id: controller.myaddress[index].id ?? '',
+                                            //         ),
+                                            //       ));
+                                            //   if (checkaddress == true) {
+                                            //     _getmyaddress();
+                                            //   }
+                                            // }
+                                          }),
+                                          flex: 3,
+                                          backgroundColor: Colors.blueAccent,
+                                          foregroundColor: Colors.white,
+                                          icon: Icons.edit,
+                                          label: 'แก้ไข',
+                                        ),
+                                        SlidableAction(
+                                          onPressed: ((context) {
+                                            showCupertinoDialog(
+                                              context: context,
+                                              builder: (context) => CupertinoAlertDialog(
+                                                title: Text(
+                                                  'แจ้งเตือน',
+                                                  //style: TextStyle(fontFamily: fontFamily),
+                                                ),
+                                                content: Text(
+                                                  'คุณต้องการลบข้อมูลหรือไม่',
+                                                  //style: TextStyle(fontFamily: fontFamily),
+                                                ),
+                                                actions: <CupertinoDialogAction>[
+                                                  CupertinoDialogAction(
+                                                    child: Text(
+                                                      'ยกเลิก',
+                                                      // style: TextStyle(
+                                                      //   color: kThemeTextColor,
+                                                      //   fontFamily: fontFamily,
+                                                      //   fontWeight: FontWeight.bold,
+                                                      // ),
+                                                    ),
+                                                    onPressed: () => Navigator.pop(context),
+                                                  ),
+                                                  CupertinoDialogAction(
+                                                    child: Text(
+                                                      'ตกลง',
+                                                      // style: TextStyle(
+                                                      //   color: kThemeTextColor,
+                                                      //   fontFamily: fontFamily,
+                                                      // ),
+                                                    ),
+                                                    onPressed: () async {
+                                                      try {
+                                                        LoadingDialog.open(context);
+                                                        await JobService.deletePosition(
+                                                            recruitmentId: controller
+                                                                .positionCompany[0].recruitment_companies![index2].id!);
+                                                        await context
+                                                            .read<JobController>()
+                                                            .loadPositionCompay(id: userId!);
+                                                        if (mounted) {
+                                                          LoadingDialog.close(context);
+                                                          Navigator.pop(context);
+                                                        }
+                                                      } catch (e) {
+                                                        LoadingDialog.close(context);
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) => AlertDialog(
+                                                            backgroundColor: Colors.blueAccent,
+                                                            title: Text("Error", style: TextStyle(color: Colors.white)),
+                                                            content: Text(e.toString(),
+                                                                style: TextStyle(color: Colors.white)),
+                                                            actions: [
+                                                              TextButton(
+                                                                  onPressed: () {
+                                                                    Navigator.pop(context);
+                                                                  },
+                                                                  child:
+                                                                      Text('OK', style: TextStyle(color: Colors.white)))
+                                                            ],
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          }),
+                                          flex: 3,
+                                          backgroundColor: Colors.redAccent,
+                                          foregroundColor: Colors.white,
+                                          icon: Icons.delete_outline,
+                                          label: 'ลบ',
+                                        ),
                                       ],
                                     ),
-                                    subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            'วุฒิการศึกษา: ${controller.positionCompany[0].recruitment_companies?[index2].degree ?? ''} '),
-                                        Text(
-                                            'สาขา: ${controller.positionCompany[0].recruitment_companies?[index2].major ?? ''} '),
-                                        Text(
-                                            'เงินเดือน: ${controller.positionCompany[0].recruitment_companies?[index2].salary ?? ''} บาท'),
-                                        Text(
-                                            'ลักษณะงาน: ${controller.positionCompany[0].recruitment_companies?[index2].description ?? ''} '),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                                'ประสบการณ์ ${controller.positionCompany[0].recruitment_companies?[index2].exp ?? ''} ปี'),
-                                            IconButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) => DetailRecruit(
-                                                                idPosition: controller.positionCompany[0]
-                                                                    .recruitment_companies![index2].id!,
-                                                              )));
-                                                },
-                                                icon: Icon(Icons.remove_red_eye)),
-                                          ],
-                                        ),
-                                        Divider(
-                                          thickness: 2,
-                                        ),
-                                      ],
+                                    child: SizedBox(
+                                      child: Column(
+                                        children: [
+                                          ListTile(
+                                            title: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                    controller.positionCompany[0].recruitment_companies?[index2]
+                                                            .position ??
+                                                        '',
+                                                    style: TextStyle(color: Colors.black, fontSize: 20)),
+                                                // Text(
+                                                //     '${controller.positionCompany[0].recruitment_companies?[index2].qty ?? ''} ตำแหน่ง'),
+                                              ],
+                                            ),
+                                            subtitle: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 240,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                          'วุฒิการศึกษา: ${controller.positionCompany[0].recruitment_companies?[index2].degree ?? ''} ',
+                                                          style: TextStyle(color: Colors.black, fontSize: 12.5)),
+                                                      Text(
+                                                          'สาขา: ${controller.positionCompany[0].recruitment_companies?[index2].major ?? ''} ',
+                                                          style: TextStyle(color: Colors.black, fontSize: 12.5)),
+                                                      Text(
+                                                          'เงินเดือน: ${controller.positionCompany[0].recruitment_companies?[index2].salary ?? ''} บาท',
+                                                          style: TextStyle(color: Colors.black, fontSize: 12.5)),
+                                                      Text(
+                                                          'ประสบการณ์ ${controller.positionCompany[0].recruitment_companies?[index2].exp ?? ''} ปี',
+                                                          style: TextStyle(color: Colors.black, fontSize: 12.5)),
+                                                      Text(
+                                                        'ลักษณะงาน: ${controller.positionCompany[0].recruitment_companies?[index2].description ?? ''} ',
+                                                        style: TextStyle(color: Colors.black, fontSize: 12),
+                                                        maxLines: 2,
+                                                      ),
+
+                                                      // Row(
+                                                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      //   children: [
+                                                      //     Text(
+                                                      //         'ประสบการณ์ ${controller.positionCompany[0].recruitment_companies?[index2].exp ?? ''} ปี'),
+                                                      //     IconButton(
+                                                      //         onPressed: () {
+                                                      //           Navigator.push(
+                                                      //               context,
+                                                      //               MaterialPageRoute(
+                                                      //                   builder: (context) => DetailRecruit(
+                                                      //                         idPosition: controller.positionCompany[0]
+                                                      //                             .recruitment_companies![index2].id!,
+                                                      //                       )));
+                                                      //         },
+                                                      //         icon: Icon(Icons.remove_red_eye)),
+                                                      //   ],
+                                                      // ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 100,
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                          '${controller.positionCompany[0].recruitment_companies?[index2].qty ?? ''} ตำแหน่ง',
+                                                          style: TextStyle(color: Colors.black, fontSize: 15)),
+                                                      Icon(
+                                                        Icons.arrow_back_rounded,
+                                                        size: 15,
+                                                      ),
+                                                      IconButton(
+                                                          onPressed: () {
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (context) => DetailRecruit(
+                                                                          idPosition: controller.positionCompany[0]
+                                                                              .recruitment_companies![index2].id!,
+                                                                        )));
+                                                          },
+                                                          icon: Icon(
+                                                            Icons.remove_red_eye,
+                                                            size: 30,
+                                                          )),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            // trailing: Column(
+                                            //   children: [
+                                            //     Text(
+                                            //         '${controller.positionCompany[0].recruitment_companies?[index2].qty ?? ''} ตำแหน่ง',
+                                            //         style: TextStyle(color: Colors.black, fontSize: 15)),
+                                            //     IconButton(
+                                            //         iconSize: 15,
+                                            //         onPressed: () {
+                                            //           // Navigator.push(
+                                            //           //     context,
+                                            //           //     MaterialPageRoute(
+                                            //           //         builder: (context) => DetailRecruit(
+                                            //           //               idPosition: controller.positionCompany[0]
+                                            //           //                   .recruitment_companies![index2].id!,
+                                            //           //             )));
+                                            //         },
+                                            //         icon: Icon(
+                                            //           Icons.arrow_back_rounded,
+                                            //           size: 20,
+                                            //         )),
+                                            //     IconButton(
+                                            //         onPressed: () {
+                                            //           Navigator.push(
+                                            //               context,
+                                            //               MaterialPageRoute(
+                                            //                   builder: (context) => DetailRecruit(
+                                            //                         idPosition: controller.positionCompany[0]
+                                            //                             .recruitment_companies![index2].id!,
+                                            //                       )));
+                                            //         },
+                                            //         icon: Icon(
+                                            //           Icons.remove_red_eye,
+                                            //           size: 30,
+                                            //         )),
+                                            //   ],
+                                            // ),
+                                          ),
+                                          Divider(
+                                            thickness: 2,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   );
                                 })
                             : Center(child: CircularProgressIndicator()),
-                        Container(
-                          alignment: Alignment.bottomCenter,
-                          height: size.height * 0.10,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => AddRecruitScreen(
-                                                id: userId!,
-                                              )));
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  child: Container(
-                                    height: size.height * 0.06,
-                                    width: size.width * 0.32,
-                                    //color: Colors.red,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.all(Radius.circular(30)),
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      'เพิ่มรายการ',
-                                      style: TextStyle(color: Colors.white),
-                                    )),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Container(
+                        //   alignment: Alignment.bottomCenter,
+                        //   height: size.height * 0.10,
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       InkWell(
+                        //         onTap: () {
+                        //           Navigator.push(
+                        //               context,
+                        //               MaterialPageRoute(
+                        //                   builder: (context) => AddRecruitScreen(
+                        //                         id: userId!,
+                        //                       )));
+                        //         },
+                        //         child: Padding(
+                        //           padding: EdgeInsets.symmetric(horizontal: 10),
+                        //           child: Container(
+                        //             height: size.height * 0.06,
+                        //             width: size.width * 0.32,
+                        //             //color: Colors.red,
+                        //             decoration: BoxDecoration(
+                        //               color: Colors.blue,
+                        //               borderRadius: BorderRadius.all(Radius.circular(30)),
+                        //             ),
+                        //             child: Center(
+                        //                 child: Text(
+                        //               'เพิ่มรายการ',
+                        //               style: TextStyle(color: Colors.white),
+                        //             )),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

@@ -1,3 +1,4 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/Scrap/ScrapController.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +7,9 @@ import '../../../../appTheme.dart';
 import '../../../Alljob/Companies/Widgets/CompaniesList.dart';
 import '../../../Login/Widgets/AppTextForm.dart';
 import '../../../Widgets/SearchTextField.dart';
+import '../../../app/AppController.dart';
 import '../AllServeController.dart';
+import 'DetailScrap/detailScrapPage.dart';
 import 'ScrapDetailScreen.dart';
 
 class CompanyScrapPage extends StatefulWidget {
@@ -18,6 +21,7 @@ class CompanyScrapPage extends StatefulWidget {
 
 class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProviderStateMixin {
   late TabController _tabController;
+  final _controller = ScrollController();
   int a = 1;
   FilePickerResult? result;
   PlatformFile? file;
@@ -83,20 +87,35 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
   void initState() {
     super.initState();
     _loadItem();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
+    _controller.addListener(() {
+      if (_controller.position.maxScrollExtent == _controller.offset) {
+        _loadItem();
+      }
+    });
   }
 
   Future _loadItem() async {
-    await context.read<JobController>().loadLogoCompay();
+    // await context.read<ScrapController>().loadScrap();
+    await context.read<ScrapController>().loadCompanyScrap();
+    final userId = await context.read<AppController>().user!.id;
+    await context.read<ScrapController>().detailScrapCompany(userId!);
   }
+
+  // @override
+  // void dispose() {
+  //   _loadItem();
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     final appFontSize = AppFontSize.of(context);
     final size = MediaQuery.of(context).size;
-    return Consumer<JobController>(
-      builder: (context, controller, child) => DefaultTabController(
-        length: 2,
+    return Consumer2<JobController, ScrapController>(
+      builder: (context, controller, controllerScrap, child) => DefaultTabController(
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -116,7 +135,8 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
               labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
               tabs: [
                 Tab(text: 'รายชื่อบริษัท'),
-                Tab(text: 'รายการ'),
+                Tab(text: 'รายการของเสีย'),
+                Tab(text: 'เพิ่มรายการเสีย'),
               ],
             ),
           ),
@@ -139,15 +159,141 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                         height: 10,
                       ),
                       Container(
+                          padding: EdgeInsets.all(15),
+                          child: controllerScrap.listCompanyScrap.isEmpty
+                              ? Center(child: CircularProgressIndicator())
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  controller: _controller,
+                                  itemCount: controllerScrap.listCompanyScrap.length + 1,
+                                  itemBuilder: (_, index) {
+                                    if (index < controllerScrap.listCompanyScrap.length) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(5),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            // Navigator.push(
+                                            //     context,
+                                            //     MaterialPageRoute(
+                                            //         builder: (context) => DetailScrapPage(
+                                            //               id: controller.logoCompay[index].id!,
+                                            //               name: controller.logoCompay[index].name!,
+                                            //             )));
+                                          },
+                                          child: Container(
+                                            width: size.width,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: AssetImage('assets/images/promotionBG.png'),
+                                                fit: BoxFit.fill,
+                                              ),
+                                              boxShadow: const [
+                                                BoxShadow(
+                                                    offset: Offset(0, 2),
+                                                    color: Color.fromRGBO(0, 78, 179, 0.05),
+                                                    blurRadius: 10)
+                                              ],
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: controllerScrap.listCompanyScrap[index].image != null
+                                                        ? Image.network(
+                                                            "${controllerScrap.listCompanyScrap[index].image}",
+                                                            height: size.height / 17,
+                                                            errorBuilder: (context, error, stackTrace) =>
+                                                                Image.asset('assets/No_Image_Available.jpg'),
+                                                          )
+                                                        : Image.asset('assets/No_Image_Available.jpg'),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Expanded(
+                                                    flex: 8,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            controllerScrap.listCompanyScrap[index].name ?? '',
+                                                            style: TextStyle(
+                                                                fontWeight: FontWeight.bold,
+                                                                fontSize: appFontSize?.body),
+                                                          ),
+                                                          SizedBox(height: 5),
+                                                          Text(
+                                                            'เบอร์โทร ${controllerScrap.listCompanyScrap[index].phone ?? ''}',
+                                                            style: TextStyle(fontSize: appFontSize?.body2),
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                          SizedBox(height: 4),
+                                                          Text(
+                                                            'อีเมลล์ ${controllerScrap.listCompanyScrap[index].email ?? ''} ',
+                                                            style: TextStyle(fontSize: appFontSize?.body2),
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                          SizedBox(height: 4),
+                                                          // Text(
+                                                          //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
+                                                          //   style: TextStyle(fontSize: appFontSize?.body2),
+                                                          //   // overflow: TextOverflow.ellipsis,
+                                                          // ),
+                                                          // SizedBox(height: 4),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 30),
+                                        child: Center(
+                                          child: controllerScrap.hasmore
+                                              ? const CircularProgressIndicator()
+                                              : const Text(''),
+                                        ),
+                                      );
+                                    }
+                                  })),
+                    ],
+                  ),
+                ),
+                //Tab2
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: SearchTextField(),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
                         padding: EdgeInsets.all(15),
-                        child: controller.logoCompay.isEmpty
+                        child: controllerScrap.scrapCompanyDetail.isEmpty
                             ? Center(child: CircularProgressIndicator())
                             : ListView.builder(
                                 // controller: _controller,
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: controller.logoCompay.length,
+                                itemCount: controllerScrap.scrapCompanyDetail[0].scraps!.length,
                                 itemBuilder: (_, index) {
                                   return Padding(
                                     padding: const EdgeInsets.all(5),
@@ -179,17 +325,17 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                                           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                                           child: Row(
                                             children: [
-                                              Expanded(
-                                                flex: 2,
-                                                child: controller.logoCompay[index].image != null
-                                                    ? Image.network(
-                                                        "${controller.logoCompay[index].image}",
-                                                        height: size.height / 17,
-                                                        errorBuilder: (context, error, stackTrace) =>
-                                                            Image.asset('assets/No_Image_Available.jpg'),
-                                                      )
-                                                    : Image.asset('assets/No_Image_Available.jpg'),
-                                              ),
+                                              // Expanded(
+                                              //   flex: 2,
+                                              //   child: controller.scrapCompanyDetail[0].scraps![index].image != null
+                                              //       ? Image.network(
+                                              //           "${controller.scrapCompanyDetail[0].scraps![index].image}",
+                                              //           height: size.height / 17,
+                                              //           errorBuilder: (context, error, stackTrace) =>
+                                              //               Image.asset('assets/No_Image_Available.jpg'),
+                                              //         )
+                                              //       : Image.asset('assets/No_Image_Available.jpg'),
+                                              // ),
                                               SizedBox(
                                                 width: 10,
                                               ),
@@ -201,19 +347,19 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        controller.logoCompay[index].name ?? '',
+                                                        controllerScrap.scrapCompanyDetail[0].scraps![index].name ?? '',
                                                         style: TextStyle(
                                                             fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
                                                       ),
                                                       SizedBox(height: 5),
                                                       Text(
-                                                        'เบอร์โทรศัพท์ ${controller.logoCompay[index].phone ?? ''}',
+                                                        'คำอธืบาย ${controllerScrap.scrapCompanyDetail[0].scraps![index].description ?? ''}',
                                                         style: TextStyle(fontSize: appFontSize?.body2),
                                                         overflow: TextOverflow.ellipsis,
                                                       ),
                                                       SizedBox(height: 4),
                                                       Text(
-                                                        'อีเมลล์ ${controller.logoCompay[index].email ?? ''} ',
+                                                        'จำนวน ${controllerScrap.scrapCompanyDetail[0].scraps![index].qty ?? ''} ',
                                                         style: TextStyle(fontSize: appFontSize?.body2),
                                                         overflow: TextOverflow.ellipsis,
                                                       ),
@@ -239,7 +385,7 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                     ],
                   ),
                 ),
-                //Tab2
+                //Tab3
                 SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),

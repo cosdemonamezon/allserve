@@ -1,22 +1,40 @@
-import 'package:allserve/Screen/Allserve/AllserveHome/AllServeService.dart';
-import 'package:allserve/Screen/Allserve/AllserveHome/Widgets/AddTextForm.dart';
-import 'package:allserve/Screen/Widgets/ButtonRounded.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../Widgets/ButtonRounded.dart';
 import '../../Widgets/LoadingDialog.dart';
 import 'AllServeController.dart';
+import 'AllServeService.dart';
+import 'Widgets/AddTextForm.dart';
 
-class AddRecruitScreen extends StatefulWidget {
-  AddRecruitScreen({Key? key, required this.id}) : super(key: key);
-  final int id;
+class EditRecruitScreen extends StatefulWidget {
+  EditRecruitScreen(
+      {super.key,
+      this.idCompany,
+      this.idPosition,
+      this.position,
+      this.degree,
+      this.major,
+      this.salary,
+      this.exp,
+      this.qty,
+      this.description});
+  int? idCompany;
+  int? idPosition;
+  String? position;
+  String? degree;
+  String? major;
+  String? salary;
+  String? exp;
+  String? qty;
+  String? description;
 
   @override
-  State<AddRecruitScreen> createState() => _AddRecruitScreenState();
+  State<EditRecruitScreen> createState() => _EditRecruitScreenState();
 }
 
-class _AddRecruitScreenState extends State<AddRecruitScreen> {
+class _EditRecruitScreenState extends State<EditRecruitScreen> {
   @override
   final GlobalKey<FormState> addFormKey = GlobalKey<FormState>();
   final TextEditingController position = TextEditingController();
@@ -32,12 +50,25 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
   String yearvalue = 'ปี';
   bool isChecked = false;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    position.text = widget.position ?? '';
+    degree.text = widget.degree ?? '';
+    major.text = widget.major ?? '';
+    salary.text = widget.salary ?? '';
+    exp.text = widget.exp ?? '';
+    qty.text = widget.qty ?? '';
+    description.text = widget.description ?? '';
+  }
+
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'เพิ่มตำแหน่งงาน',
+          'แก้ไขตำแหน่งงาน',
           //style: TextStyle(color: Colors.deepOrange),
         ),
         backgroundColor: Colors.transparent,
@@ -89,7 +120,7 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                             ),
                             AddTextForm(
                               controller: position,
-                              hintText: '',
+                              // hintText: widget.position,
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
@@ -100,7 +131,7 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                             ),
                             AddTextForm(
                               controller: degree,
-                              hintText: '',
+                              // hintText: widget.degree,
                             ),
                             SizedBox(
                               height: size.height * 0.02,
@@ -157,7 +188,7 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                             ),
                             AddTextForm(
                               controller: major,
-                              hintText: '',
+                              // hintText: widget.major,
                             ),
                             // SizedBox(
                             //   height: size.height * 0.02,
@@ -169,7 +200,10 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                                 style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            AddTextForm(controller: salary, hintText: '', keyboardType: TextInputType.phone),
+                            AddTextForm(
+                                controller: salary,
+                                // hintText: widget.salary,
+                                keyboardType: TextInputType.phone),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
                               child: Text(
@@ -179,7 +213,7 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                             ),
                             AddTextForm(
                               controller: exp,
-                              hintText: '',
+                              // hintText: widget.exp,
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
@@ -190,7 +224,7 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                             ),
                             AddTextForm(
                               controller: qty,
-                              hintText: '',
+                              // hintText: widget.qty,
                             ),
                             // Padding(
                             //   padding: EdgeInsets.symmetric(vertical: 10),
@@ -216,7 +250,7 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                             ),
                             AddTextForm(
                               controller: description,
-                              hintText: '',
+                              // hintText: widget.description,
                               maxLines: 4,
                             ),
                             SizedBox(height: 25),
@@ -257,25 +291,27 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                                           // ),
                                         ),
                                         onPressed: () async {
-                                          LoadingDialog.open(context);
-                                          final String position1 = position.text;
-                                          final String degree1 = degree.text;
-                                          final String major1 = major.text;
-                                          final String salary1 = salary.text;
-                                          final String exp1 = exp.text;
-                                          final String qty1 = qty.text;
-                                          final String description1 = description.text;
-                                          await JobService().postRecruitment(
-                                              user_id: widget.id.toString(),
-                                              position: position1,
-                                              degree: degree1,
-                                              major: major1,
-                                              salary: salary1,
-                                              exp: exp1,
-                                              qty: qty1,
-                                              description: description1);
-                                          await context.read<JobController>().loadPositionCompay(id: widget.id);
-                                          LoadingDialog.close(context);
+                                          addFormKey.currentState!.save();
+                                          // LoadingDialog.open(context);
+                                          // final String position1 = position.text;
+                                          // final String degree1 = degree.text;
+                                          // final String major1 = major.text;
+                                          // final String salary1 = salary.text;
+                                          // final String exp1 = exp.text;
+                                          // final String qty1 = qty.text;
+                                          // final String description1 = description.text;
+                                          await JobService().updatePosition(
+                                              positionId: widget.idPosition!,
+                                              user_id: widget.idCompany.toString(),
+                                              position: position.text,
+                                              degree: degree.text,
+                                              major: major.text,
+                                              salary: salary.text,
+                                              exp: exp.text,
+                                              qty: qty.text,
+                                              description: description.text);
+                                          await context.read<JobController>().loadPositionCompay(id: widget.idCompany!);
+                                          // LoadingDialog.close(context);
                                           if (mounted) {
                                             Navigator.of(context)
                                               ..pop()

@@ -85,17 +85,17 @@ class _AboutCompanyPageState extends State<AboutCompanyPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 20,
-                  ),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
                   // Center(
                   //     child: Text(
                   //   'ข้อมูลบริษัท',
                   //   style: TextStyle(fontWeight: FontWeight.bold),
                   // )),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
                   SizedBox(
                     height: 230,
                     width: double.infinity,

@@ -2,6 +2,7 @@ import 'package:allserve/Screen/Allserve/AllserveHome/AllServeScreen.dart';
 import 'package:allserve/Screen/Allserve/Profile/SetProfile.dart';
 import 'package:allserve/Screen/Allserve/Search/SearchAllservScreen.dart';
 import 'package:allserve/Screen/Allserve/Search/SearchScreen.dart';
+import 'package:allserve/Screen/Allserve/chatGPT/ChatGptPage.dart';
 import 'package:flutter/material.dart';
 
 import 'About/AboutCompanyPage.dart';
@@ -34,11 +35,13 @@ class _AllServeHomeState extends State<AllServeHome> {
         children: [
           AllServeScreen(),
           SearchAllservScreen(),
-          SearchScreen(),
+          // SearchScreen(),
+          ChatGptPage(),
           AboutCompanyPage(),
           SetProfileScreen(),
         ],
       ),
+      backgroundColor: Colors.blue,
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.0),
@@ -58,10 +61,15 @@ class _AllServeHomeState extends State<AllServeHome> {
                 activeIcon: Image.asset('assets/icons/navi3_active.png', height: size.height * 0.025),
                 label: 'ไมโครซอฟ',
               ),
+              // BottomNavigationBarItem(
+              //   icon: Image.asset('assets/icons/navi4.png', height: size.height * 0.025),
+              //   activeIcon: Image.asset('assets/icons/navi4_active.png', height: size.height * 0.025),
+              //   label: 'ค้นหา',
+              // ),
               BottomNavigationBarItem(
                 icon: Image.asset('assets/icons/navi4.png', height: size.height * 0.025),
                 activeIcon: Image.asset('assets/icons/navi4_active.png', height: size.height * 0.025),
-                label: 'ค้นหา',
+                label: 'แชท',
               ),
               BottomNavigationBarItem(
                 icon: Image.asset('assets/icons/navi3.png', height: size.height * 0.025),

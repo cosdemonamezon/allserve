@@ -23,6 +23,12 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       recruitment_companies: (json['recruitment_companies'] as List<dynamic>?)
           ?.map((e) => Recruitmentcompanies.fromJson(e as Map<String, dynamic>))
           .toList(),
+      scraps: (json['scraps'] as List<dynamic>?)
+          ?.map((e) => Scrap.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      logistics: (json['logistics'] as List<dynamic>?)
+          ?.map((e) => Logistic.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -38,4 +44,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'type': instance.type,
       'permission': instance.permission,
       'recruitment_companies': instance.recruitment_companies,
+      'scraps': instance.scraps,
+      'logistics': instance.logistics,
     };

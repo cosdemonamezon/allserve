@@ -10,7 +10,10 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Screen/Allserve/AllserveHome/AllServeController.dart';
+import 'Screen/Allserve/AllserveHome/Logistic/LogisticController.dart';
 import 'Screen/Allserve/AllserveHome/RecruitScreen.dart';
+import 'Screen/Allserve/AllserveHome/Scrap/ScrapController.dart';
+import 'Screen/Allserve/AllserveHome/purchase/purchaseController.dart';
 import 'Screen/Allserve/Search/Controller.dart';
 import 'Screen/app/AppController.dart';
 
@@ -23,6 +26,9 @@ void main() {
       ChangeNotifierProvider(create: (_) => AppController()),
       ChangeNotifierProvider(create: (_) => JobController()),
       ChangeNotifierProvider(create: (_) => SearchController()),
+      ChangeNotifierProvider(create: (_) => ScrapController()),
+      ChangeNotifierProvider(create: (_) => LogisticController()),
+      ChangeNotifierProvider(create: (_) => PurchaseController()),
     ],
     child: const MyApp(),
   ));

@@ -152,7 +152,7 @@ class _AllServeScreenState extends State<AllServeScreen> {
                             },
                             child: SizedBox(
                               child: Image.asset(
-                                "assets/icons/SalesCRM.png",
+                                "assets/Purchase_512px.png",
                                 //color: Colors.blue,
                                 height: 150,
                               ),

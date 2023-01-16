@@ -1,6 +1,9 @@
+import 'package:allserve/Models/Scrap/scrap.dart';
 import 'package:allserve/Models/User/permission.dart';
 import 'package:allserve/Models/User/recruitmentcompanies.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../Logistic/logistic.dart';
 
 part 'user.g.dart';
 
@@ -19,6 +22,8 @@ class User {
     this.type,
     this.permission,
     this.recruitment_companies,
+    this.scraps,
+    this.logistics,
   });
 
   int? id;
@@ -33,6 +38,8 @@ class User {
   String? type;
   Permission? permission;
   List<Recruitmentcompanies>? recruitment_companies;
+  List<Scrap>? scraps;
+  List<Logistic>? logistics;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
