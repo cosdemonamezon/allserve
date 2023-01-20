@@ -69,7 +69,7 @@ class _AllServeHomeState extends State<AllServeHome> {
               BottomNavigationBarItem(
                 icon: Image.asset('assets/icons/navi4.png', height: size.height * 0.025),
                 activeIcon: Image.asset('assets/icons/navi4_active.png', height: size.height * 0.025),
-                label: 'แชท',
+                label: 'ถาม AI',
               ),
               BottomNavigationBarItem(
                 icon: Image.asset('assets/icons/navi3.png', height: size.height * 0.025),

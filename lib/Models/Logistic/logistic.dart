@@ -1,28 +1,29 @@
+import 'package:allserve/Models/Quotation/quotation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'logistic.g.dart';
 
 @JsonSerializable()
 class Logistic {
-  Logistic({
-    this.id,
-    this.user_id,
-    this.name,
-    this.width,
-    this.height,
-    this.weight,
-    this.qty,
-    this.description,
-    this.transport_type,
-    this.start_lat,
-    this.start_lon,
-    this.start_location,
-    this.end_lat,
-    this.end_lon,
-    this.end_location,
-    this.status,
-    this.No,
-  });
+  Logistic(
+      {this.id,
+      this.user_id,
+      this.name,
+      this.width,
+      this.height,
+      this.weight,
+      this.qty,
+      this.description,
+      this.transport_type,
+      this.start_lat,
+      this.start_lon,
+      this.start_location,
+      this.end_lat,
+      this.end_lon,
+      this.end_location,
+      this.status,
+      this.No,
+      this.quotations});
 
   int? id;
   String? user_id;
@@ -41,6 +42,7 @@ class Logistic {
   String? end_location;
   String? status;
   int? No;
+  List<Quotation>? quotations;
 
   factory Logistic.fromJson(Map<String, dynamic> json) => _$LogisticFromJson(json);
 

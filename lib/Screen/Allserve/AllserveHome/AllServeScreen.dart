@@ -4,6 +4,7 @@ import 'package:allserve/Screen/Allserve/AllserveHome/ResponseListScreen.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/purchase/purchasePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../app/AppController.dart';
 import 'Logistic/LogisticPage.dart';
@@ -25,6 +26,7 @@ class _AllServeScreenState extends State<AllServeScreen> {
     {"name": "จำหน่ายของเสีย", "imgurl": "assets/icons/ScrapEnvironment.png"},
     {"name": "ขนส่ง", "imgurl": "assets/icons/LogisticB.png"}
   ];
+  final Uri _url = Uri.parse('https://www.alibaba.com');
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -137,7 +139,7 @@ class _AllServeScreenState extends State<AllServeScreen> {
                       Column(
                         children: [
                           Text(
-                            'การขายและการตลาด',
+                            'จัดซื้อ-จัดจ้าง',
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                             softWrap: false,
                             maxLines: 3,
@@ -225,38 +227,71 @@ class _AllServeScreenState extends State<AllServeScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.10,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (context) => ScreenAll(),
-                            );
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.06,
-                              width: MediaQuery.of(context).size.width * 0.32,
-                              //color: Colors.red,
-                              decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.all(Radius.circular(30)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.10,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => ScreenAll(),
+                                );
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height * 0.06,
+                                  width: MediaQuery.of(context).size.width * 0.32,
+                                  //color: Colors.red,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                                  ),
+                                  child: Center(
+                                      child: Text(
+                                    'เมนูทั้งหมด',
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                                ),
                               ),
-                              child: Center(
-                                  child: Text(
-                                'เมนูทั้งหมด',
-                                style: TextStyle(color: Colors.white),
-                              )),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.10,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: _launchUrl,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height * 0.06,
+                                  width: MediaQuery.of(context).size.width * 0.32,
+                                  //color: Colors.red,
+                                  decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 255, 81, 0),
+                                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                                  ),
+                                  child: Center(
+                                      child: Text(
+                                    'China Connect',
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                   // Container(
                   //   padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
@@ -492,5 +527,28 @@ class _AllServeScreenState extends State<AllServeScreen> {
         );
       },
     );
+  }
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(_url)) {
+      throw 'Could not launch $_url';
+    }
+  }
+
+  Future openBrowserURL({
+    required String url,
+    bool inApp = false,
+  }) async {
+    // ignore: deprecated_member_use
+    if (await canLaunch(url)) {
+      // ignore: deprecated_member_use
+      await launch(
+        url,
+        forceSafariVC: inApp,
+        forceWebView: inApp,
+        enableDomStorage: true,
+        enableJavaScript: true,
+      );
+    }
   }
 }

@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'vendor.dart';
+part of 'parther.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Vendor _$VendorFromJson(Map<String, dynamic> json) => Vendor(
+Parther _$PartherFromJson(Map<String, dynamic> json) => Parther(
       id: json['id'] as int?,
       user_id: json['user_id'] as String?,
       name: json['name'] as String?,
@@ -19,15 +19,12 @@ Vendor _$VendorFromJson(Map<String, dynamic> json) => Vendor(
       country: json['country'] as String?,
       postcode: json['postcode'] as String?,
       fax: json['fax'] as String?,
-      type: json['type'] as String?,
+      image: json['image'] as String?,
       status: json['status'] as String?,
-      No: (json['No'] as num?)?.toDouble(),
-      images: (json['images'] as List<dynamic>?)
-          ?.map((e) => ImagesVendor.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      type: json['type'] as String?,
     );
 
-Map<String, dynamic> _$VendorToJson(Vendor instance) => <String, dynamic>{
+Map<String, dynamic> _$PartherToJson(Parther instance) => <String, dynamic>{
       'id': instance.id,
       'user_id': instance.user_id,
       'name': instance.name,
@@ -40,8 +37,7 @@ Map<String, dynamic> _$VendorToJson(Vendor instance) => <String, dynamic>{
       'country': instance.country,
       'postcode': instance.postcode,
       'fax': instance.fax,
-      'type': instance.type,
+      'image': instance.image,
       'status': instance.status,
-      'No': instance.No,
-      'images': instance.images,
+      'type': instance.type,
     };

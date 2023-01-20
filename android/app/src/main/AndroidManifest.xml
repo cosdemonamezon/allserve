@@ -18,15 +18,15 @@
     <action android:name="android.intent.action.VIEW" />
     <data android:scheme="http" />
   </intent>
-  <!-- If your app makes calls -->
+   <!-- If your app checks for SMS support -->
   <intent>
-    <action android:name="android.intent.action.DIAL" />
-    <data android:scheme="tel" />
+    <action android:name="android.intent.action.VIEW" />
+    <data android:scheme="sms" />
   </intent>
-  <!-- If your sends SMS messages -->
+  <!-- If your app checks for call support -->
   <intent>
-    <action android:name="android.intent.action.SENDTO" />
-    <data android:scheme="smsto" />
+    <action android:name="android.intent.action.VIEW" />
+    <data android:scheme="tel" />
   </intent>
   <!-- If your app sends emails -->
   <intent>
@@ -38,7 +38,8 @@
         android:label="allserve"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:requestLegacyExternalStorage="true">
+        android:requestLegacyExternalStorage="true"
+        android:usesCleartextTraffic="true">
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyCEYSxqWXsgtUArkUllKIsuP-4c9n7QOSE"/>
         <activity

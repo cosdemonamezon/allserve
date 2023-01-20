@@ -102,9 +102,9 @@ class _DetailsApplicantState extends State<DetailsApplicant> {
                                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                                     ),
                                   ),
-                                  Center(
-                                      child: Text('ชื่อเล่น: อานน',
-                                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))),
+                                  // Center(
+                                  //     child: Text('ชื่อเล่น: อานน',
+                                  //         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))),
                                   SizedBox(
                                     height: 20,
                                   ),

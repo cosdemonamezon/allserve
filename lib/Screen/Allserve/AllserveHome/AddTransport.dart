@@ -78,8 +78,7 @@ class _AddTransportState extends State<AddTransport> {
                         children: [
                           Checkbox(
                             checkColor: Colors.white,
-                            fillColor:
-                                MaterialStateProperty.resolveWith(getColor),
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
                             value: isChecked1,
                             onChanged: (bool? value) {
                               setState(() {
@@ -91,7 +90,7 @@ class _AddTransportState extends State<AddTransport> {
                               height: size.height * 0.08,
                               width: size.width * 0.18,
                               child: Image.asset(
-                                'assets/icons/box1.png',
+                                'assets/r4.png',
                                 fit: BoxFit.fill,
                               )),
                           Text('มอเอต์ไซด์')
@@ -105,8 +104,7 @@ class _AddTransportState extends State<AddTransport> {
                         children: [
                           Checkbox(
                             checkColor: Colors.white,
-                            fillColor:
-                                MaterialStateProperty.resolveWith(getColor),
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
                             value: isChecked2,
                             onChanged: (bool? value) {
                               setState(() {
@@ -118,7 +116,7 @@ class _AddTransportState extends State<AddTransport> {
                               height: size.height * 0.08,
                               width: size.width * 0.18,
                               child: Image.asset(
-                                'assets/icons/box2.png',
+                                'assets/r5.png',
                                 fit: BoxFit.fill,
                               )),
                           Text('รถกระบะ')
@@ -132,8 +130,7 @@ class _AddTransportState extends State<AddTransport> {
                         children: [
                           Checkbox(
                             checkColor: Colors.white,
-                            fillColor:
-                                MaterialStateProperty.resolveWith(getColor),
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
                             value: isChecked3,
                             onChanged: (bool? value) {
                               setState(() {
@@ -145,7 +142,7 @@ class _AddTransportState extends State<AddTransport> {
                               height: size.height * 0.08,
                               width: size.width * 0.18,
                               child: Image.asset(
-                                'assets/icons/box3.png',
+                                'assets/r7.png',
                                 fit: BoxFit.fill,
                               )),
                           Text('รถ 6 ล้อ')
@@ -159,8 +156,7 @@ class _AddTransportState extends State<AddTransport> {
                         children: [
                           Checkbox(
                             checkColor: Colors.white,
-                            fillColor:
-                                MaterialStateProperty.resolveWith(getColor),
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
                             value: isChecked4,
                             onChanged: (bool? value) {
                               setState(() {
@@ -172,7 +168,7 @@ class _AddTransportState extends State<AddTransport> {
                               height: size.height * 0.08,
                               width: size.width * 0.18,
                               child: Image.asset(
-                                'assets/icons/box3.png',
+                                'assets/r2.png',
                                 fit: BoxFit.fill,
                               )),
                           Text('เรือ')
@@ -186,8 +182,7 @@ class _AddTransportState extends State<AddTransport> {
                         children: [
                           Checkbox(
                             checkColor: Colors.white,
-                            fillColor:
-                                MaterialStateProperty.resolveWith(getColor),
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
                             value: isChecked5,
                             onChanged: (bool? value) {
                               setState(() {
@@ -199,7 +194,7 @@ class _AddTransportState extends State<AddTransport> {
                               height: size.height * 0.08,
                               width: size.width * 0.18,
                               child: Image.asset(
-                                'assets/icons/box3.png',
+                                'assets/r1.png',
                                 fit: BoxFit.fill,
                               )),
                           Text('เครื่องบิน')
@@ -227,12 +222,10 @@ class _AddTransportState extends State<AddTransport> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
-                        SizedBox(
-                            width: size.width * 0.10, child: Text('กว้าง')),
+                        SizedBox(width: size.width * 0.10, child: Text('กว้าง')),
                       ],
                     ),
                   ),
@@ -243,8 +236,7 @@ class _AddTransportState extends State<AddTransport> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         Text('เมตร'),
@@ -260,8 +252,7 @@ class _AddTransportState extends State<AddTransport> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         SizedBox(width: size.width * 0.10, child: Text('ยาว')),
@@ -275,8 +266,7 @@ class _AddTransportState extends State<AddTransport> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         Text('เมตร'),
@@ -292,8 +282,7 @@ class _AddTransportState extends State<AddTransport> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         SizedBox(width: size.width * 0.10, child: Text('หนัก')),
@@ -307,8 +296,7 @@ class _AddTransportState extends State<AddTransport> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         Text('กิโล..'),
@@ -324,12 +312,10 @@ class _AddTransportState extends State<AddTransport> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
-                        SizedBox(
-                            width: size.width * 0.10, child: Text('จำนวน')),
+                        SizedBox(width: size.width * 0.10, child: Text('จำนวน')),
                       ],
                     ),
                   ),
@@ -340,8 +326,7 @@ class _AddTransportState extends State<AddTransport> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         Text('กล่อง'),
@@ -357,8 +342,7 @@ class _AddTransportState extends State<AddTransport> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
                         SizedBox(width: size.width * 0.10, child: Text('รูป')),
@@ -396,7 +380,6 @@ class _AddTransportState extends State<AddTransport> {
                   ),
                 ],
               ),
-              
             ],
           ),
         ),

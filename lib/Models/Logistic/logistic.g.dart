@@ -24,6 +24,9 @@ Logistic _$LogisticFromJson(Map<String, dynamic> json) => Logistic(
       end_location: json['end_location'] as String?,
       status: json['status'] as String?,
       No: json['No'] as int?,
+      quotations: (json['quotations'] as List<dynamic>?)
+          ?.map((e) => Quotation.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$LogisticToJson(Logistic instance) => <String, dynamic>{
@@ -44,4 +47,5 @@ Map<String, dynamic> _$LogisticToJson(Logistic instance) => <String, dynamic>{
       'end_location': instance.end_location,
       'status': instance.status,
       'No': instance.No,
+      'quotations': instance.quotations,
     };

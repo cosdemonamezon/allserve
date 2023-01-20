@@ -1,3 +1,4 @@
+import 'package:allserve/Models/Logistic/logistic.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +17,7 @@ class LogisticController extends ChangeNotifier {
   bool hasmore = true;
   int page = 0;
   List<Vendor> listCompanyLogistic = [];
+  Logistic? quotationDetail;
 
   // DetailScrapCompany
   Future<void> detailLogisticCompany(
@@ -45,6 +47,18 @@ class LogisticController extends ChangeNotifier {
     if (loadItem.length < 5) {
       hasmore = false;
     }
+    notifyListeners();
+  }
+
+  // DetailQuotationLogistic
+  Future<void> detailQuotation(
+    int id,
+  ) async {
+    quotationDetail = null;
+    pref = await SharedPreferences.getInstance();
+    token = pref?.getString('token');
+    quotationDetail = await LogisticSrevice.getQuotatianLogistic(itemId: id);
+
     notifyListeners();
   }
 }

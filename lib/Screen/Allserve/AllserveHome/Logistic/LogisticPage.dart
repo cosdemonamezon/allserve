@@ -1,17 +1,16 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/AddLogistic/AddLogisticPage.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/LogisticController.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/Quotation/QuotationLogisticPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../appTheme.dart';
-import '../../../Alljob/Companies/Widgets/CompaniesList.dart';
 import '../../../Widgets/SearchTextField.dart';
 import '../../../app/AppController.dart';
-import '../../About/AboutScreen.dart';
 import '../AddTransport.dart';
 import '../AllServeController.dart';
-import '../Scrap/DetailScrap/detailScrapPage.dart';
+import '../DetailVendor/DetailVendorPage.dart';
 import 'DetailTransport.dart';
-import 'DetialLogistic/DetialLogisticPage.dart';
 
 class LogisticPage extends StatefulWidget {
   const LogisticPage({super.key});
@@ -165,13 +164,12 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
                                       padding: const EdgeInsets.all(5),
                                       child: GestureDetector(
                                         onTap: () {
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) => DetialLogisticPage(
-                                          //               id: controller.logoCompay[index].id!,
-                                          //               name: controller.logoCompay[index].name!,
-                                          //             )));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => DetailVendorPage(
+                                                        id: controllerLogistic.listCompanyLogistic[index].id!,
+                                                      )));
                                         },
                                         child: Container(
                                           width: size.width,
@@ -191,17 +189,17 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
                                             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                                             child: Row(
                                               children: [
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: controllerLogistic.listCompanyLogistic[index].image != null
-                                                      ? Image.network(
-                                                          "${controllerLogistic.listCompanyLogistic[index].image}",
-                                                          height: size.height / 17,
-                                                          errorBuilder: (context, error, stackTrace) =>
-                                                              Image.asset('assets/No_Image_Available.jpg'),
-                                                        )
-                                                      : Image.asset('assets/No_Image_Available.jpg'),
-                                                ),
+                                                // Expanded(
+                                                //   flex: 2,
+                                                //   child: controllerLogistic.listCompanyLogistic[index].image != null
+                                                //       ? Image.network(
+                                                //           "${controllerLogistic.listCompanyLogistic[index].image}",
+                                                //           height: size.height / 17,
+                                                //           errorBuilder: (context, error, stackTrace) =>
+                                                //               Image.asset('assets/No_Image_Available.jpg'),
+                                                //         )
+                                                //       : Image.asset('assets/No_Image_Available.jpg'),
+                                                // ),
                                                 SizedBox(
                                                   width: 10,
                                                 ),
@@ -268,6 +266,40 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
                     child: Column(
                       children: [
                         Container(
+                          alignment: Alignment.bottomCenter,
+                          height: size.height * 0.07,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddLogisticPage()));
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  child: Container(
+                                    height: size.height * 0.05,
+                                    width: size.width * 0.20,
+                                    //color: Colors.red,
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      'เพิ่มรายการ',
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          thickness: 3,
+                        ),
+                        Container(
                           padding: EdgeInsets.all(15),
                           child: controllerLogistic.logisticCompanyDetail.isEmpty
                               ? Center(child: CircularProgressIndicator())
@@ -282,13 +314,13 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
                                       padding: const EdgeInsets.all(5),
                                       child: GestureDetector(
                                         onTap: () {
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) => DetailCompany(
-                                          //               id: controller.logoCompay[index].id!,
-                                          //               name: controller.logoCompay[index].name!,
-                                          //             )));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => QuotationLogisticPage(
+                                                        id: controllerLogistic
+                                                            .logisticCompanyDetail[0].logistics![index].id!,
+                                                      )));
                                         },
                                         child: Container(
                                           width: size.width,

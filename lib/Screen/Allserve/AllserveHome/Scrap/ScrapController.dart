@@ -18,6 +18,8 @@ class ScrapController extends ChangeNotifier {
   bool hasmore = true;
   int page = 0;
   List<Vendor> listCompanyScrap = [];
+  Vendor? vendorDetail;
+  Scrap? quotationScrapDetail;
   // User? scrapCompanyDetail;
 
   // //โหลด User มาแสดงทั้งหมด
@@ -59,6 +61,30 @@ class ScrapController extends ChangeNotifier {
     if (loadItem.length < 5) {
       hasmore = false;
     }
+    notifyListeners();
+  }
+
+  // เรียกบริษัท Vendor ตามID
+  Future<void> detailVendor(
+    int id,
+  ) async {
+    vendorDetail = null;
+    pref = await SharedPreferences.getInstance();
+    token = pref?.getString('token');
+    vendorDetail = await ScrapSrevice.getVendorId(vendorId: id);
+
+    notifyListeners();
+  }
+
+  // DetailQuotationv
+  Future<void> detailScrapQuotation(
+    int id,
+  ) async {
+    quotationScrapDetail = null;
+    pref = await SharedPreferences.getInstance();
+    token = pref?.getString('token');
+    quotationScrapDetail = await ScrapSrevice.getQuotatianScrap(itemId: id);
+
     notifyListeners();
   }
 }

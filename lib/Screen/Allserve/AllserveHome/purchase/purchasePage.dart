@@ -1,3 +1,4 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/purchase/Quotation/QuotationPurchasePage.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/purchase/purchaseController.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,7 +6,10 @@ import 'package:provider/provider.dart';
 import '../../../../appTheme.dart';
 import '../../../Alljob/Companies/Widgets/CompaniesList.dart';
 import '../../../Widgets/SearchTextField.dart';
+import '../../../app/AppController.dart';
 import '../AllServeController.dart';
+import '../DetailVendor/DetailVendorPage.dart';
+import 'AddPurchase/AddPurchasePage.dart';
 
 class PurchasePage extends StatefulWidget {
   const PurchasePage({super.key});
@@ -79,7 +83,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
   void initState() {
     super.initState();
     _loadItem();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         _loadItem();
@@ -89,6 +93,8 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
 
   Future _loadItem() async {
     await context.read<PurchaseController>().loadCompanyPurchase();
+    final userId = await context.read<AppController>().user!.id;
+    await context.read<PurchaseController>().detailPurchaseCompany(userId!);
   }
 
   @override
@@ -97,7 +103,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
     final size = MediaQuery.of(context).size;
     return Consumer<PurchaseController>(
       builder: (context, controller, child) => DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -117,6 +123,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
               labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
               tabs: [
                 Tab(text: 'รายชื่อบริษัท'),
+                Tab(text: 'รายการ'),
                 Tab(text: 'รายการ'),
               ],
             ),
@@ -155,13 +162,12 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                                       padding: const EdgeInsets.all(5),
                                       child: GestureDetector(
                                         onTap: () {
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) => DetailCompany(
-                                          //               id: controller.logoCompay[index].id!,
-                                          //               name: controller.logoCompay[index].name!,
-                                          //             )));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => DetailVendorPage(
+                                                        id: controller.listCompanyPurchase[index].id!,
+                                                      )));
                                         },
                                         child: Container(
                                           width: size.width,
@@ -181,17 +187,17 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                                             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                                             child: Row(
                                               children: [
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: controller.listCompanyPurchase[index].image != null
-                                                      ? Image.network(
-                                                          "${controller.listCompanyPurchase[index].image}",
-                                                          height: size.height / 17,
-                                                          errorBuilder: (context, error, stackTrace) =>
-                                                              Image.asset('assets/No_Image_Available.jpg'),
-                                                        )
-                                                      : Image.asset('assets/No_Image_Available.jpg'),
-                                                ),
+                                                // Expanded(
+                                                //   flex: 2,
+                                                //   child: controller.listCompanyPurchase[index].image != null
+                                                //       ? Image.network(
+                                                //           "${controller.listCompanyPurchase[index].image}",
+                                                //           height: size.height / 17,
+                                                //           errorBuilder: (context, error, stackTrace) =>
+                                                //               Image.asset('assets/No_Image_Available.jpg'),
+                                                //         )
+                                                //       : Image.asset('assets/No_Image_Available.jpg'),
+                                                // ),
                                                 SizedBox(
                                                   width: 10,
                                                 ),
@@ -221,7 +227,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                                                         ),
                                                         SizedBox(height: 4),
                                                         // Text(
-                                                        //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
+                                                        //   'ลักษณะงาน ${controller.purchaseCompanyDetail[index].type ?? ''}',
                                                         //   style: TextStyle(fontSize: appFontSize?.body2),
                                                         //   // overflow: TextOverflow.ellipsis,
                                                         // ),
@@ -260,6 +266,160 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                         SizedBox(
                           height: 10,
                         ),
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(horizontal: 10),
+                        //   child: SearchTextField(),
+                        // ),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
+                        Container(
+                          alignment: Alignment.bottomCenter,
+                          height: size.height * 0.07,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddPurchasePage()));
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  child: Container(
+                                    height: size.height * 0.05,
+                                    width: size.width * 0.20,
+                                    //color: Colors.red,
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      'เพิ่มรายการ',
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(
+                          thickness: 3,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          child: controller.purchaseCompanyDetail.isEmpty
+                              ? Center(child: CircularProgressIndicator())
+                              : ListView.builder(
+                                  // controller: _controller,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: controller.purchaseCompanyDetail[0].puchases!.length,
+                                  itemBuilder: (_, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => QuotationPurchasePage(
+                                                        id: controller.purchaseCompanyDetail[0].puchases![index].id!,
+                                                      )));
+                                        },
+                                        child: Container(
+                                          width: size.width,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage('assets/images/promotionBG.png'),
+                                              fit: BoxFit.fill,
+                                            ),
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                  offset: Offset(0, 2),
+                                                  color: Color.fromRGBO(0, 78, 179, 0.05),
+                                                  blurRadius: 10)
+                                            ],
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                            child: Row(
+                                              children: [
+                                                // Expanded(
+                                                //   flex: 2,
+                                                //   child: controller.scrapCompanyDetail[0].scraps![index].image != null
+                                                //       ? Image.network(
+                                                //           "${controller.scrapCompanyDetail[0].scraps![index].image}",
+                                                //           height: size.height / 17,
+                                                //           errorBuilder: (context, error, stackTrace) =>
+                                                //               Image.asset('assets/No_Image_Available.jpg'),
+                                                //         )
+                                                //       : Image.asset('assets/No_Image_Available.jpg'),
+                                                // ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Expanded(
+                                                  flex: 8,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          controller.purchaseCompanyDetail[0].puchases![index].name ??
+                                                              '',
+                                                          style: TextStyle(
+                                                              fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
+                                                        ),
+                                                        SizedBox(height: 5),
+                                                        Text(
+                                                          'คำอธืบาย ${controller.purchaseCompanyDetail[0].puchases![index].description ?? ''}',
+                                                          style: TextStyle(fontSize: appFontSize?.body2),
+                                                          overflow: TextOverflow.ellipsis,
+                                                        ),
+                                                        SizedBox(height: 4),
+                                                        Text(
+                                                          'จำนวน ${controller.purchaseCompanyDetail[0].puchases![index].qty ?? ''} ',
+                                                          style: TextStyle(fontSize: appFontSize?.body2),
+                                                          overflow: TextOverflow.ellipsis,
+                                                        ),
+                                                        SizedBox(height: 4),
+                                                        // Text(
+                                                        //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
+                                                        //   style: TextStyle(fontSize: appFontSize?.body2),
+                                                        //   // overflow: TextOverflow.ellipsis,
+                                                        // ),
+                                                        // SizedBox(height: 4),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                //Tab3
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: SearchTextField(),
@@ -274,7 +434,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                         //       shrinkWrap: true,
                         //       scrollDirection: Axis.vertical,
                         //       physics: NeverScrollableScrollPhysics(),
-                        //       itemCount: controller.logoCompay.length,
+                        //       itemCount: controller.purchaseCompanyDetail.length,
                         //       itemBuilder: (_, index) {
                         //         return Padding(
                         //           padding: const EdgeInsets.all(5),
@@ -284,8 +444,8 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                         //                   context,
                         //                   MaterialPageRoute(
                         //                       builder: (context) => DetailCompany(
-                        //                             id: controller.logoCompay[index].id!,
-                        //                             name: controller.logoCompay[index].name!,
+                        //                             id: controller.purchaseCompanyDetail[index].id!,
+                        //                             name: controller.purchaseCompanyDetail[index].name!,
                         //                           )));
                         //             },
                         //             child: Container(
@@ -306,7 +466,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                         //                     Expanded(
                         //                         flex: 2,
                         //                         child: Image.network(
-                        //                           "${controller.logoCompay[index].image}",
+                        //                           "${controller.purchaseCompanyDetail[index].image}",
                         //                           height: size.height / 17,
                         //                           errorBuilder: (context, error, stackTrace) =>
                         //                               Image.asset('assets/images/No_Image_Available.jpg'),
@@ -325,24 +485,24 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                         //                           crossAxisAlignment: CrossAxisAlignment.start,
                         //                           children: [
                         //                             Text(
-                        //                               controller.logoCompay[index].name ?? '',
+                        //                               controller.purchaseCompanyDetail[index].name ?? '',
                         //                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
                         //                             ),
                         //                             SizedBox(height: 5),
                         //                             Text(
-                        //                               'เบอร์โทรศัพท์ ${controller.logoCompay[index].phone ?? ''}',
+                        //                               'เบอร์โทรศัพท์ ${controller.purchaseCompanyDetail[index].phone ?? ''}',
                         //                               style: TextStyle(fontSize: appFontSize?.body2),
                         //                               overflow: TextOverflow.ellipsis,
                         //                             ),
                         //                             SizedBox(height: 4),
                         //                             Text(
-                        //                               'อีเมลล์ ${controller.logoCompay[index].email ?? ''} ',
+                        //                               'อีเมลล์ ${controller.purchaseCompanyDetail[index].email ?? ''} ',
                         //                               style: TextStyle(fontSize: appFontSize?.body2),
                         //                               overflow: TextOverflow.ellipsis,
                         //                             ),
                         //                             SizedBox(height: 4),
                         //                             // Text(
-                        //                             //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
+                        //                             //   'ลักษณะงาน ${controller.purchaseCompanyDetail[index].type ?? ''}',
                         //                             //   style: TextStyle(fontSize: appFontSize?.body2),
                         //                             //   // overflow: TextOverflow.ellipsis,
                         //                             // ),

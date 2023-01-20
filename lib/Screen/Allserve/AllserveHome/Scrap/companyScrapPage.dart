@@ -1,3 +1,5 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/Scrap/AddScrap/AddScrapPage.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/Scrap/Quotation/QuotationScrapPage.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Scrap/ScrapController.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import '../../../Login/Widgets/AppTextForm.dart';
 import '../../../Widgets/SearchTextField.dart';
 import '../../../app/AppController.dart';
 import '../AllServeController.dart';
+import '../DetailVendor/DetailVendorPage.dart';
 import 'DetailScrap/detailScrapPage.dart';
 import 'ScrapDetailScreen.dart';
 
@@ -174,13 +177,12 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                                         padding: const EdgeInsets.all(5),
                                         child: GestureDetector(
                                           onTap: () {
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) => DetailScrapPage(
-                                            //               id: controller.logoCompay[index].id!,
-                                            //               name: controller.logoCompay[index].name!,
-                                            //             )));
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => DetailVendorPage(
+                                                          id: controllerScrap.listCompanyScrap[index].id!,
+                                                        )));
                                           },
                                           child: Container(
                                             width: size.width,
@@ -200,17 +202,17 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                                               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                                               child: Row(
                                                 children: [
-                                                  Expanded(
-                                                    flex: 2,
-                                                    child: controllerScrap.listCompanyScrap[index].image != null
-                                                        ? Image.network(
-                                                            "${controllerScrap.listCompanyScrap[index].image}",
-                                                            height: size.height / 17,
-                                                            errorBuilder: (context, error, stackTrace) =>
-                                                                Image.asset('assets/No_Image_Available.jpg'),
-                                                          )
-                                                        : Image.asset('assets/No_Image_Available.jpg'),
-                                                  ),
+                                                  // Expanded(
+                                                  //   flex: 2,
+                                                  //   child: controllerScrap.listCompanyScrap[index].image != null
+                                                  //       ? Image.network(
+                                                  //           "${controllerScrap.listCompanyScrap[index].image}",
+                                                  //           height: size.height / 17,
+                                                  //           errorBuilder: (context, error, stackTrace) =>
+                                                  //               Image.asset('assets/No_Image_Available.jpg'),
+                                                  //         )
+                                                  //       : Image.asset('assets/No_Image_Available.jpg'),
+                                                  // ),
                                                   SizedBox(
                                                     width: 10,
                                                   ),
@@ -277,12 +279,46 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                       SizedBox(
                         height: 10,
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: SearchTextField(),
+                      // Padding(
+                      //   padding: EdgeInsets.symmetric(horizontal: 10),
+                      //   child: SearchTextField(),
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
+                      Container(
+                        alignment: Alignment.bottomCenter,
+                        height: size.height * 0.07,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => AddScrapPage()));
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Container(
+                                  height: size.height * 0.05,
+                                  width: size.width * 0.20,
+                                  //color: Colors.red,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                                  ),
+                                  child: Center(
+                                      child: Text(
+                                    'เพิ่มรายการ',
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(
-                        height: 10,
+                      Divider(
+                        thickness: 3,
                       ),
                       Container(
                         padding: EdgeInsets.all(15),
@@ -299,13 +335,12 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                                     padding: const EdgeInsets.all(5),
                                     child: GestureDetector(
                                       onTap: () {
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) => DetailCompany(
-                                        //               id: controller.logoCompay[index].id!,
-                                        //               name: controller.logoCompay[index].name!,
-                                        //             )));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => QuotationScrapPage(
+                                                      id: controllerScrap.scrapCompanyDetail[0].scraps![index].id!,
+                                                    )));
                                       },
                                       child: Container(
                                         width: size.width,

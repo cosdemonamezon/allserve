@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../Quotation/quotation.dart';
+
 part 'scrap.g.dart';
 
 @JsonSerializable()
@@ -11,7 +13,9 @@ class Scrap {
     this.qty,
     this.description,
     this.status,
+    this.expire_hour,
     this.No,
+    this.quotations,
   });
 
   int? id;
@@ -20,7 +24,9 @@ class Scrap {
   String? qty;
   String? description;
   String? status;
+  String? expire_hour;
   int? No;
+  List<Quotation>? quotations;
 
   factory Scrap.fromJson(Map<String, dynamic> json) => _$ScrapFromJson(json);
 

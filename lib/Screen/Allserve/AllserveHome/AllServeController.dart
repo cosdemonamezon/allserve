@@ -40,6 +40,7 @@ class JobController extends ChangeNotifier {
 
 //โหลด User มาแสดงทั้งหมด
   Future<void> loadUserAllJob() async {
+    uesrAllJob.clear();
     final _loadUserAllJob = await JobService.getUserAllJob();
     uesrAllJob = (_loadUserAllJob);
 

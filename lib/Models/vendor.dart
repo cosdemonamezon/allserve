@@ -1,27 +1,27 @@
+import 'package:allserve/Models/imagesVendor.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'vendor.g.dart';
 
 @JsonSerializable()
 class Vendor {
-  Vendor({
-    this.id,
-    this.user_id,
-    this.name,
-    this.email,
-    this.phone,
-    this.tax,
-    this.address1,
-    this.address2,
-    this.address3,
-    this.country,
-    this.postcode,
-    this.fax,
-    this.image,
-    this.type,
-    this.status,
-    this.No,
-  });
+  Vendor(
+      {this.id,
+      this.user_id,
+      this.name,
+      this.email,
+      this.phone,
+      this.tax,
+      this.address1,
+      this.address2,
+      this.address3,
+      this.country,
+      this.postcode,
+      this.fax,
+      this.type,
+      this.status,
+      this.No,
+      this.images});
 
   int? id;
   String? user_id;
@@ -35,10 +35,10 @@ class Vendor {
   String? country;
   String? postcode;
   String? fax;
-  String? image;
   String? type;
   String? status;
   double? No;
+  List<ImagesVendor>? images;
 
   factory Vendor.fromJson(Map<String, dynamic> json) => _$VendorFromJson(json);
 

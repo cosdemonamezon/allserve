@@ -4,6 +4,7 @@ import 'package:allserve/Models/User/recruitmentcompanies.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../Logistic/logistic.dart';
+import '../Purchase/purchase.dart';
 
 part 'user.g.dart';
 
@@ -40,6 +41,7 @@ class User {
   List<Recruitmentcompanies>? recruitment_companies;
   List<Scrap>? scraps;
   List<Logistic>? logistics;
+  List<Purchase>? puchases;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

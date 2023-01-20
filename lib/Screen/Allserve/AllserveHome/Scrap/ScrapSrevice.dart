@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
@@ -53,7 +55,7 @@ class ScrapSrevice {
     }
   }
 
-  //เพิ่มตำแหน่งงานที่ company
+  //เรียกบริษัท Vendor เป็น Type
   static Future<List<Vendor>> getCompanyVendor({
     int? draw = 1,
     int? length = 10,
@@ -95,6 +97,74 @@ class ScrapSrevice {
     } else {
       final responseString = jsonDecode(response.body);
       throw responseString['message'];
+    }
+  }
+
+  // เพิ่มรายการสินค้า Scrap
+  Future<Scrap?> postListScrap({
+    required String user_id,
+    required String name,
+    required String qty,
+    required String description,
+    required PlatformFile images,
+  }) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    // final files = file.map((e) => MultipartFile.fromFileSync(e.path!)).toList();
+    final token = pref.getString('token');
+    final headers = {'Authorization': 'Bearer $token', 'Content-Type': 'multipart/form-data'};
+    final formData = FormData.fromMap(
+      {
+        "user_id": user_id,
+        "name": name,
+        "qty": qty,
+        "description": description,
+        'images': MultipartFile.fromFileSync(images.path!),
+      },
+    );
+    try {
+      final response = await Dio().post('$baseUrl/api/scrap', data: formData, options: Options(headers: headers));
+
+      return Scrap.fromJson(response.data['data']);
+    } on DioError catch (e) {
+      throw (e.response?.data['message']);
+    }
+  }
+
+  // เรียกบริษัท Vendor ตามID
+  static Future<Vendor?> getVendorId({required int vendorId}) async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/vendor/$vendorId');
+
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer ${token}', 'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      return Vendor.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
+  // DetailQuotationScrap
+  static Future<Scrap?> getQuotatianScrap({required int itemId}) async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/get_scrap_quotation_by_order/$itemId');
+
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer ${token}', 'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      return Scrap.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
     }
   }
 }
