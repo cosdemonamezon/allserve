@@ -83,7 +83,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
   void initState() {
     super.initState();
     _loadItem();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         _loadItem();
@@ -103,7 +103,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
     final size = MediaQuery.of(context).size;
     return Consumer<PurchaseController>(
       builder: (context, controller, child) => DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -124,7 +124,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
               tabs: [
                 Tab(text: 'รายชื่อบริษัท'),
                 Tab(text: 'รายการ'),
-                Tab(text: 'รายการ'),
+                // Tab(text: 'รายการ'),
               ],
             ),
           ),
@@ -409,134 +409,134 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                     ),
                   ),
                 ),
-                //Tab3
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: SearchTextField(),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        // Container(
-                        //   padding: EdgeInsets.all(15),
-                        //   child: ListView.builder(
-                        //       // controller: _controller,
-                        //       shrinkWrap: true,
-                        //       scrollDirection: Axis.vertical,
-                        //       physics: NeverScrollableScrollPhysics(),
-                        //       itemCount: controller.purchaseCompanyDetail.length,
-                        //       itemBuilder: (_, index) {
-                        //         return Padding(
-                        //           padding: const EdgeInsets.all(5),
-                        //           child: GestureDetector(
-                        //             onTap: () {
-                        //               Navigator.push(
-                        //                   context,
-                        //                   MaterialPageRoute(
-                        //                       builder: (context) => DetailCompany(
-                        //                             id: controller.purchaseCompanyDetail[index].id!,
-                        //                             name: controller.purchaseCompanyDetail[index].name!,
-                        //                           )));
-                        //             },
-                        //             child: Container(
-                        //               width: size.width,
-                        //               decoration: BoxDecoration(
-                        //                 image: DecorationImage(
-                        //                   image: AssetImage('assets/images/promotionBG.png'),
-                        //                   fit: BoxFit.fill,
-                        //                 ),
-                        //                 boxShadow: const [
-                        //                   BoxShadow(offset: Offset(0, 2), color: Color.fromRGBO(0, 78, 179, 0.05), blurRadius: 10)
-                        //                 ],
-                        //               ),
-                        //               child: Padding(
-                        //                 padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                        //                 child: Row(
-                        //                   children: [
-                        //                     Expanded(
-                        //                         flex: 2,
-                        //                         child: Image.network(
-                        //                           "${controller.purchaseCompanyDetail[index].image}",
-                        //                           height: size.height / 17,
-                        //                           errorBuilder: (context, error, stackTrace) =>
-                        //                               Image.asset('assets/images/No_Image_Available.jpg'),
-                        //                         )
-                        //                         // : Image.asset(
-                        //                         //     'assets/images/No_Image_Available.jpg'),
-                        //                         ),
-                        //                     SizedBox(
-                        //                       width: 10,
-                        //                     ),
-                        //                     Expanded(
-                        //                       flex: 8,
-                        //                       child: Padding(
-                        //                         padding: const EdgeInsets.symmetric(horizontal: 5),
-                        //                         child: Column(
-                        //                           crossAxisAlignment: CrossAxisAlignment.start,
-                        //                           children: [
-                        //                             Text(
-                        //                               controller.purchaseCompanyDetail[index].name ?? '',
-                        //                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
-                        //                             ),
-                        //                             SizedBox(height: 5),
-                        //                             Text(
-                        //                               'เบอร์โทรศัพท์ ${controller.purchaseCompanyDetail[index].phone ?? ''}',
-                        //                               style: TextStyle(fontSize: appFontSize?.body2),
-                        //                               overflow: TextOverflow.ellipsis,
-                        //                             ),
-                        //                             SizedBox(height: 4),
-                        //                             Text(
-                        //                               'อีเมลล์ ${controller.purchaseCompanyDetail[index].email ?? ''} ',
-                        //                               style: TextStyle(fontSize: appFontSize?.body2),
-                        //                               overflow: TextOverflow.ellipsis,
-                        //                             ),
-                        //                             SizedBox(height: 4),
-                        //                             // Text(
-                        //                             //   'ลักษณะงาน ${controller.purchaseCompanyDetail[index].type ?? ''}',
-                        //                             //   style: TextStyle(fontSize: appFontSize?.body2),
-                        //                             //   // overflow: TextOverflow.ellipsis,
-                        //                             // ),
-                        //                             // SizedBox(height: 4),
-                        //                           ],
-                        //                         ),
-                        //                       ),
-                        //                     ),
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         );
-                        //       }),
-                        // ),
-                        ListView(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: companydata
-                              .map((data) => CompaniesList(
-                                    companydata: data,
-                                    use: true,
-                                    press: () {
-                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => JobCompanyScreen()));
-                                    },
-                                  ))
-                              .toList(),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                // //Tab3
+                // SingleChildScrollView(
+                //   child: Padding(
+                //     padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                //     child: Column(
+                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       crossAxisAlignment: CrossAxisAlignment.end,
+                //       children: [
+                //         SizedBox(
+                //           height: 10,
+                //         ),
+                //         Padding(
+                //           padding: EdgeInsets.symmetric(horizontal: 10),
+                //           child: SearchTextField(),
+                //         ),
+                //         SizedBox(
+                //           height: 10,
+                //         ),
+                //         // Container(
+                //         //   padding: EdgeInsets.all(15),
+                //         //   child: ListView.builder(
+                //         //       // controller: _controller,
+                //         //       shrinkWrap: true,
+                //         //       scrollDirection: Axis.vertical,
+                //         //       physics: NeverScrollableScrollPhysics(),
+                //         //       itemCount: controller.purchaseCompanyDetail.length,
+                //         //       itemBuilder: (_, index) {
+                //         //         return Padding(
+                //         //           padding: const EdgeInsets.all(5),
+                //         //           child: GestureDetector(
+                //         //             onTap: () {
+                //         //               Navigator.push(
+                //         //                   context,
+                //         //                   MaterialPageRoute(
+                //         //                       builder: (context) => DetailCompany(
+                //         //                             id: controller.purchaseCompanyDetail[index].id!,
+                //         //                             name: controller.purchaseCompanyDetail[index].name!,
+                //         //                           )));
+                //         //             },
+                //         //             child: Container(
+                //         //               width: size.width,
+                //         //               decoration: BoxDecoration(
+                //         //                 image: DecorationImage(
+                //         //                   image: AssetImage('assets/images/promotionBG.png'),
+                //         //                   fit: BoxFit.fill,
+                //         //                 ),
+                //         //                 boxShadow: const [
+                //         //                   BoxShadow(offset: Offset(0, 2), color: Color.fromRGBO(0, 78, 179, 0.05), blurRadius: 10)
+                //         //                 ],
+                //         //               ),
+                //         //               child: Padding(
+                //         //                 padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                //         //                 child: Row(
+                //         //                   children: [
+                //         //                     Expanded(
+                //         //                         flex: 2,
+                //         //                         child: Image.network(
+                //         //                           "${controller.purchaseCompanyDetail[index].image}",
+                //         //                           height: size.height / 17,
+                //         //                           errorBuilder: (context, error, stackTrace) =>
+                //         //                               Image.asset('assets/images/No_Image_Available.jpg'),
+                //         //                         )
+                //         //                         // : Image.asset(
+                //         //                         //     'assets/images/No_Image_Available.jpg'),
+                //         //                         ),
+                //         //                     SizedBox(
+                //         //                       width: 10,
+                //         //                     ),
+                //         //                     Expanded(
+                //         //                       flex: 8,
+                //         //                       child: Padding(
+                //         //                         padding: const EdgeInsets.symmetric(horizontal: 5),
+                //         //                         child: Column(
+                //         //                           crossAxisAlignment: CrossAxisAlignment.start,
+                //         //                           children: [
+                //         //                             Text(
+                //         //                               controller.purchaseCompanyDetail[index].name ?? '',
+                //         //                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
+                //         //                             ),
+                //         //                             SizedBox(height: 5),
+                //         //                             Text(
+                //         //                               'เบอร์โทรศัพท์ ${controller.purchaseCompanyDetail[index].phone ?? ''}',
+                //         //                               style: TextStyle(fontSize: appFontSize?.body2),
+                //         //                               overflow: TextOverflow.ellipsis,
+                //         //                             ),
+                //         //                             SizedBox(height: 4),
+                //         //                             Text(
+                //         //                               'อีเมลล์ ${controller.purchaseCompanyDetail[index].email ?? ''} ',
+                //         //                               style: TextStyle(fontSize: appFontSize?.body2),
+                //         //                               overflow: TextOverflow.ellipsis,
+                //         //                             ),
+                //         //                             SizedBox(height: 4),
+                //         //                             // Text(
+                //         //                             //   'ลักษณะงาน ${controller.purchaseCompanyDetail[index].type ?? ''}',
+                //         //                             //   style: TextStyle(fontSize: appFontSize?.body2),
+                //         //                             //   // overflow: TextOverflow.ellipsis,
+                //         //                             // ),
+                //         //                             // SizedBox(height: 4),
+                //         //                           ],
+                //         //                         ),
+                //         //                       ),
+                //         //                     ),
+                //         //                   ],
+                //         //                 ),
+                //         //               ),
+                //         //             ),
+                //         //           ),
+                //         //         );
+                //         //       }),
+                //         // ),
+                //         ListView(
+                //           scrollDirection: Axis.vertical,
+                //           shrinkWrap: true,
+                //           physics: const NeverScrollableScrollPhysics(),
+                //           children: companydata
+                //               .map((data) => CompaniesList(
+                //                     companydata: data,
+                //                     use: true,
+                //                     press: () {
+                //                       // Navigator.push(context, MaterialPageRoute(builder: (context) => JobCompanyScreen()));
+                //                     },
+                //                   ))
+                //               .toList(),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

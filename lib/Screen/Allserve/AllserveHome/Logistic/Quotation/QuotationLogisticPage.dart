@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../appTheme.dart';
+import '../../ApproveQuotation/ApproveQuotationPage.dart';
 
 class QuotationLogisticPage extends StatefulWidget {
   const QuotationLogisticPage({super.key, required this.id});
@@ -286,60 +287,88 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                                           ],
                                                         ),
                                                         InkWell(
-                                                          onTap: () async {
-                                                            // final result2 =
-                                                            await showCupertinoDialog<bool>(
-                                                              context: context,
-                                                              builder: (context) {
-                                                                return CupertinoAlertDialog(
-                                                                  title: Text(
-                                                                    'ยืนยัน',
-                                                                  ),
-                                                                  content: Text(
-                                                                    'ยืนยันรับใบเสนอราคา',
-                                                                  ),
-                                                                  actions: [
-                                                                    CupertinoDialogAction(
-                                                                        child: Text(
-                                                                          'ยืนยัน',
-                                                                        ),
-                                                                        onPressed: () async {}),
-                                                                    CupertinoDialogAction(
-                                                                      child: Text(
-                                                                        'ยกเลิก',
-                                                                      ),
-                                                                      onPressed: () => Navigator.pop(context, false),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            );
-                                                            // if (result2 == true) {
-                                                            //   setState(() {
-                                                            //     controller.meetings[i].isAccept = true;
-                                                            //   });
-                                                            //   print(controller.meetings[i].isAccept);
-                                                            // }
+                                                          onTap: () {
+                                                            Navigator.push(context,
+                                                                MaterialPageRoute(builder: (context) {
+                                                              return ApproveQuotationPage(
+                                                                page: 'Logistic',
+                                                                id: controller.quotationDetail!.quotations![index].id!,
+                                                                titer: controller
+                                                                    .quotationDetail!.quotations![index].title!,
+                                                                remark: controller
+                                                                    .quotationDetail!.quotations![index].remark!,
+                                                                file: controller
+                                                                    .quotationDetail!.quotations![index].path!,
+                                                              );
+                                                            }));
                                                           },
                                                           child: Container(
-                                                            width: MediaQuery.of(context).size.width * 0.18,
-                                                            height: MediaQuery.of(context).size.height * 0.1,
-                                                            decoration: BoxDecoration(
-                                                              color: Colors.blue,
-                                                              borderRadius: BorderRadius.circular(20),
-                                                            ),
-                                                            child: Row(
-                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                              children: [
-                                                                Text(
-                                                                  'Accept',
-                                                                  style: TextStyle(
-                                                                      fontWeight: FontWeight.bold, fontSize: 15),
-                                                                )
-                                                              ],
-                                                            ),
+                                                            height: size.height * 0.04,
+                                                            width: size.width * 0.08,
+                                                            color: Colors.blueAccent,
+                                                            child: Center(
+                                                                child: Icon(
+                                                              Icons.arrow_forward_ios,
+                                                              size: 20,
+                                                              color: Colors.white,
+                                                            )),
                                                           ),
-                                                        )
+                                                        ),
+                                                        // InkWell(
+                                                        //   onTap: () async {
+                                                        //     // final result2 =
+                                                        //     await showCupertinoDialog<bool>(
+                                                        //       context: context,
+                                                        //       builder: (context) {
+                                                        //         return CupertinoAlertDialog(
+                                                        //           title: Text(
+                                                        //             'ยืนยัน',
+                                                        //           ),
+                                                        //           content: Text(
+                                                        //             'ยืนยันรับใบเสนอราคา',
+                                                        //           ),
+                                                        //           actions: [
+                                                        //             CupertinoDialogAction(
+                                                        //                 child: Text(
+                                                        //                   'ยืนยัน',
+                                                        //                 ),
+                                                        //                 onPressed: () async {}),
+                                                        //             CupertinoDialogAction(
+                                                        //               child: Text(
+                                                        //                 'ยกเลิก',
+                                                        //               ),
+                                                        //               onPressed: () => Navigator.pop(context, false),
+                                                        //             ),
+                                                        //           ],
+                                                        //         );
+                                                        //       },
+                                                        //     );
+                                                        //     // if (result2 == true) {
+                                                        //     //   setState(() {
+                                                        //     //     controller.meetings[i].isAccept = true;
+                                                        //     //   });
+                                                        //     //   print(controller.meetings[i].isAccept);
+                                                        //     // }
+                                                        //   },
+                                                        //   child: Container(
+                                                        //     width: MediaQuery.of(context).size.width * 0.18,
+                                                        //     height: MediaQuery.of(context).size.height * 0.1,
+                                                        //     decoration: BoxDecoration(
+                                                        //       color: Colors.blue,
+                                                        //       borderRadius: BorderRadius.circular(20),
+                                                        //     ),
+                                                        //     child: Row(
+                                                        //       mainAxisAlignment: MainAxisAlignment.center,
+                                                        //       children: [
+                                                        //         Text(
+                                                        //           'Accept',
+                                                        //           style: TextStyle(
+                                                        //               fontWeight: FontWeight.bold, fontSize: 15),
+                                                        //         )
+                                                        //       ],
+                                                        //     ),
+                                                        //   ),
+                                                        // )
                                                       ],
                                                     ),
                                                   ],

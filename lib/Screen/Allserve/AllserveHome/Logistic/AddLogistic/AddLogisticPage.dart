@@ -1,9 +1,14 @@
+import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/LogisiticSrevicer.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../Alljob/Job/Widgets/RecordTexForm.dart';
+import '../../../../Widgets/LoadingDialog.dart';
+import '../../../../app/AppController.dart';
+import '../LogisticController.dart';
 
 class AddLogisticPage extends StatefulWidget {
   const AddLogisticPage({super.key});
@@ -13,6 +18,16 @@ class AddLogisticPage extends StatefulWidget {
 }
 
 class _AddLogisticPageState extends State<AddLogisticPage> {
+  final TextEditingController name = TextEditingController();
+  final TextEditingController width = TextEditingController();
+  final TextEditingController height = TextEditingController();
+  final TextEditingController weight = TextEditingController();
+  final TextEditingController qty = TextEditingController();
+  final TextEditingController description = TextEditingController();
+  final TextEditingController startlocation = TextEditingController();
+  final TextEditingController endlocation = TextEditingController();
+  final TextEditingController time = TextEditingController();
+
   bool isChecked = false;
   String selectedItem = 'มอเอต์ไซด์';
 
@@ -30,9 +45,20 @@ class _AddLogisticPageState extends State<AddLogisticPage> {
     return Colors.blue;
   }
 
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _firstInstall();
+  }
+
+  Future<void> _firstInstall() async {
+    await context.read<AppController>().initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final user = context.read<AppController>().user;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -363,6 +389,68 @@ class _AddLogisticPageState extends State<AddLogisticPage> {
                     padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
+                        SizedBox(width: size.width * 0.10, child: Text('ชื่อ')),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: size.width * 0.60,
+                    child: RecordTextForm(
+                      controller: name,
+                      hintText: 'หัวข้อ',
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    child: Row(
+                      children: [
+                        Text(''),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.03,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    child: Row(
+                      children: [
+                        SizedBox(width: size.width * 0.10, child: Text('รายละเอียด')),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: size.width * 0.60,
+                    child: RecordTextForm(
+                      controller: description,
+                      hintText: '',
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    child: Row(
+                      children: [
+                        Text(''),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.03,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    child: Row(
+                      children: [
                         SizedBox(width: size.width * 0.10, child: Text('สถานที่')),
                       ],
                     ),
@@ -370,6 +458,7 @@ class _AddLogisticPageState extends State<AddLogisticPage> {
                   SizedBox(
                     width: size.width * 0.60,
                     child: RecordTextForm(
+                      controller: startlocation,
                       hintText: 'สถานที่',
                     ),
                   ),
@@ -400,6 +489,7 @@ class _AddLogisticPageState extends State<AddLogisticPage> {
                   SizedBox(
                     width: size.width * 0.60,
                     child: RecordTextForm(
+                      controller: endlocation,
                       hintText: 'สถานที่',
                     ),
                   ),
@@ -430,6 +520,7 @@ class _AddLogisticPageState extends State<AddLogisticPage> {
                   SizedBox(
                     width: size.width * 0.60,
                     child: RecordTextForm(
+                      controller: width,
                       hintText: 'ระบุความกว้าง',
                     ),
                   ),
@@ -453,14 +544,15 @@ class _AddLogisticPageState extends State<AddLogisticPage> {
                     padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
-                        SizedBox(width: size.width * 0.10, child: Text('ยาว')),
+                        SizedBox(width: size.width * 0.10, child: Text('สูง')),
                       ],
                     ),
                   ),
                   SizedBox(
                     width: size.width * 0.60,
                     child: RecordTextForm(
-                      hintText: 'ระบุความยาว',
+                      controller: height,
+                      hintText: 'ระบุความสูง',
                     ),
                   ),
                   Padding(
@@ -490,6 +582,7 @@ class _AddLogisticPageState extends State<AddLogisticPage> {
                   SizedBox(
                     width: size.width * 0.60,
                     child: RecordTextForm(
+                      controller: weight,
                       hintText: 'ระบุน้ำหนัก',
                     ),
                   ),
@@ -520,6 +613,7 @@ class _AddLogisticPageState extends State<AddLogisticPage> {
                   SizedBox(
                     width: size.width * 0.60,
                     child: RecordTextForm(
+                      controller: qty,
                       hintText: 'ระบุจำนวน',
                     ),
                   ),
@@ -527,7 +621,49 @@ class _AddLogisticPageState extends State<AddLogisticPage> {
                     padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
                     child: Row(
                       children: [
-                        Text('กล่อง'),
+                        Text('ชิ้น'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.03,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                child: Row(
+                  children: [
+                    Text('ระยะเวลาการปิดรับขอเสนอ'),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: size.height * 0.01,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    child: Row(
+                      children: [
+                        SizedBox(width: size.width * 0.10, child: Text('')),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: size.width * 0.60,
+                    child: RecordTextForm(
+                      controller: time,
+                      hintText: '30,60,120 นาที',
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    child: Row(
+                      children: [
+                        Text('นาที'),
                       ],
                     ),
                   ),
@@ -628,9 +764,53 @@ class _AddLogisticPageState extends State<AddLogisticPage> {
                                   //   fontFamily: fontFamily,
                                   // ),
                                 ),
-                                onPressed: () => Navigator.of(context)
-                                  ..pop()
-                                  ..pop(),
+                                onPressed: () async {
+                                  try {
+                                    LoadingDialog.open(context);
+                                    await LogisticSrevice().postListLogistic(
+                                      user_id: user!.id.toString(),
+                                      name: name.text,
+                                      description: description.text,
+                                      width: width.text,
+                                      weight: weight.text,
+                                      height: height.text,
+                                      qty: qty.text,
+                                      transport_type: selectedItem,
+                                      start_lat: '1',
+                                      start_lon: '1',
+                                      start_location: startlocation.text,
+                                      end_lat: '1',
+                                      end_lon: '1',
+                                      end_location: endlocation.text,
+                                      expire_hour: time.text,
+                                      images: _selectedFile!,
+                                    );
+                                    if (mounted) {
+                                      await context.read<LogisticController>().detailLogisticCompany(user.id!);
+                                      LoadingDialog.close(context);
+                                      Navigator.of(context)
+                                        ..pop()
+                                        ..pop();
+                                    }
+                                  } catch (e) {
+                                    LoadingDialog.close(context);
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        backgroundColor: Colors.blueAccent,
+                                        title: Text("Error", style: TextStyle(color: Colors.white)),
+                                        content: Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text('OK', style: TextStyle(color: Colors.white)))
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                },
                               )
                             ],
                           ),

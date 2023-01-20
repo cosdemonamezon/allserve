@@ -90,7 +90,7 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
   void initState() {
     super.initState();
     _loadItem();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     _controller.addListener(() {
       if (_controller.position.maxScrollExtent == _controller.offset) {
         _loadItem();
@@ -118,7 +118,7 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
     final size = MediaQuery.of(context).size;
     return Consumer2<JobController, ScrapController>(
       builder: (context, controller, controllerScrap, child) => DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -139,7 +139,7 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
               tabs: [
                 Tab(text: 'รายชื่อบริษัท'),
                 Tab(text: 'รายการของเสีย'),
-                Tab(text: 'เพิ่มรายการเสีย'),
+                // Tab(text: 'เพิ่มรายการเสีย'),
               ],
             ),
           ),
@@ -420,173 +420,173 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                     ],
                   ),
                 ),
-                //Tab3
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: size.height * 0.03,
-                        ),
-                        ListView(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          physics: const ClampingScrollPhysics(),
-                          children: List.generate(
-                              a,
-                              (index) => Padding(
-                                    padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
-                                    child: Card(
-                                      margin: EdgeInsets.zero,
-                                      elevation: 0,
-                                      color: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                        side: BorderSide(
-                                          color: Color(0xFFF3F3F3),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text('${index + 1}.'),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.01,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text('ชื่อสินค้า'),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.01,
-                                            ),
-                                            AppTextForm(
-                                              hintText: 'ใส่ชื่อสินค้า',
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.01,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text('จำนวน'),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.01,
-                                            ),
-                                            AppTextForm(
-                                              hintText: '',
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.01,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text('รูป'),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.01,
-                                            ),
-                                            Container(
-                                              height: size.height * 0.05,
-                                              width: size.width,
-                                              color:
-                                                  file != null ? Colors.blueAccent : Color.fromARGB(255, 124, 124, 124),
-                                              child: InkWell(
-                                                onTap: () async {
-                                                  result = await FilePicker.platform.pickFiles();
-                                                  setState(() {
-                                                    if (result != null) {
-                                                      file = result!.files.first;
-                                                      print(file);
-                                                    } else {
-                                                      print('No file');
-                                                    }
-                                                  });
-                                                },
-                                                child: Center(
-                                                    child: Text(
-                                                  'อัพโหลด',
-                                                  style: TextStyle(color: Colors.white),
-                                                )),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: size.height * 0.02,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  )),
-                        ),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              a = a + 1;
-                            });
-                          },
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.all(Radius.circular(30)),
-                            ),
-                            child: Center(child: Icon(Icons.plus_one)),
-                          ),
-                        ),
-                        SizedBox(
-                          height: size.height * 0.1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.10,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ScrapDetailScreen()));
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  child: Container(
-                                    height: size.height * 0.06,
-                                    width: size.width * 0.32,
-                                    //color: Colors.red,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.all(Radius.circular(30)),
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      'ยืนยัน',
-                                      style: TextStyle(color: Colors.white),
-                                    )),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // //Tab3
+                // SingleChildScrollView(
+                //   child: Padding(
+                //     padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                //     child: Column(
+                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       crossAxisAlignment: CrossAxisAlignment.center,
+                //       children: [
+                //         SizedBox(
+                //           height: size.height * 0.03,
+                //         ),
+                //         ListView(
+                //           shrinkWrap: true,
+                //           scrollDirection: Axis.vertical,
+                //           physics: const ClampingScrollPhysics(),
+                //           children: List.generate(
+                //               a,
+                //               (index) => Padding(
+                //                     padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
+                //                     child: Card(
+                //                       margin: EdgeInsets.zero,
+                //                       elevation: 0,
+                //                       color: Colors.white,
+                //                       shape: RoundedRectangleBorder(
+                //                         side: BorderSide(
+                //                           color: Color(0xFFF3F3F3),
+                //                           width: 2.0,
+                //                         ),
+                //                         borderRadius: BorderRadius.circular(8),
+                //                       ),
+                //                       child: Padding(
+                //                         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                //                         child: Column(
+                //                           children: [
+                //                             Row(
+                //                               children: [
+                //                                 Text('${index + 1}.'),
+                //                               ],
+                //                             ),
+                //                             SizedBox(
+                //                               height: size.height * 0.01,
+                //                             ),
+                //                             Row(
+                //                               children: [
+                //                                 Text('ชื่อสินค้า'),
+                //                               ],
+                //                             ),
+                //                             SizedBox(
+                //                               height: size.height * 0.01,
+                //                             ),
+                //                             AppTextForm(
+                //                               hintText: 'ใส่ชื่อสินค้า',
+                //                             ),
+                //                             SizedBox(
+                //                               height: size.height * 0.01,
+                //                             ),
+                //                             Row(
+                //                               children: [
+                //                                 Text('จำนวน'),
+                //                               ],
+                //                             ),
+                //                             SizedBox(
+                //                               height: size.height * 0.01,
+                //                             ),
+                //                             AppTextForm(
+                //                               hintText: '',
+                //                             ),
+                //                             SizedBox(
+                //                               height: size.height * 0.01,
+                //                             ),
+                //                             Row(
+                //                               children: [
+                //                                 Text('รูป'),
+                //                               ],
+                //                             ),
+                //                             SizedBox(
+                //                               height: size.height * 0.01,
+                //                             ),
+                //                             Container(
+                //                               height: size.height * 0.05,
+                //                               width: size.width,
+                //                               color:
+                //                                   file != null ? Colors.blueAccent : Color.fromARGB(255, 124, 124, 124),
+                //                               child: InkWell(
+                //                                 onTap: () async {
+                //                                   result = await FilePicker.platform.pickFiles();
+                //                                   setState(() {
+                //                                     if (result != null) {
+                //                                       file = result!.files.first;
+                //                                       print(file);
+                //                                     } else {
+                //                                       print('No file');
+                //                                     }
+                //                                   });
+                //                                 },
+                //                                 child: Center(
+                //                                     child: Text(
+                //                                   'อัพโหลด',
+                //                                   style: TextStyle(color: Colors.white),
+                //                                 )),
+                //                               ),
+                //                             ),
+                //                             SizedBox(
+                //                               height: size.height * 0.02,
+                //                             ),
+                //                           ],
+                //                         ),
+                //                       ),
+                //                     ),
+                //                   )),
+                //         ),
+                //         SizedBox(
+                //           height: size.height * 0.02,
+                //         ),
+                //         InkWell(
+                //           onTap: () {
+                //             setState(() {
+                //               a = a + 1;
+                //             });
+                //           },
+                //           child: Container(
+                //             height: 40,
+                //             width: 40,
+                //             decoration: BoxDecoration(
+                //               color: Colors.grey,
+                //               borderRadius: BorderRadius.all(Radius.circular(30)),
+                //             ),
+                //             child: Center(child: Icon(Icons.plus_one)),
+                //           ),
+                //         ),
+                //         SizedBox(
+                //           height: size.height * 0.1,
+                //         ),
+                //         SizedBox(
+                //           height: size.height * 0.10,
+                //           child: Row(
+                //             mainAxisAlignment: MainAxisAlignment.center,
+                //             children: [
+                //               InkWell(
+                //                 onTap: () {
+                //                   Navigator.push(context, MaterialPageRoute(builder: (context) => ScrapDetailScreen()));
+                //                 },
+                //                 child: Padding(
+                //                   padding: EdgeInsets.symmetric(horizontal: 10),
+                //                   child: Container(
+                //                     height: size.height * 0.06,
+                //                     width: size.width * 0.32,
+                //                     //color: Colors.red,
+                //                     decoration: BoxDecoration(
+                //                       color: Colors.blue,
+                //                       borderRadius: BorderRadius.all(Radius.circular(30)),
+                //                     ),
+                //                     child: Center(
+                //                         child: Text(
+                //                       'ยืนยัน',
+                //                       style: TextStyle(color: Colors.white),
+                //                     )),
+                //                   ),
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

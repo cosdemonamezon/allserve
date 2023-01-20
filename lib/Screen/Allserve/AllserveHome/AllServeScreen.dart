@@ -113,7 +113,7 @@ class _AllServeScreenState extends State<AllServeScreen> {
                       Column(
                         children: [
                           Text(
-                            'สรรหาคน',
+                            'สรรหาบุคลากร',
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                             softWrap: false,
                             maxLines: 3,
@@ -139,7 +139,7 @@ class _AllServeScreenState extends State<AllServeScreen> {
                       Column(
                         children: [
                           Text(
-                            'จัดซื้อ-จัดจ้าง',
+                            'จัดซื้อจัดจ้าง',
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                             softWrap: false,
                             maxLines: 3,
@@ -173,7 +173,7 @@ class _AllServeScreenState extends State<AllServeScreen> {
                       Column(
                         children: [
                           Text(
-                            'จำหน่ายของเสีย',
+                            'กำจัดของเสีย',
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                             softWrap: false,
                             maxLines: 3,

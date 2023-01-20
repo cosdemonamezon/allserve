@@ -6,10 +6,12 @@ class AppTextForm extends StatefulWidget {
     this.controller,
     this.hintText,
     this.isPassword = false,
+    this.keyboardType,
   }) : super(key: key);
   final TextEditingController? controller;
   final String? hintText;
   final bool isPassword;
+  final TextInputType? keyboardType;
 
   @override
   State<AppTextForm> createState() => _AppTextFormState();
@@ -22,6 +24,7 @@ class _AppTextFormState extends State<AppTextForm> {
     return TextFormField(
       obscureText: widget.isPassword ? _show : false,
       controller: widget.controller,
+      maxLines: widget.keyboardType == TextInputType.multiline ? null : 1,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(10.0),
         fillColor: Color(0xFFF3F6FA),
@@ -40,9 +43,7 @@ class _AppTextFormState extends State<AppTextForm> {
                     _show = !_show;
                   });
                 },
-                child: _show
-                    ? Image.asset('assets/icons/eye.png')
-                    : Image.asset('assets/icons/eye-slash.png'),
+                child: _show ? Image.asset('assets/icons/eye.png') : Image.asset('assets/icons/eye-slash.png'),
               )
             : null,
       ),

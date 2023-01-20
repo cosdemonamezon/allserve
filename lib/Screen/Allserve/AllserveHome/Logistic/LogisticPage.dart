@@ -84,7 +84,7 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
   void initState() {
     super.initState();
     _loadItem();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         _loadItem();
@@ -105,7 +105,7 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
     final size = MediaQuery.of(context).size;
     return Consumer2<JobController, LogisticController>(
       builder: (context, controller, controllerLogistic, child) => DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -126,7 +126,7 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
               tabs: [
                 Tab(text: 'ผู้ให้บริการ'),
                 Tab(text: 'รายการขนส่ง'),
-                Tab(text: 'Test'),
+                // Tab(text: 'Test'),
               ],
             ),
           ),
@@ -403,100 +403,100 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
                     ),
                   ),
                 ),
-                //Tab3
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: size.height * 0.60,
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: size.height * 0.05,
-                              ),
-                              ListTile(
-                                title: Text('1. ขนส่งสินค้า 200 กิโล'),
-                                subtitle: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('วันที่ 19/08/2565'),
-                                    Text('บริษัท A ขนส่ง จำกัด'),
-                                  ],
-                                ),
-                                trailing: IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context, MaterialPageRoute(builder: (context) => DetailTransport()));
-                                    },
-                                    icon: Icon(Icons.remove_red_eye)),
-                              ),
-                              Divider(
-                                thickness: 2,
-                              ),
-                              ListTile(
-                                title: Text('2. ขนส่งเหล็กเส้น 5000 กิโล'),
-                                subtitle: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('วันที่ 19/08/2565'),
-                                    Text('บริษัท B ขนส่ง จำกัด'),
-                                  ],
-                                ),
-                                trailing: IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context, MaterialPageRoute(builder: (context) => DetailTransport()));
-                                    },
-                                    icon: Icon(Icons.remove_red_eye)),
-                              ),
-                              Divider(
-                                thickness: 2,
-                              ),
-                              SizedBox(
-                                height: size.height * 0.05,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.bottomCenter,
-                          height: size.height * 0.10,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddTransport()));
-                                },
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  child: Container(
-                                    height: size.height * 0.06,
-                                    width: size.width * 0.32,
-                                    //color: Colors.red,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.all(Radius.circular(30)),
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      'เพิ่มรายการ',
-                                      style: TextStyle(color: Colors.white),
-                                    )),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // //Tab3
+                // SingleChildScrollView(
+                //   child: Padding(
+                //     padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                //     child: Column(
+                //       children: [
+                //         SizedBox(
+                //           height: size.height * 0.60,
+                //           child: Column(
+                //             children: [
+                //               SizedBox(
+                //                 height: size.height * 0.05,
+                //               ),
+                //               ListTile(
+                //                 title: Text('1. ขนส่งสินค้า 200 กิโล'),
+                //                 subtitle: Column(
+                //                   mainAxisAlignment: MainAxisAlignment.start,
+                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                //                   children: [
+                //                     Text('วันที่ 19/08/2565'),
+                //                     Text('บริษัท A ขนส่ง จำกัด'),
+                //                   ],
+                //                 ),
+                //                 trailing: IconButton(
+                //                     onPressed: () {
+                //                       Navigator.push(
+                //                           context, MaterialPageRoute(builder: (context) => DetailTransport()));
+                //                     },
+                //                     icon: Icon(Icons.remove_red_eye)),
+                //               ),
+                //               Divider(
+                //                 thickness: 2,
+                //               ),
+                //               ListTile(
+                //                 title: Text('2. ขนส่งเหล็กเส้น 5000 กิโล'),
+                //                 subtitle: Column(
+                //                   mainAxisAlignment: MainAxisAlignment.start,
+                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                //                   children: [
+                //                     Text('วันที่ 19/08/2565'),
+                //                     Text('บริษัท B ขนส่ง จำกัด'),
+                //                   ],
+                //                 ),
+                //                 trailing: IconButton(
+                //                     onPressed: () {
+                //                       Navigator.push(
+                //                           context, MaterialPageRoute(builder: (context) => DetailTransport()));
+                //                     },
+                //                     icon: Icon(Icons.remove_red_eye)),
+                //               ),
+                //               Divider(
+                //                 thickness: 2,
+                //               ),
+                //               SizedBox(
+                //                 height: size.height * 0.05,
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //         Container(
+                //           alignment: Alignment.bottomCenter,
+                //           height: size.height * 0.10,
+                //           child: Row(
+                //             mainAxisAlignment: MainAxisAlignment.center,
+                //             children: [
+                //               InkWell(
+                //                 onTap: () {
+                //                   Navigator.push(context, MaterialPageRoute(builder: (context) => AddTransport()));
+                //                 },
+                //                 child: Padding(
+                //                   padding: EdgeInsets.symmetric(horizontal: 10),
+                //                   child: Container(
+                //                     height: size.height * 0.06,
+                //                     width: size.width * 0.32,
+                //                     //color: Colors.red,
+                //                     decoration: BoxDecoration(
+                //                       color: Colors.blue,
+                //                       borderRadius: BorderRadius.all(Radius.circular(30)),
+                //                     ),
+                //                     child: Center(
+                //                         child: Text(
+                //                       'เพิ่มรายการ',
+                //                       style: TextStyle(color: Colors.white),
+                //                     )),
+                //                   ),
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

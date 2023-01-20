@@ -9,6 +9,7 @@ import 'dart:convert' as convert;
 import '../../../Models/Company/compay.dart';
 import '../../../Models/User/recruitmentcompanies.dart';
 import '../../../Models/UserJob/userJob.dart';
+import '../../../Models/approve.dart';
 import '../../../constants/constants.dart';
 
 class JobService {
@@ -240,6 +241,91 @@ class JobService {
     } else {
       final data = convert.jsonDecode(response.body);
       throw Exception(data['message']);
+    }
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////
+  // Approveใบเสนอราคา Scrap
+  Future<Approve?> postApproveScrap({
+    required String status,
+    required String remark,
+    required String id,
+  }) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/scrap_status_approve');
+    final response = await http.post(url,
+        body: jsonEncode({
+          "status": status,
+          "remark": remark,
+          "id": id,
+        }),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+          'Content-Type': 'application/json',
+        });
+    if (response.statusCode == 200) {
+      final responseString = jsonDecode(response.body);
+      return Approve.fromJson(responseString["data"]);
+    } else {
+      final responseString = jsonDecode(response.body);
+      throw responseString['message'];
+    }
+  }
+
+  // Approveใบเสนอราคา logistic
+  Future<Approve?> postApprovelogistic({
+    required String status,
+    required String remark,
+    required String id,
+  }) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/logistic_status_approve');
+    final response = await http.post(url,
+        body: jsonEncode({
+          "status": status,
+          "remark": remark,
+          "id": id,
+        }),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+          'Content-Type': 'application/json',
+        });
+    if (response.statusCode == 200) {
+      final responseString = jsonDecode(response.body);
+      return Approve.fromJson(responseString["data"]);
+    } else {
+      final responseString = jsonDecode(response.body);
+      throw responseString['message'];
+    }
+  }
+
+  // Approveใบเสนอราคา Purchase
+  Future<Approve?> postApprovePurchase({
+    required String status,
+    required String remark,
+    required String id,
+  }) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/purchase_status_approve');
+    final response = await http.post(url,
+        body: jsonEncode({
+          "status": status,
+          "remark": remark,
+          "id": id,
+        }),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+          'Content-Type': 'application/json',
+        });
+    if (response.statusCode == 200) {
+      final responseString = jsonDecode(response.body);
+      return Approve.fromJson(responseString["data"]);
+    } else {
+      final responseString = jsonDecode(response.body);
+      throw responseString['message'];
     }
   }
 }
