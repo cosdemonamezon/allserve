@@ -63,6 +63,7 @@ class _EditRecruitScreenState extends State<EditRecruitScreen> {
     description.text = widget.description ?? '';
   }
 
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(

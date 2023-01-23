@@ -27,6 +27,7 @@ class _AllServeScreenState extends State<AllServeScreen> {
     {"name": "ขนส่ง", "imgurl": "assets/icons/LogisticB.png"}
   ];
   final Uri _url = Uri.parse('https://www.alibaba.com');
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();

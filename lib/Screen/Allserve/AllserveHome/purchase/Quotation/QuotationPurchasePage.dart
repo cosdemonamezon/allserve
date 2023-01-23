@@ -142,7 +142,7 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                       Container(
                         padding: EdgeInsets.all(15),
                         child: controller.quotationPurchaseDetail?.quotations?.isEmpty ?? true
-                            ? Center(child: CircularProgressIndicator())
+                            ? SizedBox.shrink()
                             : ListView.builder(
                                 controller: _controller,
                                 shrinkWrap: true,
@@ -197,7 +197,18 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                                               Expanded(
                                                 flex: 8,
                                                 child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
+                                                    Text(
+                                                      "บริษัท:${controller.quotationPurchaseDetail?.quotations?[index].parther?.name ?? ''}",
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
+                                                      overflow: TextOverflow.fade,
+                                                      maxLines: 5,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
                                                     Row(
                                                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                       children: [
@@ -251,6 +262,8 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                                                                 page: 'Purchase',
                                                                 id: controller
                                                                     .quotationPurchaseDetail!.quotations![index].id!,
+                                                                company: controller.quotationPurchaseDetail!
+                                                                    .quotations![index].parther!.name!,
                                                                 titer: controller
                                                                     .quotationPurchaseDetail!.quotations![index].title!,
                                                                 remark: controller.quotationPurchaseDetail!

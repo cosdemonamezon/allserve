@@ -14,6 +14,7 @@ class DetailVendorPage extends StatefulWidget {
 }
 
 class _DetailVendorPageState extends State<DetailVendorPage> {
+  @override
   void initState() {
     _loadItem();
     super.initState();

@@ -1,6 +1,7 @@
 import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/AddLogistic/AddLogisticPage.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/LogisticController.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/Quotation/QuotationLogisticPage.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/succeed/ScceedQuotationLogistic.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -84,7 +85,7 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
   void initState() {
     super.initState();
     _loadItem();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     _controller.addListener(() {
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         _loadItem();
@@ -105,7 +106,7 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
     final size = MediaQuery.of(context).size;
     return Consumer2<JobController, LogisticController>(
       builder: (context, controller, controllerLogistic, child) => DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -125,8 +126,8 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
               labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
               tabs: [
                 Tab(text: 'ผู้ให้บริการ'),
-                Tab(text: 'รายการขนส่ง'),
-                // Tab(text: 'Test'),
+                Tab(text: 'รายการรอเสนอ'),
+                Tab(text: 'รายการอนุมัติ'),
               ],
             ),
           ),
@@ -310,93 +311,255 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount: controllerLogistic.logisticCompanyDetail[0].logistics!.length,
                                   itemBuilder: (_, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => QuotationLogisticPage(
-                                                        id: controllerLogistic
-                                                            .logisticCompanyDetail[0].logistics![index].id!,
-                                                      )));
-                                        },
-                                        child: Container(
-                                          width: size.width,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: AssetImage('assets/images/promotionBG.png'),
-                                              fit: BoxFit.fill,
-                                            ),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                  offset: Offset(0, 2),
-                                                  color: Color.fromRGBO(0, 78, 179, 0.05),
-                                                  blurRadius: 10)
-                                            ],
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                                            child: Row(
-                                              children: [
-                                                // Expanded(
-                                                //   flex: 2,
-                                                //   child: controller.scrapCompanyDetail[0].scraps![index].image != null
-                                                //       ? Image.network(
-                                                //           "${controller.scrapCompanyDetail[0].scraps![index].image}",
-                                                //           height: size.height / 17,
-                                                //           errorBuilder: (context, error, stackTrace) =>
-                                                //               Image.asset('assets/No_Image_Available.jpg'),
-                                                //         )
-                                                //       : Image.asset('assets/No_Image_Available.jpg'),
-                                                // ),
-                                                SizedBox(
-                                                  width: 10,
+                                    return controllerLogistic.logisticCompanyDetail[0].logistics![index].status ==
+                                            'Finish'
+                                        ? SizedBox.shrink()
+                                        : Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => QuotationLogisticPage(
+                                                              id: controllerLogistic
+                                                                  .logisticCompanyDetail[0].logistics![index].id!,
+                                                            )));
+                                              },
+                                              child: Container(
+                                                width: size.width,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: AssetImage('assets/images/promotionBG.png'),
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                        offset: Offset(0, 2),
+                                                        color: Color.fromRGBO(0, 78, 179, 0.05),
+                                                        blurRadius: 10)
+                                                  ],
                                                 ),
-                                                Expanded(
-                                                  flex: 8,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Text(
-                                                          controllerLogistic
-                                                                  .logisticCompanyDetail[0].logistics![index].name ??
-                                                              '',
-                                                          style: TextStyle(
-                                                              fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                                  child: Row(
+                                                    children: [
+                                                      // Expanded(
+                                                      //   flex: 2,
+                                                      //   child: controller.scrapCompanyDetail[0].scraps![index].image != null
+                                                      //       ? Image.network(
+                                                      //           "${controller.scrapCompanyDetail[0].scraps![index].image}",
+                                                      //           height: size.height / 17,
+                                                      //           errorBuilder: (context, error, stackTrace) =>
+                                                      //               Image.asset('assets/No_Image_Available.jpg'),
+                                                      //         )
+                                                      //       : Image.asset('assets/No_Image_Available.jpg'),
+                                                      // ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Expanded(
+                                                        flex: 8,
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                controllerLogistic.logisticCompanyDetail[0]
+                                                                        .logistics![index].name ??
+                                                                    '',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: appFontSize?.body),
+                                                              ),
+                                                              SizedBox(height: 5),
+                                                              Text(
+                                                                'คำอธิบาย ${controllerLogistic.logisticCompanyDetail[0].logistics![index].description ?? ''}',
+                                                                style: TextStyle(fontSize: appFontSize?.body2),
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                              SizedBox(height: 4),
+                                                              Text(
+                                                                'จำนวน ${controllerLogistic.logisticCompanyDetail[0].logistics![index].qty ?? ''} ',
+                                                                style: TextStyle(fontSize: appFontSize?.body2),
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                              SizedBox(height: 4),
+                                                              // Text(
+                                                              //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
+                                                              //   style: TextStyle(fontSize: appFontSize?.body2),
+                                                              //   // overflow: TextOverflow.ellipsis,
+                                                              // ),
+                                                              // SizedBox(height: 4),
+                                                            ],
+                                                          ),
                                                         ),
-                                                        SizedBox(height: 5),
-                                                        Text(
-                                                          'คำอธืบาย ${controllerLogistic.logisticCompanyDetail[0].logistics![index].description ?? ''}',
-                                                          style: TextStyle(fontSize: appFontSize?.body2),
-                                                          overflow: TextOverflow.ellipsis,
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => QuotationLogisticPage(
+                                                                        id: controllerLogistic.logisticCompanyDetail[0]
+                                                                            .logistics![index].id!,
+                                                                      )));
+                                                        },
+                                                        child: Container(
+                                                          height: size.height * 0.04,
+                                                          width: size.width * 0.08,
+                                                          color: Colors.blueAccent,
+                                                          child: Center(
+                                                              child: Icon(
+                                                            Icons.arrow_forward_ios,
+                                                            size: 20,
+                                                            color: Colors.white,
+                                                          )),
                                                         ),
-                                                        SizedBox(height: 4),
-                                                        Text(
-                                                          'จำนวน ${controllerLogistic.logisticCompanyDetail[0].logistics![index].qty ?? ''} ',
-                                                          style: TextStyle(fontSize: appFontSize?.body2),
-                                                          overflow: TextOverflow.ellipsis,
-                                                        ),
-                                                        SizedBox(height: 4),
-                                                        // Text(
-                                                        //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
-                                                        //   style: TextStyle(fontSize: appFontSize?.body2),
-                                                        //   // overflow: TextOverflow.ellipsis,
-                                                        // ),
-                                                        // SizedBox(height: 4),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
+                                          );
+                                  }),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                // Tab3
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.03),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          child: controllerLogistic.logisticCompanyDetail.isEmpty
+                              ? Center(child: CircularProgressIndicator())
+                              : ListView.builder(
+                                  // controller: _controller,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: controllerLogistic.logisticCompanyDetail[0].logistics!.length,
+                                  itemBuilder: (_, index) {
+                                    return controllerLogistic.logisticCompanyDetail[0].logistics![index].status !=
+                                            'Finish'
+                                        ? SizedBox.shrink()
+                                        : Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => ScceedQuotationLogistic(
+                                                              id: controllerLogistic
+                                                                  .logisticCompanyDetail[0].logistics![index].id!,
+                                                            )));
+                                              },
+                                              child: Container(
+                                                width: size.width,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: AssetImage('assets/images/promotionBG.png'),
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                        offset: Offset(0, 2),
+                                                        color: Color.fromRGBO(0, 78, 179, 0.05),
+                                                        blurRadius: 10)
+                                                  ],
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                                  child: Row(
+                                                    children: [
+                                                      // Expanded(
+                                                      //   flex: 2,
+                                                      //   child: controller.scrapCompanyDetail[0].scraps![index].image != null
+                                                      //       ? Image.network(
+                                                      //           "${controller.scrapCompanyDetail[0].scraps![index].image}",
+                                                      //           height: size.height / 17,
+                                                      //           errorBuilder: (context, error, stackTrace) =>
+                                                      //               Image.asset('assets/No_Image_Available.jpg'),
+                                                      //         )
+                                                      //       : Image.asset('assets/No_Image_Available.jpg'),
+                                                      // ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Expanded(
+                                                        flex: 8,
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                controllerLogistic.logisticCompanyDetail[0]
+                                                                        .logistics![index].name ??
+                                                                    '',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: appFontSize?.body),
+                                                              ),
+                                                              SizedBox(height: 5),
+                                                              Text(
+                                                                'คำอธิบาย ${controllerLogistic.logisticCompanyDetail[0].logistics![index].description ?? ''}',
+                                                                style: TextStyle(fontSize: appFontSize?.body2),
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                              SizedBox(height: 4),
+                                                              Text(
+                                                                'จำนวน ${controllerLogistic.logisticCompanyDetail[0].logistics![index].qty ?? ''} ',
+                                                                style: TextStyle(fontSize: appFontSize?.body2),
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                              SizedBox(height: 4),
+                                                              // Text(
+                                                              //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
+                                                              //   style: TextStyle(fontSize: appFontSize?.body2),
+                                                              //   // overflow: TextOverflow.ellipsis,
+                                                              // ),
+                                                              // SizedBox(height: 4),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => ScceedQuotationLogistic(
+                                                                        id: controllerLogistic.logisticCompanyDetail[0]
+                                                                            .logistics![index].id!,
+                                                                      )));
+                                                        },
+                                                        child: Container(
+                                                          height: size.height * 0.04,
+                                                          width: size.width * 0.08,
+                                                          color: Colors.blueAccent,
+                                                          child: Center(
+                                                              child: Icon(
+                                                            Icons.arrow_forward_ios,
+                                                            size: 20,
+                                                            color: Colors.white,
+                                                          )),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
                                   }),
                         ),
                       ],

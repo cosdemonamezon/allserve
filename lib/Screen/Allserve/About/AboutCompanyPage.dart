@@ -22,6 +22,7 @@ class _AboutCompanyPageState extends State<AboutCompanyPage> {
   final GlobalKey<FormState> editFormKey = GlobalKey<FormState>();
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();

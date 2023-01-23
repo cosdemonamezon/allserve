@@ -22,6 +22,7 @@ class _ShowAlertFromState extends State<ShowAlertFrom> {
   final TextEditingController? recruitment = TextEditingController();
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();

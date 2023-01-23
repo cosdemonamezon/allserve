@@ -14,6 +14,8 @@ class PurchaseController extends ChangeNotifier {
   String? token;
   SharedPreferences? pref;
   bool hasmore = true;
+  bool isloading = false;
+  bool allloded = false;
   int page = 0;
   List<Vendor> listCompanyPurchase = [];
   List<User> purchaseCompanyDetail = [];
@@ -32,11 +34,12 @@ class PurchaseController extends ChangeNotifier {
       type: 'other',
     );
 
-    listCompanyPurchase = (loadItem);
+    listCompanyPurchase.addAll(loadItem);
 
-    page = page + 1;
+    page++;
     draw++;
-    if (loadItem.length < 5) {
+    isloading = true;
+    if (loadItem.length < 10) {
       hasmore = false;
     }
     notifyListeners();

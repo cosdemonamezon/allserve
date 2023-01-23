@@ -1,5 +1,6 @@
 import 'package:allserve/Screen/Allserve/AllserveHome/purchase/Quotation/QuotationPurchasePage.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/purchase/purchaseController.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/succeed/ScceedQuotationPurchae.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,7 @@ class PurchasePage extends StatefulWidget {
 
 class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMixin {
   late TabController _tabController;
-  final _controller = ScrollController();
+  final ScrollController _controller = ScrollController();
   List companydata = [
     // {
     //   "title": "Amazon.com",
@@ -79,22 +80,32 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
       "price": "18,000 - 25,000"
     },
   ];
+
   @override
   void initState() {
     super.initState();
     _loadItem();
-    _tabController = TabController(length: 2, vsync: this);
-    _controller.addListener(() {
-      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-        _loadItem();
-      }
+    _tabController = TabController(length: 3, vsync: this);
+    Future.delayed(Duration.zero).then((value) async {
+      await context.read<PurchaseController>().loadCompanyPurchase();
+      _controller.addListener(() {
+        if (_controller.position.maxScrollExtent == _controller.offset) {
+          context.read<PurchaseController>().loadCompanyPurchase();
+        }
+      });
     });
   }
 
   Future _loadItem() async {
-    await context.read<PurchaseController>().loadCompanyPurchase();
     final userId = await context.read<AppController>().user!.id;
     await context.read<PurchaseController>().detailPurchaseCompany(userId!);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.dispose();
   }
 
   @override
@@ -103,7 +114,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
     final size = MediaQuery.of(context).size;
     return Consumer<PurchaseController>(
       builder: (context, controller, child) => DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -123,8 +134,8 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
               labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
               tabs: [
                 Tab(text: 'รายชื่อบริษัท'),
-                Tab(text: 'รายการ'),
-                // Tab(text: 'รายการ'),
+                Tab(text: 'รายการรอเสนอ'),
+                Tab(text: 'รายการอนุมัติ'),
               ],
             ),
           ),
@@ -244,9 +255,9 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                                     );
                                   } else {
                                     return Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 30),
+                                      padding: EdgeInsets.symmetric(vertical: 30),
                                       child: Center(
-                                        child: controller.hasmore ? const CircularProgressIndicator() : const Text(''),
+                                        child: controller.hasmore ? CircularProgressIndicator() : Text(''),
                                       ),
                                     );
                                   }
@@ -318,91 +329,258 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount: controller.purchaseCompanyDetail[0].puchases!.length,
                                   itemBuilder: (_, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => QuotationPurchasePage(
-                                                        id: controller.purchaseCompanyDetail[0].puchases![index].id!,
-                                                      )));
-                                        },
-                                        child: Container(
-                                          width: size.width,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: AssetImage('assets/images/promotionBG.png'),
-                                              fit: BoxFit.fill,
-                                            ),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                  offset: Offset(0, 2),
-                                                  color: Color.fromRGBO(0, 78, 179, 0.05),
-                                                  blurRadius: 10)
-                                            ],
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                                            child: Row(
-                                              children: [
-                                                // Expanded(
-                                                //   flex: 2,
-                                                //   child: controller.scrapCompanyDetail[0].scraps![index].image != null
-                                                //       ? Image.network(
-                                                //           "${controller.scrapCompanyDetail[0].scraps![index].image}",
-                                                //           height: size.height / 17,
-                                                //           errorBuilder: (context, error, stackTrace) =>
-                                                //               Image.asset('assets/No_Image_Available.jpg'),
-                                                //         )
-                                                //       : Image.asset('assets/No_Image_Available.jpg'),
-                                                // ),
-                                                SizedBox(
-                                                  width: 10,
+                                    return controller.purchaseCompanyDetail[0].puchases![index].status == 'Finish'
+                                        ? SizedBox.shrink()
+                                        : Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => QuotationPurchasePage(
+                                                              id: controller
+                                                                  .purchaseCompanyDetail[0].puchases![index].id!,
+                                                            )));
+                                              },
+                                              child: Container(
+                                                width: size.width,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: AssetImage('assets/images/promotionBG.png'),
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                        offset: Offset(0, 2),
+                                                        color: Color.fromRGBO(0, 78, 179, 0.05),
+                                                        blurRadius: 10)
+                                                  ],
                                                 ),
-                                                Expanded(
-                                                  flex: 8,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Text(
-                                                          controller.purchaseCompanyDetail[0].puchases![index].name ??
-                                                              '',
-                                                          style: TextStyle(
-                                                              fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                                  child: Row(
+                                                    children: [
+                                                      // Expanded(
+                                                      //   flex: 2,
+                                                      //   child: controller.scrapCompanyDetail[0].scraps![index].image != null
+                                                      //       ? Image.network(
+                                                      //           "${controller.scrapCompanyDetail[0].scraps![index].image}",
+                                                      //           height: size.height / 17,
+                                                      //           errorBuilder: (context, error, stackTrace) =>
+                                                      //               Image.asset('assets/No_Image_Available.jpg'),
+                                                      //         )
+                                                      //       : Image.asset('assets/No_Image_Available.jpg'),
+                                                      // ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Expanded(
+                                                        flex: 8,
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                controller.purchaseCompanyDetail[0].puchases![index]
+                                                                        .name ??
+                                                                    '',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: appFontSize?.body),
+                                                              ),
+                                                              SizedBox(height: 5),
+                                                              Text(
+                                                                'คำอธืบาย ${controller.purchaseCompanyDetail[0].puchases![index].description ?? ''}',
+                                                                style: TextStyle(fontSize: appFontSize?.body2),
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                              SizedBox(height: 4),
+                                                              Text(
+                                                                'จำนวน ${controller.purchaseCompanyDetail[0].puchases![index].qty ?? ''} ',
+                                                                style: TextStyle(fontSize: appFontSize?.body2),
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                              SizedBox(height: 4),
+                                                              // Text(
+                                                              //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
+                                                              //   style: TextStyle(fontSize: appFontSize?.body2),
+                                                              //   // overflow: TextOverflow.ellipsis,
+                                                              // ),
+                                                              // SizedBox(height: 4),
+                                                            ],
+                                                          ),
                                                         ),
-                                                        SizedBox(height: 5),
-                                                        Text(
-                                                          'คำอธืบาย ${controller.purchaseCompanyDetail[0].puchases![index].description ?? ''}',
-                                                          style: TextStyle(fontSize: appFontSize?.body2),
-                                                          overflow: TextOverflow.ellipsis,
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => QuotationPurchasePage(
+                                                                        id: controller.purchaseCompanyDetail[0]
+                                                                            .puchases![index].id!,
+                                                                      )));
+                                                        },
+                                                        child: Container(
+                                                          height: size.height * 0.04,
+                                                          width: size.width * 0.08,
+                                                          color: Colors.blueAccent,
+                                                          child: Center(
+                                                              child: Icon(
+                                                            Icons.arrow_forward_ios,
+                                                            size: 20,
+                                                            color: Colors.white,
+                                                          )),
                                                         ),
-                                                        SizedBox(height: 4),
-                                                        Text(
-                                                          'จำนวน ${controller.purchaseCompanyDetail[0].puchases![index].qty ?? ''} ',
-                                                          style: TextStyle(fontSize: appFontSize?.body2),
-                                                          overflow: TextOverflow.ellipsis,
-                                                        ),
-                                                        SizedBox(height: 4),
-                                                        // Text(
-                                                        //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
-                                                        //   style: TextStyle(fontSize: appFontSize?.body2),
-                                                        //   // overflow: TextOverflow.ellipsis,
-                                                        // ),
-                                                        // SizedBox(height: 4),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
+                                          );
+                                  }),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                //Tab3
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          child: controller.purchaseCompanyDetail.isEmpty
+                              ? Center(child: CircularProgressIndicator())
+                              : ListView.builder(
+                                  // controller: _controller,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: controller.purchaseCompanyDetail[0].puchases!.length,
+                                  itemBuilder: (_, index) {
+                                    return controller.purchaseCompanyDetail[0].puchases![index].status != 'Finish'
+                                        ? SizedBox.shrink()
+                                        : Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => ScceedQuotationPurchae(
+                                                              id: controller
+                                                                  .purchaseCompanyDetail[0].puchases![index].id!,
+                                                            )));
+                                              },
+                                              child: Container(
+                                                width: size.width,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: AssetImage('assets/images/promotionBG.png'),
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                        offset: Offset(0, 2),
+                                                        color: Color.fromRGBO(0, 78, 179, 0.05),
+                                                        blurRadius: 10)
+                                                  ],
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                                  child: Row(
+                                                    children: [
+                                                      // Expanded(
+                                                      //   flex: 2,
+                                                      //   child: controller.scrapCompanyDetail[0].scraps![index].image != null
+                                                      //       ? Image.network(
+                                                      //           "${controller.scrapCompanyDetail[0].scraps![index].image}",
+                                                      //           height: size.height / 17,
+                                                      //           errorBuilder: (context, error, stackTrace) =>
+                                                      //               Image.asset('assets/No_Image_Available.jpg'),
+                                                      //         )
+                                                      //       : Image.asset('assets/No_Image_Available.jpg'),
+                                                      // ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Expanded(
+                                                        flex: 8,
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                controller.purchaseCompanyDetail[0].puchases![index]
+                                                                        .name ??
+                                                                    '',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: appFontSize?.body),
+                                                              ),
+                                                              SizedBox(height: 5),
+                                                              Text(
+                                                                'คำอธืบาย ${controller.purchaseCompanyDetail[0].puchases![index].description ?? ''}',
+                                                                style: TextStyle(fontSize: appFontSize?.body2),
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                              SizedBox(height: 4),
+                                                              Text(
+                                                                'จำนวน ${controller.purchaseCompanyDetail[0].puchases![index].qty ?? ''} ',
+                                                                style: TextStyle(fontSize: appFontSize?.body2),
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                              SizedBox(height: 4),
+                                                              // Text(
+                                                              //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
+                                                              //   style: TextStyle(fontSize: appFontSize?.body2),
+                                                              //   // overflow: TextOverflow.ellipsis,
+                                                              // ),
+                                                              // SizedBox(height: 4),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => ScceedQuotationPurchae(
+                                                                        id: controller.purchaseCompanyDetail[0]
+                                                                            .puchases![index].id!,
+                                                                      )));
+                                                        },
+                                                        child: Container(
+                                                          height: size.height * 0.04,
+                                                          width: size.width * 0.08,
+                                                          color: Colors.blueAccent,
+                                                          child: Center(
+                                                              child: Icon(
+                                                            Icons.arrow_forward_ios,
+                                                            size: 20,
+                                                            color: Colors.white,
+                                                          )),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
                                   }),
                         ),
                       ],

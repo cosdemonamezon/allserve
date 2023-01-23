@@ -31,7 +31,7 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
   String mounthvalue = 'เดือน';
   String yearvalue = 'ปี';
   bool isChecked = false;
-
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(

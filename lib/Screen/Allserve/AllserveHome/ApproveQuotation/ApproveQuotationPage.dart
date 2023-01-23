@@ -1,17 +1,29 @@
 import 'package:allserve/Screen/Allserve/AllserveHome/AllServeService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../appTheme.dart';
 import '../../../Login/Widgets/AppTextForm.dart';
 import '../../../Widgets/LoadingDialog.dart';
+import '../../../app/AppController.dart';
+import '../Logistic/LogisticController.dart';
+import '../Scrap/ScrapController.dart';
 import '../Widgets/TextFieldWidget.dart';
+import '../purchase/purchaseController.dart';
 
 class ApproveQuotationPage extends StatefulWidget {
   const ApproveQuotationPage(
-      {super.key, required this.id, required this.titer, required this.remark, required this.file, required this.page});
+      {super.key,
+      required this.id,
+      required this.titer,
+      required this.remark,
+      required this.file,
+      required this.page,
+      required this.company});
   final int id;
+  final String company;
   final String titer;
   final String remark;
   final String file;
@@ -29,12 +41,14 @@ class _ApproveQuotationPageState extends State<ApproveQuotationPage> {
     // TODO: implement initState
     super.initState();
     print(widget.id);
+    context.read<AppController>().initialize();
   }
 
   @override
   Widget build(BuildContext context) {
     final appFontSize = AppFontSize.of(context);
     final size = MediaQuery.of(context).size;
+    final userId = context.read<AppController>().user!.id;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -51,13 +65,16 @@ class _ApproveQuotationPageState extends State<ApproveQuotationPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text('บริษัท: ${widget.company}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.titer, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text('หัวข้อ', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text(widget.titer, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                    Text('รายละเอียด', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     Text(widget.remark,
                         style: TextStyle(
                           fontSize: 15,
@@ -68,10 +85,11 @@ class _ApproveQuotationPageState extends State<ApproveQuotationPage> {
                   children: [
                     Text('clickme'),
                     InkWell(
+                      // onTap: () => _launchURL(url: widget.file),
                       onTap: () {
                         final url = widget.file;
 
-                        openBrowserURL(url: url, inApp: true);
+                        openBrowserURL(url: url, inApp: false);
                       },
                       child: Icon(
                         Icons.file_open,
@@ -176,34 +194,103 @@ class _ApproveQuotationPageState extends State<ApproveQuotationPage> {
                                 switch (widget.page) {
                                   case "Logistic":
                                     {
-                                      await JobService().postApproveScrap(
-                                          id: widget.id.toString(), remark: remark.text, status: selectedItem);
-                                      if (mounted) {
-                                        Navigator.of(context)
-                                          ..pop()
-                                          ..pop();
+                                      try {
+                                        LoadingDialog.open(context);
+                                        await JobService().postApprovelogistic(
+                                            id: widget.id.toString(), remark: remark.text, status: selectedItem);
+                                        if (mounted) {
+                                          await context.read<LogisticController>().detailLogisticCompany(userId!);
+                                          LoadingDialog.close(context);
+                                          Navigator.of(context)
+                                            ..pop()
+                                            ..pop()
+                                            ..pop();
+                                        }
+                                      } catch (e) {
+                                        LoadingDialog.close(context);
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            backgroundColor: Colors.blueAccent,
+                                            title: Text("Error", style: TextStyle(color: Colors.white)),
+                                            content: Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text('OK', style: TextStyle(color: Colors.white)))
+                                            ],
+                                          ),
+                                        );
                                       }
                                       break;
                                     }
                                   case "Scrap":
                                     {
-                                      await JobService().postApproveScrap(
-                                          id: widget.id.toString(), remark: remark.text, status: selectedItem);
-                                      if (mounted) {
-                                        Navigator.of(context)
-                                          ..pop()
-                                          ..pop();
+                                      try {
+                                        LoadingDialog.open(context);
+                                        await JobService().postApproveScrap(
+                                            id: widget.id.toString(), remark: remark.text, status: selectedItem);
+                                        if (mounted) {
+                                          context.read<ScrapController>().detailScrapCompany(userId!);
+                                          LoadingDialog.close(context);
+                                          Navigator.of(context)
+                                            ..pop()
+                                            ..pop()
+                                            ..pop();
+                                        }
+                                      } catch (e) {
+                                        LoadingDialog.close(context);
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            backgroundColor: Colors.blueAccent,
+                                            title: Text("Error", style: TextStyle(color: Colors.white)),
+                                            content: Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text('OK', style: TextStyle(color: Colors.white)))
+                                            ],
+                                          ),
+                                        );
                                       }
                                       break;
                                     }
                                   case "Purchase":
                                     {
-                                      await JobService().postApprovePurchase(
-                                          id: widget.id.toString(), remark: remark.text, status: selectedItem);
-                                      if (mounted) {
-                                        Navigator.of(context)
-                                          ..pop()
-                                          ..pop();
+                                      try {
+                                        LoadingDialog.open(context);
+                                        await JobService().postApprovePurchase(
+                                            id: widget.id.toString(), remark: remark.text, status: selectedItem);
+                                        if (mounted) {
+                                          context.read<PurchaseController>().detailPurchaseCompany(userId!);
+                                          LoadingDialog.close(context);
+                                          Navigator.of(context)
+                                            ..pop()
+                                            ..pop()
+                                            ..pop();
+                                        }
+                                      } catch (e) {
+                                        LoadingDialog.close(context);
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            backgroundColor: Colors.blueAccent,
+                                            title: Text("Error", style: TextStyle(color: Colors.white)),
+                                            content: Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text('OK', style: TextStyle(color: Colors.white)))
+                                            ],
+                                          ),
+                                        );
                                       }
                                       break;
                                     }
@@ -255,6 +342,18 @@ class _ApproveQuotationPageState extends State<ApproveQuotationPage> {
         enableJavaScript: true,
         enableDomStorage: true,
       );
+    }
+  }
+
+  _launchURL({
+    required String url,
+  }) async {
+    // const url = 'https://flutter.io';
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 }

@@ -25,7 +25,7 @@ class _AddScrapPageState extends State<AddScrapPage> {
   int a = 1;
   FilePickerResult? result;
   PlatformFile? _selectedFile;
-
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();

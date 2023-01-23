@@ -45,6 +45,7 @@ class _AddLogisticPageState extends State<AddLogisticPage> {
     return Colors.blue;
   }
 
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();

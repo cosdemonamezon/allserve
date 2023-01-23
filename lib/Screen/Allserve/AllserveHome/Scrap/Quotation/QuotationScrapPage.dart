@@ -135,7 +135,7 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                     Container(
                       padding: EdgeInsets.all(15),
                       child: controller.quotationScrapDetail?.quotations?.isEmpty ?? true
-                          ? Center(child: CircularProgressIndicator())
+                          ? SizedBox.shrink()
                           : ListView.builder(
                               controller: _controller,
                               shrinkWrap: true,
@@ -145,7 +145,7 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                               itemBuilder: (_, index) {
                                 // final String? selectedFile = controller.quotationScrapDetail!.quotations![index].path;
                                 // final File path = selectedFile as File;
-                                // if (index < controller.quotationScrapDetail!.quotations!.length) {
+                                // if (controller.quotationScrapDetail!.status != 'Finish') {
                                 return Padding(
                                   padding: const EdgeInsets.all(5),
                                   child: GestureDetector(
@@ -193,6 +193,13 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                               flex: 8,
                                               child: Column(
                                                 children: [
+                                                  Text(
+                                                    "บริษัท:${controller.quotationScrapDetail?.quotations?[index].parther?.name ?? ''}",
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
+                                                    overflow: TextOverflow.fade,
+                                                    maxLines: 5,
+                                                  ),
                                                   Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
@@ -242,6 +249,8 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                                                             return ApproveQuotationPage(
                                                               page: 'Scrap',
+                                                              company: controller.quotationScrapDetail!
+                                                                  .quotations![index].parther!.name!,
                                                               id: controller
                                                                   .quotationScrapDetail!.quotations![index].id!,
                                                               titer: controller
@@ -331,16 +340,8 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                     ),
                                   ),
                                 );
-                                // }
-                                // else {
-                                //   return Padding(
-                                //     padding: const EdgeInsets.symmetric(vertical: 30),
-                                //     child: Center(
-                                //       child: controllerLogistic.hasmore
-                                //           ? const CircularProgressIndicator()
-                                //           : const Text(''),
-                                //     ),
-                                //   );
+                                // } else {
+                                //   return SizedBox.shrink();
                                 // }
                               }),
                     ),

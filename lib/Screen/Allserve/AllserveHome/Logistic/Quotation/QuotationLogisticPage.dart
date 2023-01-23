@@ -185,7 +185,7 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                       Container(
                         padding: EdgeInsets.all(15),
                         child: controller.quotationDetail?.quotations?.isEmpty ?? true
-                            ? Center(child: CircularProgressIndicator())
+                            ? SizedBox.shrink()
                             : ListView.builder(
                                 controller: _controller,
                                 shrinkWrap: true,
@@ -242,7 +242,15 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                               Expanded(
                                                 flex: 8,
                                                 child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
+                                                    Text(
+                                                      "บริษัท:${controller.quotationDetail?.quotations?[index].parther?.name ?? ''}",
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
+                                                      overflow: TextOverflow.fade,
+                                                      maxLines: 5,
+                                                    ),
                                                     Row(
                                                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                       children: [
@@ -292,6 +300,8 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                                                 MaterialPageRoute(builder: (context) {
                                                               return ApproveQuotationPage(
                                                                 page: 'Logistic',
+                                                                company: controller
+                                                                    .quotationDetail!.quotations![index].parther!.name!,
                                                                 id: controller.quotationDetail!.quotations![index].id!,
                                                                 titer: controller
                                                                     .quotationDetail!.quotations![index].title!,

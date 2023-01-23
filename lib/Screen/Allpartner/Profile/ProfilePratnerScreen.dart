@@ -27,6 +27,7 @@ class _ProfilePratnerScreenState extends State<ProfilePratnerScreen> {
   final TextEditingController address = TextEditingController();
   File? _selectedFile;
   String? userImage;
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();

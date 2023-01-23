@@ -16,7 +16,7 @@ class _ScreenAllState extends State<ScreenAll> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(15, 15, 15, 25),
+      padding: EdgeInsets.fromLTRB(15, 15, 15, 15),
       color: Color.fromARGB(255, 255, 255, 255),
       child: SingleChildScrollView(
         child: Column(

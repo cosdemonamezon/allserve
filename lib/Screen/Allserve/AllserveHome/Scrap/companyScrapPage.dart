@@ -1,6 +1,7 @@
 import 'package:allserve/Screen/Allserve/AllserveHome/Scrap/AddScrap/AddScrapPage.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Scrap/Quotation/QuotationScrapPage.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Scrap/ScrapController.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/succeed/ScceedQuotation.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -90,7 +91,7 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
   void initState() {
     super.initState();
     _loadItem();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     _controller.addListener(() {
       if (_controller.position.maxScrollExtent == _controller.offset) {
         _loadItem();
@@ -118,7 +119,7 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
     final size = MediaQuery.of(context).size;
     return Consumer2<JobController, ScrapController>(
       builder: (context, controller, controllerScrap, child) => DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             title: Text(
@@ -138,8 +139,8 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
               labelStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'NotoSansThai'),
               tabs: [
                 Tab(text: 'รายชื่อบริษัท'),
-                Tab(text: 'รายการของเสีย'),
-                // Tab(text: 'เพิ่มรายการเสีย'),
+                Tab(text: 'รายการรอเสนอ'),
+                Tab(text: 'รายการอนุมัติ'),
               ],
             ),
           ),
@@ -149,6 +150,7 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
               children: [
                 //Tab1
                 SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
                   child: Column(
                     children: [
                       SizedBox(
@@ -321,102 +323,269 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                         thickness: 3,
                       ),
                       Container(
-                        padding: EdgeInsets.all(15),
-                        child: controllerScrap.scrapCompanyDetail.isEmpty
-                            ? Center(child: CircularProgressIndicator())
-                            : ListView.builder(
-                                // controller: _controller,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: controllerScrap.scrapCompanyDetail[0].scraps!.length,
-                                itemBuilder: (_, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(5),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => QuotationScrapPage(
-                                                      id: controllerScrap.scrapCompanyDetail[0].scraps![index].id!,
-                                                    )));
-                                      },
-                                      child: Container(
-                                        width: size.width,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: AssetImage('assets/images/promotionBG.png'),
-                                            fit: BoxFit.fill,
-                                          ),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                                offset: Offset(0, 2),
-                                                color: Color.fromRGBO(0, 78, 179, 0.05),
-                                                blurRadius: 10)
-                                          ],
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                                          child: Row(
-                                            children: [
-                                              // Expanded(
-                                              //   flex: 2,
-                                              //   child: controller.scrapCompanyDetail[0].scraps![index].image != null
-                                              //       ? Image.network(
-                                              //           "${controller.scrapCompanyDetail[0].scraps![index].image}",
-                                              //           height: size.height / 17,
-                                              //           errorBuilder: (context, error, stackTrace) =>
-                                              //               Image.asset('assets/No_Image_Available.jpg'),
-                                              //         )
-                                              //       : Image.asset('assets/No_Image_Available.jpg'),
-                                              // ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                flex: 8,
+                          padding: EdgeInsets.all(15),
+                          child: controllerScrap.scrapCompanyDetail.isEmpty
+                              ? Center(child: CircularProgressIndicator())
+                              : ListView.builder(
+                                  // controller: _controller,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: controllerScrap.scrapCompanyDetail[0].scraps!.length,
+                                  itemBuilder: (_, index) {
+                                    // ignore: unrelated_type_equality_checks
+                                    return controllerScrap.scrapCompanyDetail[0].scraps![index].status == 'Finish'
+                                        ? SizedBox.shrink()
+                                        : Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => QuotationScrapPage(
+                                                              id: controllerScrap
+                                                                  .scrapCompanyDetail[0].scraps![index].id!,
+                                                            )));
+                                              },
+                                              child: Container(
+                                                width: size.width,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: AssetImage('assets/images/promotionBG.png'),
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                        offset: Offset(0, 2),
+                                                        color: Color.fromRGBO(0, 78, 179, 0.05),
+                                                        blurRadius: 10)
+                                                  ],
+                                                ),
                                                 child: Padding(
-                                                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                                  child: Row(
                                                     children: [
-                                                      Text(
-                                                        controllerScrap.scrapCompanyDetail[0].scraps![index].name ?? '',
-                                                        style: TextStyle(
-                                                            fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
-                                                      ),
-                                                      SizedBox(height: 5),
-                                                      Text(
-                                                        'คำอธืบาย ${controllerScrap.scrapCompanyDetail[0].scraps![index].description ?? ''}',
-                                                        style: TextStyle(fontSize: appFontSize?.body2),
-                                                        overflow: TextOverflow.ellipsis,
-                                                      ),
-                                                      SizedBox(height: 4),
-                                                      Text(
-                                                        'จำนวน ${controllerScrap.scrapCompanyDetail[0].scraps![index].qty ?? ''} ',
-                                                        style: TextStyle(fontSize: appFontSize?.body2),
-                                                        overflow: TextOverflow.ellipsis,
-                                                      ),
-                                                      SizedBox(height: 4),
-                                                      // Text(
-                                                      //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
-                                                      //   style: TextStyle(fontSize: appFontSize?.body2),
-                                                      //   // overflow: TextOverflow.ellipsis,
+                                                      // Expanded(
+                                                      //   flex: 2,
+                                                      //   child: controller.scrapCompanyDetail[0].scraps![index].image != null
+                                                      //       ? Image.network(
+                                                      //           "${controller.scrapCompanyDetail[0].scraps![index].image}",
+                                                      //           height: size.height / 17,
+                                                      //           errorBuilder: (context, error, stackTrace) =>
+                                                      //               Image.asset('assets/No_Image_Available.jpg'),
+                                                      //         )
+                                                      //       : Image.asset('assets/No_Image_Available.jpg'),
                                                       // ),
-                                                      // SizedBox(height: 4),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Expanded(
+                                                        flex: 8,
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                          child: Row(
+                                                            children: [
+                                                              Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                  Text(
+                                                                    controllerScrap.scrapCompanyDetail[0].scraps![index]
+                                                                            .name ??
+                                                                        '',
+                                                                    style: TextStyle(
+                                                                        fontWeight: FontWeight.bold,
+                                                                        fontSize: appFontSize?.body),
+                                                                  ),
+                                                                  SizedBox(height: 5),
+                                                                  Text(
+                                                                    'คำอธืบาย ${controllerScrap.scrapCompanyDetail[0].scraps![index].description ?? ''}',
+                                                                    style: TextStyle(fontSize: appFontSize?.body2),
+                                                                    overflow: TextOverflow.ellipsis,
+                                                                  ),
+                                                                  SizedBox(height: 4),
+                                                                  Text(
+                                                                    'จำนวน ${controllerScrap.scrapCompanyDetail[0].scraps![index].qty ?? ''} ',
+                                                                    style: TextStyle(fontSize: appFontSize?.body2),
+                                                                    overflow: TextOverflow.ellipsis,
+                                                                  ),
+                                                                  SizedBox(height: 4),
+                                                                  // Text(
+                                                                  //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
+                                                                  //   style: TextStyle(fontSize: appFontSize?.body2),
+                                                                  //   // overflow: TextOverflow.ellipsis,
+                                                                  // ),
+                                                                  // SizedBox(height: 4),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => QuotationScrapPage(
+                                                                        id: controllerScrap
+                                                                            .scrapCompanyDetail[0].scraps![index].id!,
+                                                                      )));
+                                                        },
+                                                        child: Container(
+                                                          height: size.height * 0.04,
+                                                          width: size.width * 0.08,
+                                                          color: Colors.blueAccent,
+                                                          child: Center(
+                                                              child: Icon(
+                                                            Icons.arrow_forward_ios,
+                                                            size: 20,
+                                                            color: Colors.white,
+                                                          )),
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }),
+                                            ),
+                                          );
+                                  })),
+                    ],
+                  ),
+                ),
+                //Tab3
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
                       ),
+                      Container(
+                          padding: EdgeInsets.all(15),
+                          child: controllerScrap.scrapCompanyDetail.isEmpty
+                              ? Center(child: CircularProgressIndicator())
+                              : ListView.builder(
+                                  // controller: _controller,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: controllerScrap.scrapCompanyDetail[0].scraps!.length,
+                                  itemBuilder: (_, index) {
+                                    // ignore: unrelated_type_equality_checks
+                                    return controllerScrap.scrapCompanyDetail[0].scraps![index].status != 'Finish'
+                                        ? SizedBox.shrink()
+                                        : Padding(
+                                            padding: const EdgeInsets.all(5),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) => ScceedQuotationScrap(
+                                                              id: controllerScrap
+                                                                  .scrapCompanyDetail[0].scraps![index].id!,
+                                                            )));
+                                              },
+                                              child: Container(
+                                                width: size.width,
+                                                decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                    image: AssetImage('assets/images/promotionBG.png'),
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                        offset: Offset(0, 2),
+                                                        color: Color.fromRGBO(0, 78, 179, 0.05),
+                                                        blurRadius: 10)
+                                                  ],
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                                                  child: Row(
+                                                    children: [
+                                                      // Expanded(
+                                                      //   flex: 2,
+                                                      //   child: controller.scrapCompanyDetail[0].scraps![index].image != null
+                                                      //       ? Image.network(
+                                                      //           "${controller.scrapCompanyDetail[0].scraps![index].image}",
+                                                      //           height: size.height / 17,
+                                                      //           errorBuilder: (context, error, stackTrace) =>
+                                                      //               Image.asset('assets/No_Image_Available.jpg'),
+                                                      //         )
+                                                      //       : Image.asset('assets/No_Image_Available.jpg'),
+                                                      // ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Expanded(
+                                                        flex: 8,
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                controllerScrap
+                                                                        .scrapCompanyDetail[0].scraps![index].name ??
+                                                                    '',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold,
+                                                                    fontSize: appFontSize?.body),
+                                                              ),
+                                                              SizedBox(height: 5),
+                                                              Text(
+                                                                'คำอธืบาย ${controllerScrap.scrapCompanyDetail[0].scraps![index].description ?? ''}',
+                                                                style: TextStyle(fontSize: appFontSize?.body2),
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                              SizedBox(height: 4),
+                                                              Text(
+                                                                'จำนวน ${controllerScrap.scrapCompanyDetail[0].scraps![index].qty ?? ''} ',
+                                                                style: TextStyle(fontSize: appFontSize?.body2),
+                                                                overflow: TextOverflow.ellipsis,
+                                                              ),
+                                                              SizedBox(height: 4),
+                                                              // Text(
+                                                              //   'ลักษณะงาน ${controller.logoCompay[index].type ?? ''}',
+                                                              //   style: TextStyle(fontSize: appFontSize?.body2),
+                                                              //   // overflow: TextOverflow.ellipsis,
+                                                              // ),
+                                                              // SizedBox(height: 4),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => ScceedQuotationScrap(
+                                                                        id: controllerScrap
+                                                                            .scrapCompanyDetail[0].scraps![index].id!,
+                                                                      )));
+                                                        },
+                                                        child: Container(
+                                                          height: size.height * 0.04,
+                                                          width: size.width * 0.08,
+                                                          color: Colors.blueAccent,
+                                                          child: Center(
+                                                              child: Icon(
+                                                            Icons.arrow_forward_ios,
+                                                            size: 20,
+                                                            color: Colors.white,
+                                                          )),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                  })),
                     ],
                   ),
                 ),
