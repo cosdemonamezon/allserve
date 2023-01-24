@@ -292,31 +292,45 @@ class _EditRecruitScreenState extends State<EditRecruitScreen> {
                                           // ),
                                         ),
                                         onPressed: () async {
-                                          addFormKey.currentState!.save();
-                                          // LoadingDialog.open(context);
-                                          // final String position1 = position.text;
-                                          // final String degree1 = degree.text;
-                                          // final String major1 = major.text;
-                                          // final String salary1 = salary.text;
-                                          // final String exp1 = exp.text;
-                                          // final String qty1 = qty.text;
-                                          // final String description1 = description.text;
-                                          await JobService().updatePosition(
-                                              positionId: widget.idPosition!,
-                                              user_id: widget.idCompany.toString(),
-                                              position: position.text,
-                                              degree: degree.text,
-                                              major: major.text,
-                                              salary: salary.text,
-                                              exp: exp.text,
-                                              qty: qty.text,
-                                              description: description.text);
-                                          await context.read<JobController>().loadPositionCompay(id: widget.idCompany!);
-                                          // LoadingDialog.close(context);
-                                          if (mounted) {
-                                            Navigator.of(context)
-                                              ..pop()
-                                              ..pop();
+                                          try {
+                                            LoadingDialog.open(context);
+                                            addFormKey.currentState!.save();
+                                            await JobService().updatePosition(
+                                                positionId: widget.idPosition!,
+                                                user_id: widget.idCompany.toString(),
+                                                position: position.text,
+                                                degree: degree.text,
+                                                major: major.text,
+                                                salary: salary.text,
+                                                exp: exp.text,
+                                                qty: qty.text,
+                                                description: description.text);
+                                            await context
+                                                .read<JobController>()
+                                                .loadPositionCompay(id: widget.idCompany!);
+                                            if (mounted) {
+                                              LoadingDialog.close(context);
+                                              Navigator.of(context)
+                                                ..pop()
+                                                ..pop();
+                                            }
+                                          } catch (e) {
+                                            LoadingDialog.close(context);
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                backgroundColor: Colors.blueAccent,
+                                                title: Text("Error", style: TextStyle(color: Colors.white)),
+                                                content: Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text('OK', style: TextStyle(color: Colors.white)))
+                                                ],
+                                              ),
+                                            );
                                           }
                                         },
                                       )

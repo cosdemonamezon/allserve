@@ -257,29 +257,48 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                                           // ),
                                         ),
                                         onPressed: () async {
-                                          LoadingDialog.open(context);
-                                          final String position1 = position.text;
-                                          final String degree1 = degree.text;
-                                          final String major1 = major.text;
-                                          final String salary1 = salary.text;
-                                          final String exp1 = exp.text;
-                                          final String qty1 = qty.text;
-                                          final String description1 = description.text;
-                                          await JobService().postRecruitment(
-                                              user_id: widget.id.toString(),
-                                              position: position1,
-                                              degree: degree1,
-                                              major: major1,
-                                              salary: salary1,
-                                              exp: exp1,
-                                              qty: qty1,
-                                              description: description1);
-                                          await context.read<JobController>().loadPositionCompay(id: widget.id);
-                                          LoadingDialog.close(context);
-                                          if (mounted) {
-                                            Navigator.of(context)
-                                              ..pop()
-                                              ..pop();
+                                          try {
+                                            LoadingDialog.open(context);
+                                            final String position1 = position.text;
+                                            final String degree1 = degree.text;
+                                            final String major1 = major.text;
+                                            final String salary1 = salary.text;
+                                            final String exp1 = exp.text;
+                                            final String qty1 = qty.text;
+                                            final String description1 = description.text;
+                                            await JobService().postRecruitment(
+                                                user_id: widget.id.toString(),
+                                                position: position1,
+                                                degree: degree1,
+                                                major: major1,
+                                                salary: salary1,
+                                                exp: exp1,
+                                                qty: qty1,
+                                                description: description1);
+                                            await context.read<JobController>().loadPositionCompay(id: widget.id);
+                                            LoadingDialog.close(context);
+                                            if (mounted) {
+                                              Navigator.of(context)
+                                                ..pop()
+                                                ..pop();
+                                            }
+                                          } catch (e) {
+                                            LoadingDialog.close(context);
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                backgroundColor: Colors.blueAccent,
+                                                title: Text("Error", style: TextStyle(color: Colors.white)),
+                                                content: Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text('OK', style: TextStyle(color: Colors.white)))
+                                                ],
+                                              ),
+                                            );
                                           }
                                         },
                                       )

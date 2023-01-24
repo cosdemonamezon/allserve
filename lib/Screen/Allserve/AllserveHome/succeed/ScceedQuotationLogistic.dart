@@ -197,7 +197,7 @@ class _ScceedQuotationLogisticState extends State<ScceedQuotationLogistic> with 
                                             onTap: () {},
                                             child: Container(
                                               width: size.width,
-                                              height: 300,
+                                              height: 350,
                                               decoration: BoxDecoration(
                                                 image: DecorationImage(
                                                   image: AssetImage('assets/images/promotionBG.png'),
@@ -240,17 +240,22 @@ class _ScceedQuotationLogisticState extends State<ScceedQuotationLogistic> with 
                                                           ),
                                                           SizedBox(height: 4),
                                                           // Center(child: buildFille(path)),
-                                                          InkWell(
-                                                              onTap: () {
-                                                                final url =
-                                                                    controller.quotationDetail!.quotations![index].path;
+                                                          Column(
+                                                            children: [
+                                                              Text('ดาวน์โหลด'),
+                                                              InkWell(
+                                                                  onTap: () {
+                                                                    final url = controller
+                                                                        .quotationDetail!.quotations![index].path;
 
-                                                                openBrowserURL(url: url!, inApp: true);
-                                                              },
-                                                              child: Icon(
-                                                                Icons.file_open,
-                                                                size: 100,
-                                                              )),
+                                                                    openBrowserURL(url: url!, inApp: false);
+                                                                  },
+                                                                  child: Icon(
+                                                                    Icons.file_open,
+                                                                    size: 100,
+                                                                  )),
+                                                            ],
+                                                          ),
 
                                                           SizedBox(height: 4),
                                                         ],

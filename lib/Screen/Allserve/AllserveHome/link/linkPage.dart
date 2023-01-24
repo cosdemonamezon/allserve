@@ -44,7 +44,7 @@ class _LinkPageState extends State<LinkPage> {
                       //   await launch(url);
                       // }
 
-                      openBrowserURL(url: url!, inApp: true);
+                      openBrowserURL(url: url!, inApp: false);
                     },
                     child: Center(
                       child: CircleAvatar(

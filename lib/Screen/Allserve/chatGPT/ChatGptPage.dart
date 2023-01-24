@@ -100,9 +100,11 @@ class _ChatGptPageState extends State<ChatGptPage> {
           style: TextStyle(fontSize: 30, color: Colors.white),
         ),
         elevation: 0,
-        backgroundColor: botBackgroundColor,
+        // backgroundColor: botBackgroundColor,
+        backgroundColor: Colors.cyan,
       ),
-      backgroundColor: backgroundColor,
+      // backgroundColor: backgroundColor,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -115,7 +117,7 @@ class _ChatGptPageState extends State<ChatGptPage> {
               child: Padding(
                 padding: EdgeInsets.all(8),
                 child: CircularProgressIndicator(
-                  color: Colors.white,
+                  color: Colors.blueAccent,
                 ),
               ),
             ),
@@ -138,11 +140,13 @@ class _ChatGptPageState extends State<ChatGptPage> {
     return Visibility(
       visible: !isLoading,
       child: Container(
-        color: botBackgroundColor,
+        // color: botBackgroundColor,
+        color: Colors.cyan,
         child: IconButton(
           icon: Icon(
             Icons.send_rounded,
-            color: Color.fromRGBO(142, 142, 160, 1),
+            // color: Color.fromRGBO(142, 142, 160, 1),
+            color: Colors.white,
           ),
           onPressed: () async {
             setState(
@@ -205,10 +209,11 @@ class _ChatGptPageState extends State<ChatGptPage> {
     return Expanded(
       child: TextField(
         textCapitalization: TextCapitalization.sentences,
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.black),
         controller: _textController,
         decoration: InputDecoration(
-          fillColor: botBackgroundColor,
+          // fillColor: botBackgroundColor,
+          fillColor: Colors.cyan,
           filled: true,
           border: InputBorder.none,
           focusedBorder: InputBorder.none,
@@ -250,13 +255,15 @@ class ChatMessageWidget extends StatelessWidget {
   final ChatMessageType chatMessageType;
   final backgroundColor = Color(0xff343541);
   final botBackgroundColor = Color(0xff444654);
+  final backgroundColor1 = Colors.cyan;
+  final botBackgroundColor1 = Colors.cyanAccent;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.all(16),
-      color: chatMessageType == ChatMessageType.bot ? botBackgroundColor : backgroundColor,
+      color: chatMessageType == ChatMessageType.bot ? botBackgroundColor1 : backgroundColor1,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -291,7 +298,7 @@ class ChatMessageWidget extends StatelessWidget {
                   ),
                   child: Text(
                     text,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black),
                   ),
                 ),
               ],

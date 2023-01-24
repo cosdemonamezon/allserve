@@ -156,7 +156,7 @@ class _ScceedQuotationPurchaeState extends State<ScceedQuotationPurchae> with Ti
                                             onTap: () {},
                                             child: Container(
                                               width: size.width,
-                                              height: 300,
+                                              height: 350,
                                               decoration: BoxDecoration(
                                                 image: DecorationImage(
                                                   image: AssetImage('assets/images/promotionBG.png'),
@@ -204,17 +204,22 @@ class _ScceedQuotationPurchaeState extends State<ScceedQuotationPurchae> with Ti
                                                           ),
                                                           SizedBox(height: 4),
                                                           // Center(child: buildFille(path)),
-                                                          InkWell(
-                                                              onTap: () {
-                                                                final url = controller
-                                                                    .quotationPurchaseDetail!.quotations![index].path;
+                                                          Column(
+                                                            children: [
+                                                              Text('ดาวน์โหลด'),
+                                                              InkWell(
+                                                                  onTap: () {
+                                                                    final url = controller.quotationPurchaseDetail!
+                                                                        .quotations![index].path;
 
-                                                                openBrowserURL(url: url!, inApp: true);
-                                                              },
-                                                              child: Icon(
-                                                                Icons.file_open,
-                                                                size: 100,
-                                                              )),
+                                                                    openBrowserURL(url: url!, inApp: false);
+                                                                  },
+                                                                  child: Icon(
+                                                                    Icons.file_open,
+                                                                    size: 100,
+                                                                  )),
+                                                            ],
+                                                          ),
                                                           // Text(
                                                           //   selectedFile!,
                                                           //   style: TextStyle(fontSize: appFontSize?.body2),

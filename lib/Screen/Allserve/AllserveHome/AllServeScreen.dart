@@ -270,7 +270,11 @@ class _AllServeScreenState extends State<AllServeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
-                              onTap: _launchUrl,
+                              onTap: () {
+                                const url = 'https://www.alibaba.com';
+
+                                openBrowserURL(url: url, inApp: false);
+                              },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 child: Container(
@@ -528,6 +532,18 @@ class _AllServeScreenState extends State<AllServeScreen> {
         );
       },
     );
+  }
+
+  _ClickURL(
+      // required String url,
+      ) async {
+    const url = 'https://www.alibaba.com';
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   Future<void> _launchUrl() async {

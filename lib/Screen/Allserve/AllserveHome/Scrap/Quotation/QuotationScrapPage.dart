@@ -222,14 +222,19 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                                           ),
                                                           SizedBox(height: 4),
                                                           // Center(child: buildFille(path)),
-                                                          InkWell(
-                                                              onTap: () {
-                                                                final url = controller
-                                                                    .quotationScrapDetail!.quotations![index].path;
+                                                          Column(
+                                                            children: [
+                                                              Text('ดาวน์โหลด'),
+                                                              InkWell(
+                                                                  onTap: () {
+                                                                    final url = controller
+                                                                        .quotationScrapDetail!.quotations![index].path;
 
-                                                                openBrowserURL(url: url!, inApp: true);
-                                                              },
-                                                              child: Icon(Icons.file_open)),
+                                                                    openBrowserURL(url: url!, inApp: false);
+                                                                  },
+                                                                  child: Icon(Icons.file_open)),
+                                                            ],
+                                                          ),
                                                           // Text(
                                                           //   selectedFile!,
                                                           //   style: TextStyle(fontSize: appFontSize?.body2),

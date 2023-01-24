@@ -25,7 +25,6 @@ class _DetailRecruitState extends State<DetailRecruit> with TickerProviderStateM
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _loadItem();
-    ;
   }
 
   Future _loadItem() async {
