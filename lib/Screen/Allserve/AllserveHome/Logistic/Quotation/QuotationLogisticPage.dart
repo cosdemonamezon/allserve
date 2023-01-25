@@ -252,7 +252,7 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                                       maxLines: 5,
                                                     ),
                                                     Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
                                                         Column(
                                                           crossAxisAlignment: CrossAxisAlignment.start,

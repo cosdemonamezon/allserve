@@ -51,12 +51,5 @@
 	<string>Used to capture audio for image picker plugin</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow your camera, to create your Avatar</string>
-	<array>
-		<string>https</string>
-		<string>http</string>
-		<string>tel</string>
-		<string>sms</string>
-		<string>mailto</string>
-	</array>
 </dict>
 </plist>

@@ -118,7 +118,7 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
               ),
             ),
             bottom: TabBar(
-              //isScrollable: true,
+              isScrollable: true,
               controller: _tabController,
               labelColor: Colors.black,
               unselectedLabelColor: Colors.grey,

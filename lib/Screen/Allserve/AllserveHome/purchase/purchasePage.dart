@@ -126,7 +126,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
               ),
             ),
             bottom: TabBar(
-              //isScrollable: true,
+              isScrollable: true,
               controller: _tabController,
               labelColor: Colors.black,
               unselectedLabelColor: Colors.grey,

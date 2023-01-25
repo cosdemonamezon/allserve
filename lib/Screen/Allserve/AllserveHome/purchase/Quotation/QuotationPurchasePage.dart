@@ -210,7 +210,7 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                                                       height: 10,
                                                     ),
                                                     Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
                                                         Column(
                                                           crossAxisAlignment: CrossAxisAlignment.start,

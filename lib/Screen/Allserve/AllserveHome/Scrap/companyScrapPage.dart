@@ -131,7 +131,7 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
               ),
             ),
             bottom: TabBar(
-              //isScrollable: true,
+              isScrollable: true,
               controller: _tabController,
               labelColor: Colors.black,
               unselectedLabelColor: Colors.grey,
