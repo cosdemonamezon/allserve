@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../Models/User/user.dart';
+import '../../../../Models/detailVendor.dart';
 import '../../../../Models/vendor.dart';
 import '../../../../Models/vendorPage.dart';
 import 'ScrapSrevice.dart';
@@ -20,6 +21,7 @@ class ScrapController extends ChangeNotifier {
   List<Vendor> listCompanyScrap = [];
   Vendor? vendorDetail;
   Scrap? quotationScrapDetail;
+  List<DetailVendor> detailScrap = [];
   // User? scrapCompanyDetail;
 
   // //โหลด User มาแสดงทั้งหมด
@@ -85,6 +87,15 @@ class ScrapController extends ChangeNotifier {
     token = pref?.getString('token');
     quotationScrapDetail = await ScrapSrevice.getQuotatianScrap(itemId: id);
 
+    notifyListeners();
+  }
+
+  //โหลดรายละเอียด VendorScrap
+  Future<void> loadDetailVendorScrap() async {
+    detailScrap.clear();
+    final _loadPositionS = await ScrapSrevice.getVendorScrap();
+    detailScrap.addAll(_loadPositionS);
+    // positionCompany[0].recruitment_companies!.sort((a, b) => b.id!.compareTo(a.id!));
     notifyListeners();
   }
 }

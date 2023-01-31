@@ -1,3 +1,4 @@
+import 'package:allserve/Models/imagesCpmpanie/imagesPurchase.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -6,8 +7,9 @@ import '../../../../appTheme.dart';
 import '../purchase/purchaseController.dart';
 
 class ScceedQuotationPurchae extends StatefulWidget {
-  const ScceedQuotationPurchae({super.key, required this.id});
+  ScceedQuotationPurchae({super.key, required this.id, this.images});
   final int id;
+  List<ImagesPurchase>? images;
 
   @override
   State<ScceedQuotationPurchae> createState() => _ScceedQuotationPurchaeState();
@@ -96,12 +98,22 @@ class _ScceedQuotationPurchaeState extends State<ScceedQuotationPurchae> with Ti
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset(
-                                  'assets/No_Image_Available.jpg',
-                                  width: double.infinity,
-                                  height: 200,
-                                  fit: BoxFit.fill,
-                                ),
+                                widget.images?.isEmpty ?? true
+                                    ? Image.asset('assets/No_Image_Available.jpg')
+                                    : GridView.builder(
+                                        shrinkWrap: true,
+                                        // controller: _controller,
+                                        padding: EdgeInsets.all(15),
+                                        scrollDirection: Axis.vertical,
+                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                        ),
+                                        itemCount: widget.images!.length,
+                                        itemBuilder: (context, index) {
+                                          return widget.images![index].image != null
+                                              ? Image.network(widget.images![index].image!)
+                                              : Image.asset('assets/No_Image_Available.jpg');
+                                        }),
                                 Divider(
                                   thickness: 3,
                                 ),

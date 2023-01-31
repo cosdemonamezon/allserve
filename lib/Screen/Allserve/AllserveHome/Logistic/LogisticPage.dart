@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/AddLogistic/AddLogisticPage.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/LogisticController.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/Quotation/QuotationLogisticPage.dart';
@@ -98,6 +100,7 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
     await context.read<LogisticController>().loadCompanyLogistic();
     final userId = await context.read<AppController>().user!.id;
     await context.read<LogisticController>().detailLogisticCompany(userId!);
+    inspect(context.read<LogisticController>().detailLogisticCompany(userId));
   }
 
   @override
@@ -324,6 +327,8 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
                                                         builder: (context) => QuotationLogisticPage(
                                                               id: controllerLogistic
                                                                   .logisticCompanyDetail[0].logistics![index].id!,
+                                                              images: controllerLogistic
+                                                                  .logisticCompanyDetail[0].logistics![index].images,
                                                             )));
                                               },
                                               child: Container(
@@ -396,27 +401,16 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
                                                           ),
                                                         ),
                                                       ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) => QuotationLogisticPage(
-                                                                        id: controllerLogistic.logisticCompanyDetail[0]
-                                                                            .logistics![index].id!,
-                                                                      )));
-                                                        },
-                                                        child: Container(
-                                                          height: size.height * 0.04,
-                                                          width: size.width * 0.08,
-                                                          color: Colors.blueAccent,
-                                                          child: Center(
-                                                              child: Icon(
-                                                            Icons.arrow_forward_ios,
-                                                            size: 20,
-                                                            color: Colors.white,
-                                                          )),
-                                                        ),
+                                                      Container(
+                                                        height: size.height * 0.04,
+                                                        width: size.width * 0.08,
+                                                        color: Colors.blueAccent,
+                                                        child: Center(
+                                                            child: Icon(
+                                                          Icons.arrow_forward_ios,
+                                                          size: 20,
+                                                          color: Colors.white,
+                                                        )),
                                                       ),
                                                     ],
                                                   ),
@@ -460,6 +454,8 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
                                                         builder: (context) => ScceedQuotationLogistic(
                                                               id: controllerLogistic
                                                                   .logisticCompanyDetail[0].logistics![index].id!,
+                                                              images: controllerLogistic
+                                                                  .logisticCompanyDetail[0].logistics![index].images,
                                                             )));
                                               },
                                               child: Container(
@@ -532,27 +528,16 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
                                                           ),
                                                         ),
                                                       ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) => ScceedQuotationLogistic(
-                                                                        id: controllerLogistic.logisticCompanyDetail[0]
-                                                                            .logistics![index].id!,
-                                                                      )));
-                                                        },
-                                                        child: Container(
-                                                          height: size.height * 0.04,
-                                                          width: size.width * 0.08,
-                                                          color: Colors.blueAccent,
-                                                          child: Center(
-                                                              child: Icon(
-                                                            Icons.arrow_forward_ios,
-                                                            size: 20,
-                                                            color: Colors.white,
-                                                          )),
-                                                        ),
+                                                      Container(
+                                                        height: size.height * 0.04,
+                                                        width: size.width * 0.08,
+                                                        color: Colors.blueAccent,
+                                                        child: Center(
+                                                            child: Icon(
+                                                          Icons.arrow_forward_ios,
+                                                          size: 20,
+                                                          color: Colors.white,
+                                                        )),
                                                       ),
                                                     ],
                                                   ),

@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../Models/Purchase/purchase.dart';
 import '../../../../Models/User/user.dart';
+import '../../../../Models/detailVendor.dart';
 import '../../../../constants/constants.dart';
 
 class PurchaseSrevice {
@@ -59,10 +60,11 @@ class PurchaseSrevice {
     required String qty,
     required String description,
     required String expire_hour,
-    required PlatformFile images,
+    // required PlatformFile images,
+    required List<PlatformFile> images,
   }) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    // final files = file.map((e) => MultipartFile.fromFileSync(e.path!)).toList();
+    final filesList = images.map((e) => MultipartFile.fromFileSync(e.path!)).toList();
     final token = pref.getString('token');
     final headers = {'Authorization': 'Bearer $token', 'Content-Type': 'multipart/form-data'};
     final formData = FormData.fromMap(
@@ -72,7 +74,8 @@ class PurchaseSrevice {
         "qty": qty,
         "description": description,
         "expire_hour": expire_hour,
-        'images': MultipartFile.fromFileSync(images.path!),
+        'images[]': filesList,
+        // 'images': MultipartFile.fromFileSync(images.path!),
       },
     );
     try {
@@ -81,6 +84,26 @@ class PurchaseSrevice {
       return Purchase.fromJson(response.data['data']);
     } on DioError catch (e) {
       throw (e.response?.data['message']);
+    }
+  }
+
+  //โหลดรายละเอียด VendorPurchase
+  static Future<List<DetailVendor>> getVendorPurchase() async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/get_purchase_services');
+
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer ${token}', 'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final list = data['data'] as List;
+
+      return list.map((e) => DetailVendor.fromJson(e)).toList();
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
     }
   }
 }

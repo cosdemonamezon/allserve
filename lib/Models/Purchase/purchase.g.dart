@@ -15,6 +15,9 @@ Purchase _$PurchaseFromJson(Map<String, dynamic> json) => Purchase(
       expire_hour: json['expire_hour'] as String?,
       status: json['status'] as String?,
       No: json['No'] as int?,
+      images: (json['images'] as List<dynamic>?)
+          ?.map((e) => ImagesPurchase.fromJson(e as Map<String, dynamic>))
+          .toList(),
       quotations: (json['quotations'] as List<dynamic>?)
           ?.map((e) => Quotation.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -29,5 +32,6 @@ Map<String, dynamic> _$PurchaseToJson(Purchase instance) => <String, dynamic>{
       'expire_hour': instance.expire_hour,
       'status': instance.status,
       'No': instance.No,
+      'images': instance.images,
       'quotations': instance.quotations,
     };

@@ -333,7 +333,6 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount: controllerScrap.scrapCompanyDetail[0].scraps!.length,
                                   itemBuilder: (_, index) {
-                                    // ignore: unrelated_type_equality_checks
                                     return controllerScrap.scrapCompanyDetail[0].scraps![index].status == 'Finish'
                                         ? SizedBox.shrink()
                                         : Padding(
@@ -346,6 +345,8 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                                                         builder: (context) => QuotationScrapPage(
                                                               id: controllerScrap
                                                                   .scrapCompanyDetail[0].scraps![index].id!,
+                                                              images: controllerScrap
+                                                                  .scrapCompanyDetail[0].scraps![index].images,
                                                             )));
                                               },
                                               child: Container(
@@ -422,27 +423,16 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                                                           ),
                                                         ),
                                                       ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) => QuotationScrapPage(
-                                                                        id: controllerScrap
-                                                                            .scrapCompanyDetail[0].scraps![index].id!,
-                                                                      )));
-                                                        },
-                                                        child: Container(
-                                                          height: size.height * 0.04,
-                                                          width: size.width * 0.08,
-                                                          color: Colors.blueAccent,
-                                                          child: Center(
-                                                              child: Icon(
-                                                            Icons.arrow_forward_ios,
-                                                            size: 20,
-                                                            color: Colors.white,
-                                                          )),
-                                                        ),
+                                                      Container(
+                                                        height: size.height * 0.04,
+                                                        width: size.width * 0.08,
+                                                        color: Colors.blueAccent,
+                                                        child: Center(
+                                                            child: Icon(
+                                                          Icons.arrow_forward_ios,
+                                                          size: 20,
+                                                          color: Colors.white,
+                                                        )),
                                                       ),
                                                     ],
                                                   ),
@@ -485,6 +475,8 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                                                         builder: (context) => ScceedQuotationScrap(
                                                               id: controllerScrap
                                                                   .scrapCompanyDetail[0].scraps![index].id!,
+                                                              images: controllerScrap
+                                                                  .scrapCompanyDetail[0].scraps![index].images,
                                                             )));
                                               },
                                               child: Container(
@@ -557,27 +549,16 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                                                           ),
                                                         ),
                                                       ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) => ScceedQuotationScrap(
-                                                                        id: controllerScrap
-                                                                            .scrapCompanyDetail[0].scraps![index].id!,
-                                                                      )));
-                                                        },
-                                                        child: Container(
-                                                          height: size.height * 0.04,
-                                                          width: size.width * 0.08,
-                                                          color: Colors.blueAccent,
-                                                          child: Center(
-                                                              child: Icon(
-                                                            Icons.arrow_forward_ios,
-                                                            size: 20,
-                                                            color: Colors.white,
-                                                          )),
-                                                        ),
+                                                      Container(
+                                                        height: size.height * 0.04,
+                                                        width: size.width * 0.08,
+                                                        color: Colors.blueAccent,
+                                                        child: Center(
+                                                            child: Icon(
+                                                          Icons.arrow_forward_ios,
+                                                          size: 20,
+                                                          color: Colors.white,
+                                                        )),
                                                       ),
                                                     ],
                                                   ),

@@ -1,4 +1,5 @@
 import 'package:allserve/Models/Quotation/quotation.dart';
+import 'package:allserve/Models/imagesCpmpanie/imagesLogistic.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'logistic.g.dart';
@@ -23,6 +24,7 @@ class Logistic {
       this.end_location,
       this.status,
       this.No,
+      this.images,
       this.quotations});
 
   int? id;
@@ -42,6 +44,7 @@ class Logistic {
   String? end_location;
   String? status;
   int? No;
+  List<ImagesLogistic>? images;
   List<Quotation>? quotations;
 
   factory Logistic.fromJson(Map<String, dynamic> json) => _$LogisticFromJson(json);

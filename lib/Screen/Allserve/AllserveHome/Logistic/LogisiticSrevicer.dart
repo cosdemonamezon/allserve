@@ -8,13 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../Models/Logistic/logistic.dart';
 import '../../../../Models/User/user.dart';
+import '../../../../Models/detailVendor.dart';
 import '../../../../constants/constants.dart';
 
 class LogisticSrevice {
   const LogisticSrevice();
 
-  // DetailScrapCompany
-  static Future<List<User>> getScrapCompany({required int companyId}) async {
+  // DetailLogisticCompany
+  static Future<List<User>> getLogisticCompany({required int companyId}) async {
     final pref = await SharedPreferences.getInstance();
     final token = pref.getString('token');
     final url = Uri.parse('$baseUrl/api/logistic_by_companie/$companyId');
@@ -69,10 +70,11 @@ class LogisticSrevice {
     required String end_lon,
     required String end_location,
     required String expire_hour,
-    required PlatformFile images,
+    // required PlatformFile images,
+    required List<PlatformFile> images,
   }) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    // final files = file.map((e) => MultipartFile.fromFileSync(e.path!)).toList();
+    final filesList = images.map((e) => MultipartFile.fromFileSync(e.path!)).toList();
     final token = pref.getString('token');
     final headers = {'Authorization': 'Bearer $token', 'Content-Type': 'multipart/form-data'};
     final formData = FormData.fromMap(
@@ -92,7 +94,8 @@ class LogisticSrevice {
         "end_lon": end_lon,
         "end_location": end_location,
         "expire_hour": expire_hour,
-        'images': MultipartFile.fromFileSync(images.path!),
+        'images[]': filesList,
+        // 'images[]': MultipartFile.fromFileSync(images.path!),
       },
     );
     try {
@@ -101,6 +104,26 @@ class LogisticSrevice {
       return Logistic.fromJson(response.data['data']);
     } on DioError catch (e) {
       throw (e.response?.data['message']);
+    }
+  }
+
+  //โหลดรายละเอียด VendorLogistic
+  static Future<List<DetailVendor>> getVendorLogistic() async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/get_logistic_services');
+
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer ${token}', 'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final list = data['data'] as List;
+
+      return list.map((e) => DetailVendor.fromJson(e)).toList();
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
     }
   }
 }

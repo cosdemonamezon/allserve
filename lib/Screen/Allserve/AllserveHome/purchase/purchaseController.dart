@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../Models/Purchase/purchase.dart';
 import '../../../../Models/User/user.dart';
+import '../../../../Models/detailVendor.dart';
 import '../../../../Models/vendor.dart';
 import '../Scrap/ScrapSrevice.dart';
 
@@ -20,6 +21,7 @@ class PurchaseController extends ChangeNotifier {
   List<Vendor> listCompanyPurchase = [];
   List<User> purchaseCompanyDetail = [];
   Purchase? quotationPurchaseDetail;
+  List<DetailVendor> detailPurchase = [];
 
   // โหลดรายชื่อบริษัทPurchase
   Future loadCompanyPurchase({
@@ -65,6 +67,15 @@ class PurchaseController extends ChangeNotifier {
     token = pref?.getString('token');
     quotationPurchaseDetail = await PurchaseSrevice.getQuotatianPurchase(itemId: id);
 
+    notifyListeners();
+  }
+
+  //โหลดรายละเอียด VendorPurchase
+  Future<void> loadDetailVendorPurchase() async {
+    detailPurchase.clear();
+    final _loadPositionS = await PurchaseSrevice.getVendorPurchase();
+    detailPurchase.addAll(_loadPositionS);
+    // positionCompany[0].recruitment_companies!.sort((a, b) => b.id!.compareTo(a.id!));
     notifyListeners();
   }
 }

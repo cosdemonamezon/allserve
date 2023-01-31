@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../Models/imagesCpmpanie/imagesScrap.dart';
 import '../../../../appTheme.dart';
 import '../Scrap/ScrapController.dart';
 
 class ScceedQuotationScrap extends StatefulWidget {
-  const ScceedQuotationScrap({super.key, required this.id});
+  ScceedQuotationScrap({super.key, required this.id, this.images});
   final int id;
+  List<ImagesScrap>? images;
 
   @override
   State<ScceedQuotationScrap> createState() => _ScceedQuotationScrapState();
@@ -94,12 +96,22 @@ class _ScceedQuotationScrapState extends State<ScceedQuotationScrap> with Ticker
                         child: Padding(
                           padding: const EdgeInsets.all(20),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                            Image.asset(
-                              'assets/No_Image_Available.jpg',
-                              width: double.infinity,
-                              height: 200,
-                              fit: BoxFit.fill,
-                            ),
+                            widget.images?.isEmpty ?? true
+                                ? Image.asset('assets/No_Image_Available.jpg')
+                                : GridView.builder(
+                                    shrinkWrap: true,
+                                    // controller: _controller,
+                                    padding: EdgeInsets.all(15),
+                                    scrollDirection: Axis.vertical,
+                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                    ),
+                                    itemCount: widget.images!.length,
+                                    itemBuilder: (context, index) {
+                                      return widget.images![index].image != null
+                                          ? Image.network(widget.images![index].image!)
+                                          : Image.asset('assets/No_Image_Available.jpg');
+                                    }),
                             Divider(
                               thickness: 3,
                             ),

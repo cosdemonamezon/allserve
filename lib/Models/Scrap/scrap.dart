@@ -1,3 +1,4 @@
+import 'package:allserve/Models/imagesCpmpanie/imagesScrap.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../Quotation/quotation.dart';
@@ -15,6 +16,7 @@ class Scrap {
     this.status,
     this.expire_hour,
     this.No,
+    this.images,
     this.quotations,
   });
 
@@ -26,6 +28,7 @@ class Scrap {
   String? status;
   String? expire_hour;
   int? No;
+  List<ImagesScrap>? images;
   List<Quotation>? quotations;
 
   factory Scrap.fromJson(Map<String, dynamic> json) => _$ScrapFromJson(json);

@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:allserve/Models/imagesCpmpanie/imagesScrap.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -7,8 +10,9 @@ import '../../ApproveQuotation/ApproveQuotationPage.dart';
 import '../ScrapController.dart';
 
 class QuotationScrapPage extends StatefulWidget {
-  const QuotationScrapPage({super.key, required this.id});
+  QuotationScrapPage({super.key, required this.id, this.images});
   final int id;
+  final List<ImagesScrap>? images;
 
   @override
   State<QuotationScrapPage> createState() => _QuotationScrapPageState();
@@ -26,6 +30,7 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
     //   }
     // });
     print(widget.id);
+    inspect(widget.images);
   }
 
   Future _loadItem() async {
@@ -95,12 +100,22 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                         child: Padding(
                           padding: const EdgeInsets.all(20),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                            Image.asset(
-                              'assets/No_Image_Available.jpg',
-                              width: double.infinity,
-                              height: 200,
-                              fit: BoxFit.fill,
-                            ),
+                            widget.images?.isEmpty ?? true
+                                ? Image.asset('assets/No_Image_Available.jpg')
+                                : GridView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    // controller: _controller,
+                                    scrollDirection: Axis.vertical,
+                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                    ),
+                                    itemCount: widget.images!.length,
+                                    itemBuilder: (context, index) {
+                                      return widget.images![index].image != null
+                                          ? Image.network(widget.images![index].image!)
+                                          : Image.asset('assets/No_Image_Available.jpg');
+                                    }),
                             Divider(
                               thickness: 3,
                             ),

@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../Models/Scrap/scrap.dart';
 import '../../../../Models/User/user.dart';
+import '../../../../Models/detailVendor.dart';
 import '../../../../Models/vendor.dart';
 import '../../../../Models/vendorPage.dart';
 import '../../../../constants/constants.dart';
@@ -106,10 +107,12 @@ class ScrapSrevice {
     required String name,
     required String qty,
     required String description,
-    required PlatformFile images,
+    required String expire_hour,
+    // required PlatformFile images,
+    required List<PlatformFile> images,
   }) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    // final files = file.map((e) => MultipartFile.fromFileSync(e.path!)).toList();
+    final filesList = images.map((e) => MultipartFile.fromFileSync(e.path!)).toList();
     final token = pref.getString('token');
     final headers = {'Authorization': 'Bearer $token', 'Content-Type': 'multipart/form-data'};
     final formData = FormData.fromMap(
@@ -118,7 +121,9 @@ class ScrapSrevice {
         "name": name,
         "qty": qty,
         "description": description,
-        'images': MultipartFile.fromFileSync(images.path!),
+        "expire_hour": expire_hour,
+        'images[]': filesList,
+        // 'images': MultipartFile.fromFileSync(images.path!),
       },
     );
     try {
@@ -162,6 +167,26 @@ class ScrapSrevice {
       final data = jsonDecode(response.body);
 
       return Scrap.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
+
+  //โหลดรายละเอียด VendorScrap
+  static Future<List<DetailVendor>> getVendorScrap() async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/get_scrap_services');
+
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer ${token}', 'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final list = data['data'] as List;
+
+      return list.map((e) => DetailVendor.fromJson(e)).toList();
     } else {
       final data = convert.jsonDecode(response.body);
       throw Exception(data['message']);

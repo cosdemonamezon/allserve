@@ -341,6 +341,8 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                                                         builder: (context) => QuotationPurchasePage(
                                                               id: controller
                                                                   .purchaseCompanyDetail[0].puchases![index].id!,
+                                                              images: controller
+                                                                  .purchaseCompanyDetail[0].puchases![index].images,
                                                             )));
                                               },
                                               child: Container(
@@ -413,27 +415,16 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                                                           ),
                                                         ),
                                                       ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) => QuotationPurchasePage(
-                                                                        id: controller.purchaseCompanyDetail[0]
-                                                                            .puchases![index].id!,
-                                                                      )));
-                                                        },
-                                                        child: Container(
-                                                          height: size.height * 0.04,
-                                                          width: size.width * 0.08,
-                                                          color: Colors.blueAccent,
-                                                          child: Center(
-                                                              child: Icon(
-                                                            Icons.arrow_forward_ios,
-                                                            size: 20,
-                                                            color: Colors.white,
-                                                          )),
-                                                        ),
+                                                      Container(
+                                                        height: size.height * 0.04,
+                                                        width: size.width * 0.08,
+                                                        color: Colors.blueAccent,
+                                                        child: Center(
+                                                            child: Icon(
+                                                          Icons.arrow_forward_ios,
+                                                          size: 20,
+                                                          color: Colors.white,
+                                                        )),
                                                       ),
                                                     ],
                                                   ),
@@ -481,6 +472,8 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                                                         builder: (context) => ScceedQuotationPurchae(
                                                               id: controller
                                                                   .purchaseCompanyDetail[0].puchases![index].id!,
+                                                              images: controller
+                                                                  .purchaseCompanyDetail[0].puchases![index].images,
                                                             )));
                                               },
                                               child: Container(
@@ -553,27 +546,16 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                                                           ),
                                                         ),
                                                       ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) => ScceedQuotationPurchae(
-                                                                        id: controller.purchaseCompanyDetail[0]
-                                                                            .puchases![index].id!,
-                                                                      )));
-                                                        },
-                                                        child: Container(
-                                                          height: size.height * 0.04,
-                                                          width: size.width * 0.08,
-                                                          color: Colors.blueAccent,
-                                                          child: Center(
-                                                              child: Icon(
-                                                            Icons.arrow_forward_ios,
-                                                            size: 20,
-                                                            color: Colors.white,
-                                                          )),
-                                                        ),
+                                                      Container(
+                                                        height: size.height * 0.04,
+                                                        width: size.width * 0.08,
+                                                        color: Colors.blueAccent,
+                                                        child: Center(
+                                                            child: Icon(
+                                                          Icons.arrow_forward_ios,
+                                                          size: 20,
+                                                          color: Colors.white,
+                                                        )),
                                                       ),
                                                     ],
                                                   ),

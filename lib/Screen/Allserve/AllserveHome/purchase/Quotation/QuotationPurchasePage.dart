@@ -1,15 +1,19 @@
+import 'dart:developer';
+
 import 'package:allserve/Screen/Allserve/AllserveHome/purchase/purchaseController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../Models/imagesCpmpanie/imagesPurchase.dart';
 import '../../../../../appTheme.dart';
 import '../../ApproveQuotation/ApproveQuotationPage.dart';
 
 class QuotationPurchasePage extends StatefulWidget {
-  const QuotationPurchasePage({super.key, required this.id});
+  QuotationPurchasePage({super.key, required this.id, this.images});
   final int id;
+  final List<ImagesPurchase>? images;
 
   @override
   State<QuotationPurchasePage> createState() => _QuotationPurchasePageState();
@@ -26,6 +30,7 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
     //     _loadItem();
     //   }
     // });
+    inspect(widget.images);
     print(widget.id);
   }
 
@@ -98,12 +103,22 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset(
-                                  'assets/No_Image_Available.jpg',
-                                  width: double.infinity,
-                                  height: 200,
-                                  fit: BoxFit.fill,
-                                ),
+                                widget.images?.isEmpty ?? true
+                                    ? Image.asset('assets/No_Image_Available.jpg')
+                                    : GridView.builder(
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        // controller: _controller,
+                                        scrollDirection: Axis.vertical,
+                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                        ),
+                                        itemCount: widget.images!.length,
+                                        itemBuilder: (context, index) {
+                                          return widget.images![index].image != null
+                                              ? Image.network(widget.images![index].image!)
+                                              : Image.asset('assets/No_Image_Available.jpg');
+                                        }),
                                 Divider(
                                   thickness: 3,
                                 ),

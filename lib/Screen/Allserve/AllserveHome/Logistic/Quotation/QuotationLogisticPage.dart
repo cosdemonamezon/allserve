@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:allserve/Models/imagesCpmpanie/imagesLogistic.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/LogisticController.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,8 +13,9 @@ import '../../../../../appTheme.dart';
 import '../../ApproveQuotation/ApproveQuotationPage.dart';
 
 class QuotationLogisticPage extends StatefulWidget {
-  const QuotationLogisticPage({super.key, required this.id});
+  QuotationLogisticPage({super.key, required this.id, this.images});
   final int id;
+  final List<ImagesLogistic>? images;
 
   @override
   State<QuotationLogisticPage> createState() => _QuotationLogisticPageState();
@@ -28,6 +32,8 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
     //     _loadItem();
     //   }
     // });
+    print(widget.id);
+    inspect(widget.images);
   }
 
   Future _loadItem() async {
@@ -99,12 +105,22 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Image.asset(
-                                  'assets/No_Image_Available.jpg',
-                                  width: double.infinity,
-                                  height: 200,
-                                  fit: BoxFit.fill,
-                                ),
+                                widget.images?.isEmpty ?? true
+                                    ? Image.asset('assets/No_Image_Available.jpg')
+                                    : GridView.builder(
+                                        shrinkWrap: true,
+                                        // controller: _controller,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        scrollDirection: Axis.vertical,
+                                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                        ),
+                                        itemCount: widget.images!.length,
+                                        itemBuilder: (context, index) {
+                                          return widget.images![index].image != null
+                                              ? Image.network(widget.images![index].image!)
+                                              : Image.asset('assets/No_Image_Available.jpg');
+                                        }),
                                 Divider(
                                   thickness: 3,
                                 ),
@@ -141,7 +157,7 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                 SizedBox(
                                   height: 10,
                                 ),
-                                Text('ประเภทของรถ: ${controller.quotationDetail?.transport_type ?? ' '}',
+                                Text('ประเภทการขนส่ง: ${controller.quotationDetail?.transport_type ?? ' '}',
                                     style: TextStyle(
                                       fontSize: 15,
                                     )),
