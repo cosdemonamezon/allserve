@@ -1,4 +1,5 @@
 import 'package:allserve/Screen/Allserve/Search/Controller.dart';
+import 'package:allserve/Screen/Allserve/Search/DetailMicrosoft/DetailMicrosoftPage.dart';
 import 'package:allserve/Screen/Allserve/Search/Widgets/ListMicrosoft.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -96,7 +97,13 @@ class _SearchAllservScreenState extends State<SearchAllservScreen> {
                             return Stack(
                               children: [
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                      return DetailMicrosoftPage(
+                                        id: controller.logoMicrosoft[index].id!,
+                                      );
+                                    }));
+                                  },
                                   child: Container(
                                     width: size.width,
                                     margin: EdgeInsets.only(right: 25, left: 25, top: 15),

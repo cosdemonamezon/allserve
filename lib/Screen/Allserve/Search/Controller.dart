@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Models/microsoft.dart';
 import 'Service.dart';
@@ -7,7 +8,10 @@ class SearchController extends ChangeNotifier {
   SearchController({this.searchService = const SearchService()});
 
   SearchService searchService;
+  String? token;
+  SharedPreferences? pref;
   List<Microsoft> logoMicrosoft = [];
+  Microsoft? detailMicrosoft;
 
   Future<void> loadLogoMicrosoft() async {
     logoMicrosoft.clear();
@@ -22,6 +26,18 @@ class SearchController extends ChangeNotifier {
     // }
 
     logoMicrosoft = (_loadItem);
+
+    notifyListeners();
+  }
+
+  // DetailQuotationv
+  Future<void> microsoftDetail(
+    int id,
+  ) async {
+    detailMicrosoft = null;
+    pref = await SharedPreferences.getInstance();
+    token = pref?.getString('token');
+    detailMicrosoft = await SearchService.getMicrosoftDetail(itemId: id);
 
     notifyListeners();
   }

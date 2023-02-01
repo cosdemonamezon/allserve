@@ -27,4 +27,23 @@ class SearchService {
       throw Exception(data['message']);
     }
   }
+
+  // getMicrosoftDetail
+  static Future<Microsoft?> getMicrosoftDetail({required int itemId}) async {
+    final pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/microsoft/$itemId');
+
+    final response =
+        await http.get(url, headers: {'Authorization': 'Bearer ${token}', 'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      return Microsoft.fromJson(data['data']);
+    } else {
+      final data = convert.jsonDecode(response.body);
+      throw Exception(data['message']);
+    }
+  }
 }
