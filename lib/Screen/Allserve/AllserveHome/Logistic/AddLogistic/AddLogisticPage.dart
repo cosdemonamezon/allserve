@@ -687,33 +687,35 @@ class _AddLogisticPageState extends State<AddLogisticPage> {
                   height: size.height * 0.01,
                 ),
                 SizedBox(
-                  child: ListView.builder(
-                      // controller: _controller,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: controller.detailLogistic.length,
-                      itemBuilder: (_, index) {
-                        return CheckboxListTile(
-                          controlAffinity: ListTileControlAffinity.leading,
-                          value: controller.detailLogistic[index].isChecked,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              controller.detailLogistic[index].isChecked = value!;
-                              print(controller.detailLogistic[index].isChecked);
-                              if (controller.detailLogistic[index].isChecked == true) {
-                                // 'รถกระบะ';
-                                ListChacked.add(controller.detailLogistic[index].name!);
-                                print(ListChacked);
-                              } else if (controller.detailLogistic[index].isChecked == false) {
-                                ListChacked.remove(controller.detailLogistic[index].name!);
-                                print(ListChacked);
-                              }
-                            });
-                          },
-                          title: Text(controller.detailLogistic[index].name!),
-                        );
-                      }),
+                  child: controller.detailLogistic.isEmpty
+                      ? Center(child: CircularProgressIndicator())
+                      : ListView.builder(
+                          // controller: _controller,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: controller.detailLogistic.length,
+                          itemBuilder: (_, index) {
+                            return CheckboxListTile(
+                              controlAffinity: ListTileControlAffinity.leading,
+                              value: controller.detailLogistic[index].isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  controller.detailLogistic[index].isChecked = value!;
+                                  print(controller.detailLogistic[index].isChecked);
+                                  if (controller.detailLogistic[index].isChecked == true) {
+                                    // 'รถกระบะ';
+                                    ListChacked.add(controller.detailLogistic[index].name!);
+                                    print(ListChacked);
+                                  } else if (controller.detailLogistic[index].isChecked == false) {
+                                    ListChacked.remove(controller.detailLogistic[index].name!);
+                                    print(ListChacked);
+                                  }
+                                });
+                              },
+                              title: Text(controller.detailLogistic[index].name!),
+                            );
+                          }),
                 ),
                 SizedBox(
                   height: size.height * 0.03,
