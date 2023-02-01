@@ -169,7 +169,7 @@ class _AddRecruitScreenState extends State<AddRecruitScreen> {
                                 style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            AddTextForm(controller: salary, hintText: '', keyboardType: TextInputType.phone),
+                            AddTextForm(controller: salary, hintText: '', keyboardType: TextInputType.datetime),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
                               child: Text(

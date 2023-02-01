@@ -204,7 +204,7 @@ class _EditRecruitScreenState extends State<EditRecruitScreen> {
                             AddTextForm(
                                 controller: salary,
                                 // hintText: widget.salary,
-                                keyboardType: TextInputType.phone),
+                                keyboardType: TextInputType.datetime),
                             Padding(
                               padding: EdgeInsets.symmetric(vertical: 10),
                               child: Text(

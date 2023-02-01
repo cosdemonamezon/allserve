@@ -261,6 +261,7 @@ class _ProfilePratnerScreenState extends State<ProfilePratnerScreen> {
                   iconData: Icons.person_outline,
                 ),
                 TextFieldWidget(
+                  keyboardType: TextInputType.emailAddress,
                   onSaved: (input) => email.text = input!,
                   validator: (input) => !input!.contains('@') ? "Should be a valid email" : null,
                   initialValue: email.text,
