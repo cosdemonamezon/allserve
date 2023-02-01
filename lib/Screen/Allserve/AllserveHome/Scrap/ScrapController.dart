@@ -39,6 +39,7 @@ class ScrapController extends ChangeNotifier {
     scrapCompanyDetail.clear();
     final _loadDatil = await ScrapSrevice.getScrapCompany(companyId: id);
     scrapCompanyDetail.addAll(_loadDatil);
+    scrapCompanyDetail[0].scraps!.sort((a, b) => b.id!.compareTo(a.id!));
 
     notifyListeners();
   }

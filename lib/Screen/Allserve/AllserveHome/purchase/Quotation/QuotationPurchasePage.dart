@@ -178,14 +178,20 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                                         // if (index < controller.quotationPurchaseDetail!.quotations!.length) {
                                         return Padding(
                                           padding: const EdgeInsets.all(5),
-                                          child: GestureDetector(
+                                          child: InkWell(
                                             onTap: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //         builder: (context) => DetailVendorPage(
-                                              //               id: controller.quotationPurchaseDetail!.quotations![index].id!,
-                                              //             )));
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                                return ApproveQuotationPage(
+                                                  page: 'Purchase',
+                                                  id: controller.quotationPurchaseDetail!.quotations![index].id!,
+                                                  company: controller
+                                                      .quotationPurchaseDetail!.quotations![index].parther!.name!,
+                                                  titer: controller.quotationPurchaseDetail!.quotations![index].title!,
+                                                  remark:
+                                                      controller.quotationPurchaseDetail!.quotations![index].remark!,
+                                                  file: controller.quotationPurchaseDetail!.quotations![index].path!,
+                                                );
+                                              }));
                                             },
                                             child: Container(
                                               width: size.width,
@@ -287,36 +293,16 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                                                                   // SizedBox(height: 4),
                                                                 ],
                                                               ),
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  Navigator.push(context,
-                                                                      MaterialPageRoute(builder: (context) {
-                                                                    return ApproveQuotationPage(
-                                                                      page: 'Purchase',
-                                                                      id: controller.quotationPurchaseDetail!
-                                                                          .quotations![index].id!,
-                                                                      company: controller.quotationPurchaseDetail!
-                                                                          .quotations![index].parther!.name!,
-                                                                      titer: controller.quotationPurchaseDetail!
-                                                                          .quotations![index].title!,
-                                                                      remark: controller.quotationPurchaseDetail!
-                                                                          .quotations![index].remark!,
-                                                                      file: controller.quotationPurchaseDetail!
-                                                                          .quotations![index].path!,
-                                                                    );
-                                                                  }));
-                                                                },
-                                                                child: Container(
-                                                                  height: size.height * 0.04,
-                                                                  width: size.width * 0.08,
-                                                                  color: Colors.blueAccent,
-                                                                  child: Center(
-                                                                      child: Icon(
-                                                                    Icons.arrow_forward_ios,
-                                                                    size: 20,
-                                                                    color: Colors.white,
-                                                                  )),
-                                                                ),
+                                                              Container(
+                                                                height: size.height * 0.04,
+                                                                width: size.width * 0.08,
+                                                                color: Colors.blueAccent,
+                                                                child: Center(
+                                                                    child: Icon(
+                                                                  Icons.arrow_forward_ios,
+                                                                  size: 20,
+                                                                  color: Colors.white,
+                                                                )),
                                                               ),
                                                               // InkWell(
                                                               //   onTap: () async {

@@ -28,6 +28,7 @@ class LogisticController extends ChangeNotifier {
     logisticCompanyDetail.clear();
     final _loadDatil = await LogisticSrevice.getLogisticCompany(companyId: id);
     logisticCompanyDetail = (_loadDatil);
+    logisticCompanyDetail[0].logistics!.sort((a, b) => b.id!.compareTo(a.id!));
 
     notifyListeners();
   }

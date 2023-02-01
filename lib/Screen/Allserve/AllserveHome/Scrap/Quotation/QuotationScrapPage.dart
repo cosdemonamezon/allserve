@@ -174,14 +174,19 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                       // if (controller.quotationScrapDetail!.status != 'Finish') {
                                       return Padding(
                                         padding: const EdgeInsets.all(5),
-                                        child: GestureDetector(
+                                        child: InkWell(
                                           onTap: () {
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (context) => DetailVendorPage(
-                                            //               id: controller.quotationScrapDetail!.quotations![index].id!,
-                                            //             )));
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                              return ApproveQuotationPage(
+                                                page: 'Scrap',
+                                                company:
+                                                    controller.quotationScrapDetail!.quotations![index].parther!.name!,
+                                                id: controller.quotationScrapDetail!.quotations![index].id!,
+                                                titer: controller.quotationScrapDetail!.quotations![index].title!,
+                                                remark: controller.quotationScrapDetail!.quotations![index].remark!,
+                                                file: controller.quotationScrapDetail!.quotations![index].path!,
+                                              );
+                                            }));
                                           },
                                           child: Container(
                                             width: size.width,
@@ -276,36 +281,16 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                                                 // SizedBox(height: 4),
                                                               ],
                                                             ),
-                                                            InkWell(
-                                                              onTap: () {
-                                                                Navigator.push(context,
-                                                                    MaterialPageRoute(builder: (context) {
-                                                                  return ApproveQuotationPage(
-                                                                    page: 'Scrap',
-                                                                    company: controller.quotationScrapDetail!
-                                                                        .quotations![index].parther!.name!,
-                                                                    id: controller
-                                                                        .quotationScrapDetail!.quotations![index].id!,
-                                                                    titer: controller.quotationScrapDetail!
-                                                                        .quotations![index].title!,
-                                                                    remark: controller.quotationScrapDetail!
-                                                                        .quotations![index].remark!,
-                                                                    file: controller
-                                                                        .quotationScrapDetail!.quotations![index].path!,
-                                                                  );
-                                                                }));
-                                                              },
-                                                              child: Container(
-                                                                height: size.height * 0.04,
-                                                                width: size.width * 0.08,
-                                                                color: Colors.blueAccent,
-                                                                child: Center(
-                                                                    child: Icon(
-                                                                  Icons.arrow_forward_ios,
-                                                                  size: 20,
-                                                                  color: Colors.white,
-                                                                )),
-                                                              ),
+                                                            Container(
+                                                              height: size.height * 0.04,
+                                                              width: size.width * 0.08,
+                                                              color: Colors.blueAccent,
+                                                              child: Center(
+                                                                  child: Icon(
+                                                                Icons.arrow_forward_ios,
+                                                                size: 20,
+                                                                color: Colors.white,
+                                                              )),
                                                             ),
                                                             // InkWell(
                                                             //   onTap: () async {

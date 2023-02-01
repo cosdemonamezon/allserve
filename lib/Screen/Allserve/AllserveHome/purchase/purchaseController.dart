@@ -54,6 +54,7 @@ class PurchaseController extends ChangeNotifier {
     purchaseCompanyDetail.clear();
     final _loadDatil = await PurchaseSrevice.getPurchaseCompany(companyId: id);
     purchaseCompanyDetail = (_loadDatil);
+    purchaseCompanyDetail[0].puchases!.sort((a, b) => b.id!.compareTo(a.id!));
 
     notifyListeners();
   }
