@@ -118,7 +118,13 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                         itemCount: widget.images!.length,
                                         itemBuilder: (context, index) {
                                           return widget.images![index].image != null
-                                              ? Image.network(widget.images![index].image!)
+                                              ? InkWell(
+                                                  onTap: () {
+                                                    final url = widget.images![index].image;
+
+                                                    openBrowserURL(url: url!, inApp: false);
+                                                  },
+                                                  child: Image.network(widget.images![index].image!))
                                               : Image.asset('assets/No_Image_Available.jpg');
                                         }),
                                 Divider(

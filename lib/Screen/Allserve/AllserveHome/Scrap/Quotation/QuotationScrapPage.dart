@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:allserve/Models/imagesCpmpanie/imagesScrap.dart';
 import 'package:flutter/material.dart';
+import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -113,7 +114,13 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                     itemCount: widget.images!.length,
                                     itemBuilder: (context, index) {
                                       return widget.images![index].image != null
-                                          ? Image.network(widget.images![index].image!)
+                                          ? InkWell(
+                                              onTap: () {
+                                                final url = widget.images![index].image;
+
+                                                openBrowserURL(url: url!, inApp: false);
+                                              },
+                                              child: Image.network(widget.images![index].image!))
                                           : Image.asset('assets/No_Image_Available.jpg');
                                     }),
                             Divider(
