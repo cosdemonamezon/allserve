@@ -97,55 +97,58 @@ class _DetailRecruitState extends State<DetailRecruit> with TickerProviderStateM
                                 physics: NeverScrollableScrollPhysics(),
                                 itemCount: controller.uesrAllJob.length,
                                 itemBuilder: (_, index) {
-                                  return ListTile(
-                                    title: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(controller.uesrAllJob[index].name!),
-                                        Text('อายุ ${(controller.uesrAllJob[index].birthday?.agenow() ?? '')} ปี'),
-                                      ],
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        controller.uesrAllJob[index].user_job_detail!.isNotEmpty
-                                            ? Text(
-                                                'ระดับการศึกษา: ${controller.uesrAllJob[index].user_job_detail?[0].degree ?? ''}')
-                                            : Text('ระดับการศึกษา:'),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        controller.uesrAllJob[index].user_job_detail!.isNotEmpty
-                                            ? Text(
-                                                'สาขา: ${controller.uesrAllJob[index].user_job_detail?[0].major ?? ''}')
-                                            : Text('สาขา:'),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            controller.uesrAllJob[index].user_job_detail!.isNotEmpty
-                                                ? Text(
-                                                    'สถานศึกษา: ${controller.uesrAllJob[index].user_job_detail?[0].location_of_educate ?? ''} ')
-                                                : Text('สถานศึกษา:'),
-                                            IconButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) => DetailsApplicant(
-                                                                id: controller.uesrAllJob[index].id!,
-                                                                titie: 'meetings',
-                                                                idPosition: widget.idPosition,
-                                                              )));
-                                                },
-                                                icon: Icon(Icons.remove_red_eye)),
-                                          ],
-                                        ),
-                                        Divider(
-                                          thickness: 2,
-                                        ),
-                                      ],
-                                    ),
-                                  );
+                                  return controller.uesrAllJob[index].status != 'Yes'
+                                      ? SizedBox.shrink()
+                                      : ListTile(
+                                          title: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(controller.uesrAllJob[index].name!),
+                                              Text(
+                                                  'อายุ ${(controller.uesrAllJob[index].birthday?.agenow() ?? '')} ปี'),
+                                            ],
+                                          ),
+                                          subtitle: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              controller.uesrAllJob[index].user_job_detail!.isNotEmpty
+                                                  ? Text(
+                                                      'ระดับการศึกษา: ${controller.uesrAllJob[index].user_job_detail?[0].degree ?? ''}')
+                                                  : Text('ระดับการศึกษา:'),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              controller.uesrAllJob[index].user_job_detail!.isNotEmpty
+                                                  ? Text(
+                                                      'สาขา: ${controller.uesrAllJob[index].user_job_detail?[0].major ?? ''}')
+                                                  : Text('สาขา:'),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  controller.uesrAllJob[index].user_job_detail!.isNotEmpty
+                                                      ? Text(
+                                                          'สถานศึกษา: ${controller.uesrAllJob[index].user_job_detail?[0].location_of_educate ?? ''} ')
+                                                      : Text('สถานศึกษา:'),
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) => DetailsApplicant(
+                                                                      id: controller.uesrAllJob[index].id!,
+                                                                      titie: 'meetings',
+                                                                      idPosition: widget.idPosition,
+                                                                    )));
+                                                      },
+                                                      icon: Icon(Icons.remove_red_eye)),
+                                                ],
+                                              ),
+                                              Divider(
+                                                thickness: 2,
+                                              ),
+                                            ],
+                                          ),
+                                        );
                                 }),
                       ],
                     ),

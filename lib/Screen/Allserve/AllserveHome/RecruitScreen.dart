@@ -115,6 +115,8 @@ class _RecruitScreenState extends State<RecruitScreen> with TickerProviderStateM
                       SizedBox(
                         height: 10,
                       ),
+                      // controller.uesrAllJob == null
+                      //     ? Center(child: CircularProgressIndicator())
                       Container(
                           padding: EdgeInsets.all(15),
                           child: controller.uesrAllJob.isEmpty
@@ -125,8 +127,8 @@ class _RecruitScreenState extends State<RecruitScreen> with TickerProviderStateM
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount: controller.uesrAllJob.length,
                                   itemBuilder: (_, index) {
-                                    return controller.uesrAllJob == null
-                                        ? Center(child: CircularProgressIndicator())
+                                    return controller.uesrAllJob[index].status != 'Yes'
+                                        ? SizedBox.shrink()
                                         : Stack(
                                             children: [
                                               InkWell(
@@ -159,10 +161,28 @@ class _RecruitScreenState extends State<RecruitScreen> with TickerProviderStateM
                                                     child: Row(
                                                       children: [
                                                         Expanded(
-                                                          flex: 2,
-                                                          child: Image.asset("assets/icons/user.png",
-                                                              height: size.height / 17),
-                                                        ),
+                                                            flex: 2,
+                                                            child: controller.uesrAllJob[index].image != null
+                                                                ? CircleAvatar(
+                                                                    backgroundColor: Colors.transparent,
+                                                                    radius: 40,
+                                                                    child: ClipOval(
+                                                                      child: Image.network(
+                                                                        controller.uesrAllJob[index].image!,
+                                                                        fit: BoxFit.cover,
+                                                                      ),
+                                                                    ),
+                                                                  )
+                                                                : CircleAvatar(
+                                                                    backgroundColor: Colors.transparent,
+                                                                    radius: 40,
+                                                                    child: ClipOval(
+                                                                      child: Image.asset(
+                                                                        'assets/icons/user.png',
+                                                                        fit: BoxFit.cover,
+                                                                      ),
+                                                                    ),
+                                                                  )),
                                                         SizedBox(
                                                           width: 10,
                                                         ),
