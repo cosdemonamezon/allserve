@@ -400,7 +400,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                                                               ),
                                                               SizedBox(height: 4),
                                                               Text(
-                                                                'จำนวน ${controller.purchaseCompanyDetail[0].puchases![index].qty ?? ''} ',
+                                                                'จำนวน ${controller.purchaseCompanyDetail[0].puchases![index].qty ?? ''} ชิ้น',
                                                                 style: TextStyle(fontSize: appFontSize?.body2),
                                                                 overflow: TextOverflow.ellipsis,
                                                               ),
@@ -531,7 +531,7 @@ class _PurchasePageState extends State<PurchasePage> with TickerProviderStateMix
                                                               ),
                                                               SizedBox(height: 4),
                                                               Text(
-                                                                'จำนวน ${controller.purchaseCompanyDetail[0].puchases![index].qty ?? ''} ',
+                                                                'จำนวน ${controller.purchaseCompanyDetail[0].puchases![index].qty ?? ''} ชิ้น',
                                                                 style: TextStyle(fontSize: appFontSize?.body2),
                                                                 overflow: TextOverflow.ellipsis,
                                                               ),

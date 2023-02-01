@@ -386,7 +386,7 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
                                                               ),
                                                               SizedBox(height: 4),
                                                               Text(
-                                                                'จำนวน ${controllerLogistic.logisticCompanyDetail[0].logistics![index].qty ?? ''} ',
+                                                                'จำนวน ${controllerLogistic.logisticCompanyDetail[0].logistics![index].qty ?? ''} ชิ้น',
                                                                 style: TextStyle(fontSize: appFontSize?.body2),
                                                                 overflow: TextOverflow.ellipsis,
                                                               ),
@@ -513,7 +513,7 @@ class _LogisticPageState extends State<LogisticPage> with TickerProviderStateMix
                                                               ),
                                                               SizedBox(height: 4),
                                                               Text(
-                                                                'จำนวน ${controllerLogistic.logisticCompanyDetail[0].logistics![index].qty ?? ''} ',
+                                                                'จำนวน ${controllerLogistic.logisticCompanyDetail[0].logistics![index].qty ?? ''} ชิ้น',
                                                                 style: TextStyle(fontSize: appFontSize?.body2),
                                                                 overflow: TextOverflow.ellipsis,
                                                               ),

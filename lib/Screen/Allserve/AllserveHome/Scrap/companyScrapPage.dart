@@ -406,7 +406,7 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                                                                   ),
                                                                   SizedBox(height: 4),
                                                                   Text(
-                                                                    'จำนวน ${controllerScrap.scrapCompanyDetail[0].scraps![index].qty ?? ''} ',
+                                                                    'จำนวน ${controllerScrap.scrapCompanyDetail[0].scraps![index].qty ?? ''} ชิ้น',
                                                                     style: TextStyle(fontSize: appFontSize?.body2),
                                                                     overflow: TextOverflow.ellipsis,
                                                                   ),
@@ -534,7 +534,7 @@ class _CompanyScrapPageState extends State<CompanyScrapPage> with TickerProvider
                                                               ),
                                                               SizedBox(height: 4),
                                                               Text(
-                                                                'จำนวน ${controllerScrap.scrapCompanyDetail[0].scraps![index].qty ?? ''} ',
+                                                                'จำนวน ${controllerScrap.scrapCompanyDetail[0].scraps![index].qty ?? ''} ชิ้น',
                                                                 style: TextStyle(fontSize: appFontSize?.body2),
                                                                 overflow: TextOverflow.ellipsis,
                                                               ),
