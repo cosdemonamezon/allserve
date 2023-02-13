@@ -101,7 +101,7 @@ class _ChatGptPageState extends State<ChatGptPage> {
         ),
         elevation: 0,
         // backgroundColor: botBackgroundColor,
-        backgroundColor: Colors.cyan,
+        backgroundColor: Colors.blue,
       ),
       // backgroundColor: backgroundColor,
       backgroundColor: Colors.white,
@@ -141,7 +141,7 @@ class _ChatGptPageState extends State<ChatGptPage> {
       visible: !isLoading,
       child: Container(
         // color: botBackgroundColor,
-        color: Colors.cyan,
+        color: Colors.blue,
         child: IconButton(
           icon: Icon(
             Icons.send_rounded,
@@ -213,7 +213,7 @@ class _ChatGptPageState extends State<ChatGptPage> {
         controller: _textController,
         decoration: InputDecoration(
           // fillColor: botBackgroundColor,
-          fillColor: Colors.cyan,
+          fillColor: Colors.blue,
           filled: true,
           border: InputBorder.none,
           focusedBorder: InputBorder.none,

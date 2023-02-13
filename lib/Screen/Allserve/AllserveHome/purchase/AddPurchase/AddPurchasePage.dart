@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:allserve/Screen/Allserve/AllserveHome/purchase/purchaseService.dart';
 import 'package:file_picker/file_picker.dart';
@@ -219,64 +220,123 @@ class _AddPurchasePageState extends State<AddPurchasePage> {
                                                   padding: EdgeInsets.all(15),
                                                   scrollDirection: Axis.vertical,
                                                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: 4,
+                                                    crossAxisCount: 3,
                                                     mainAxisSpacing: 2,
                                                     crossAxisSpacing: 2,
                                                   ),
                                                   itemCount: _selectedFile!.length,
                                                   itemBuilder: (context, index) {
                                                     final file = _selectedFile![index];
+                                                    final File fileImage = File(file.path!);
+                                                    final extension = file.extension ?? 'none';
                                                     inspect(file);
 
-                                                    return buildFille(file);
+                                                    // return buildFille(file);
+                                                    return InkWell(
+                                                      onTap: () => OpenFile.open(file.path),
+                                                      child: Container(
+                                                        padding: EdgeInsets.all(8),
+                                                        child: Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Expanded(
+                                                                child: Stack(clipBehavior: Clip.none, children: [
+                                                              file.path == null
+                                                                  ? Image.asset('No_Image_Available')
+                                                                  : Image.file(fileImage),
+                                                              // Container(
+                                                              //   alignment: Alignment.center,
+                                                              //   width: double.infinity,
+                                                              //   decoration: BoxDecoration(
+                                                              //       color: Colors.orange,
+                                                              //       borderRadius: BorderRadius.circular(12)),
+                                                              //   child: Text(
+                                                              //     '.$extension',
+                                                              //     style: TextStyle(
+                                                              //         fontSize: 25,
+                                                              //         fontWeight: FontWeight.bold,
+                                                              //         color: Colors.white),
+                                                              //   ),
+                                                              // ),
+                                                              Positioned(
+                                                                top: -8,
+                                                                right: -8,
+                                                                child: InkWell(
+                                                                  onTap: () {
+                                                                    setState(() {
+                                                                      _selectedFile!.removeAt(index);
+                                                                      print(file);
+                                                                    });
+                                                                  },
+                                                                  child: Icon(
+                                                                    Icons.remove_circle,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ])),
+                                                            SizedBox(
+                                                              height: 8,
+                                                            ),
+                                                            Text(
+                                                              file.name,
+                                                              style: TextStyle(
+                                                                  fontSize: 10,
+                                                                  fontWeight: FontWeight.bold,
+                                                                  color: Colors.black),
+                                                              overflow: TextOverflow.ellipsis,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
                                                   })
                                               : SizedBox.shrink(),
                                           SizedBox(
                                             height: size.height * 0.05,
                                           ),
-                                          _selectedFile != null
-                                              ? Center(
-                                                  child: Container(
-                                                    height: size.height * 0.05,
-                                                    width: size.width * 0.25,
-                                                    color: Colors.redAccent,
-                                                    child: InkWell(
-                                                      onTap: () async {
-                                                        setState(() {
-                                                          _selectedFile = null;
-                                                        });
-                                                      },
-                                                      child: Center(
-                                                          child: Text(
-                                                        'ลบไฟล์',
-                                                        style: TextStyle(color: Colors.white),
-                                                      )),
-                                                    ),
-                                                  ),
-                                                )
-                                              : Center(
-                                                  child: Container(
-                                                    height: size.height * 0.05,
-                                                    width: size.width * 0.25,
-                                                    color: Colors.blueAccent,
-                                                    child: InkWell(
-                                                      onTap: () async {
-                                                        final result = await FilePicker.platform
-                                                            .pickFiles(allowMultiple: true, type: FileType.image);
-                                                        setState(() {
-                                                          if (result == null) return;
+                                          // _selectedFile != null
+                                          //     ? Center(
+                                          //         child: Container(
+                                          //           height: size.height * 0.05,
+                                          //           width: size.width * 0.25,
+                                          //           color: Colors.redAccent,
+                                          //           child: InkWell(
+                                          //             onTap: () async {
+                                          //               setState(() {
+                                          //                 _selectedFile = null;
+                                          //               });
+                                          //             },
+                                          //             child: Center(
+                                          //                 child: Text(
+                                          //               'ลบไฟล์',
+                                          //               style: TextStyle(color: Colors.white),
+                                          //             )),
+                                          //           ),
+                                          //         ),
+                                          //       )
+                                          Center(
+                                            child: Container(
+                                              height: size.height * 0.05,
+                                              width: size.width * 0.25,
+                                              color: Colors.blueAccent,
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  final result = await FilePicker.platform
+                                                      .pickFiles(allowMultiple: true, type: FileType.image);
+                                                  setState(() {
+                                                    if (result == null) return;
 
-                                                          _selectedFile = result.files;
-                                                        });
-                                                      },
-                                                      child: Center(
-                                                          child: Text(
-                                                        'อัพโหลดไฟล์',
-                                                        style: TextStyle(color: Colors.white),
-                                                      )),
-                                                    ),
-                                                  ),
-                                                ),
+                                                    _selectedFile = result.files;
+                                                  });
+                                                },
+                                                child: Center(
+                                                    child: Text(
+                                                  'อัพโหลดไฟล์',
+                                                  style: TextStyle(color: Colors.white),
+                                                )),
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
