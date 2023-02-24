@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:allserve/Models/imagesCpmpanie/imagesLogistic.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/LogisiticSrevicer.dart';
 import 'package:allserve/Screen/Allserve/AllserveHome/Logistic/LogisticController.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,7 +10,10 @@ import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../Models/addService.dart';
 import '../../../../../appTheme.dart';
+import '../../../../Widgets/ButtonRounded.dart';
+import '../../../../Widgets/LoadingDialog.dart';
 import '../../ApproveQuotation/ApproveQuotationPage.dart';
 
 class QuotationLogisticPage extends StatefulWidget {
@@ -38,8 +42,27 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
 
   Future _loadItem() async {
     await context.read<LogisticController>().detailQuotation(widget.id);
+    await context.read<LogisticController>().loadDetailVendorLogistic();
+    // // Logistic
+    final alllogistic = context.read<LogisticController>().detailLogistic;
+    final vendorlogistic = context.read<LogisticController>().quotationDetailLogistic!.services;
+    final logisticselected = vendorlogistic!.where((element) => alllogistic.contains(element.service_id));
+    for (var logisticDetail in vendorlogistic) {
+      for (var logistic in alllogistic) {
+        print("${logisticDetail.service_id} = ${logistic.id}");
+        if (logisticDetail.service_id == logistic.id.toString()) {
+          final datalogistic = AddService(service_type: 'logistic', service_id: int.parse(logisticDetail.service_id!));
+          print("object");
+          setState(() {
+            logistic.isChecked = true;
+            ListChacked.add(datalogistic);
+          });
+        }
+      }
+    }
   }
 
+  List<AddService> ListChacked = [];
   late TabController _tabController;
   final _controller = ScrollController();
   @override
@@ -75,7 +98,7 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
               body: SafeArea(
                   child: TabBarView(controller: _tabController, children: [
                 //Tap1
-                controller.quotationDetail == null
+                controller.quotationDetailLogistic == null
                     ? Center(child: CircularProgressIndicator())
                     : SingleChildScrollView(
                         scrollDirection: Axis.vertical,
@@ -132,61 +155,62 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                       Divider(
                                         thickness: 3,
                                       ),
-                                      Text(controller.quotationDetail?.name ?? ' ',
+                                      Text(controller.quotationDetailLogistic?.name ?? ' ',
                                           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('คำอธิบาย: ${controller.quotationDetail?.description ?? ' '}',
+                                      Text('คำอธิบาย: ${controller.quotationDetailLogistic?.description ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('จำนวน: ${controller.quotationDetail?.qty ?? ' '}',
+                                      Text('จำนวน: ${controller.quotationDetailLogistic?.qty ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('สถานที่รับ: ${controller.quotationDetail?.start_location ?? ' '}',
+                                      Text('สถานที่รับ: ${controller.quotationDetailLogistic?.start_location ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('สถานที่ส่ง: ${controller.quotationDetail?.end_location ?? ' '}',
+                                      Text('สถานที่ส่ง: ${controller.quotationDetailLogistic?.end_location ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('ประเภทการขนส่ง: ${controller.quotationDetail?.transport_type ?? ' '}',
+                                      Text(
+                                          'ประเภทการขนส่ง: ${controller.quotationDetailLogistic?.transport_type ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('ความกว้าง: ${controller.quotationDetail?.width ?? ' '}',
+                                      Text('ความกว้าง: ${controller.quotationDetailLogistic?.width ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('ความสูง: ${controller.quotationDetail?.height ?? ' '}',
+                                      Text('ความสูง: ${controller.quotationDetailLogistic?.height ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('น้ำหนัก: ${controller.quotationDetail?.weight ?? ' '}',
+                                      Text('น้ำหนัก: ${controller.quotationDetailLogistic?.weight ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
@@ -195,12 +219,126 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                       ),
                                     ],
                                   ),
-                                ))
+                                )),
+                            SizedBox(
+                              child: controller.detailLogistic.isEmpty
+                                  ? Center(child: CircularProgressIndicator())
+                                  : ListView.builder(
+                                      // controller: _controller,
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: controller.detailLogistic.length,
+                                      itemBuilder: (_, index) {
+                                        return CheckboxListTile(
+                                          controlAffinity: ListTileControlAffinity.leading,
+                                          value: controller.detailLogistic[index].isChecked,
+                                          onChanged: (bool? value) {
+                                            final dataLogistic = AddService(
+                                                service_id: controller.detailLogistic[index].id!,
+                                                service_type: 'logistic');
+                                            setState(() {
+                                              controller.detailLogistic[index].isChecked = value!;
+                                              print(controller.detailLogistic[index].isChecked);
+                                              if (value) {
+                                                // 'รถกระบะ';
+                                                ListChacked.add(dataLogistic);
+                                                inspect(ListChacked);
+                                              } else {
+                                                // ListChacked.remove(controller.detailLogistic[index].name!);
+                                                ListChacked.removeWhere(
+                                                  (element) =>
+                                                      element.service_id == dataLogistic.service_id &&
+                                                      element.service_type == 'logistic',
+                                                );
+                                                inspect(ListChacked);
+                                              }
+                                            });
+                                          },
+                                          title: Text(controller.detailLogistic[index].name!),
+                                        );
+                                      }),
+                            ),
+                            SizedBox(
+                              height: size.height * 0.03,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: ButtonRounded(
+                                text: 'บันทึก',
+                                color: Colors.blue,
+                                textColor: Colors.white,
+                                onPressed: () {
+                                  showCupertinoDialog(
+                                    context: context,
+                                    builder: (context) => CupertinoAlertDialog(
+                                      title: Text(
+                                        'ดำเนินการเรียบร้อย',
+                                        //style: TextStyle(fontFamily: fontFamily),
+                                      ),
+                                      content: Text(
+                                        'ต้องการออกจากหน้านี้หรือไม่',
+                                        //style: TextStyle(fontFamily: fontFamily),
+                                      ),
+                                      actions: <CupertinoDialogAction>[
+                                        CupertinoDialogAction(
+                                          child: Text(
+                                            'ยกเลิก',
+                                          ),
+                                          onPressed: () => Navigator.pop(context),
+                                        ),
+                                        CupertinoDialogAction(
+                                          child: Text(
+                                            'ตกลง',
+                                          ),
+                                          onPressed: () async {
+                                            try {
+                                              LoadingDialog.open(context);
+                                              await LogisticSrevice().setServiceOrder(
+                                                order_id: widget.id,
+                                                order_type: 'logistic',
+                                                services: ListChacked,
+                                              );
+                                              // await context
+                                              //     .read<ProfileController>()
+                                              //     .vendorDetailService(user.partner_detail!.id!);
+                                              if (mounted) {
+                                                LoadingDialog.close(context);
+                                                Navigator.of(context)
+                                                  ..pop()
+                                                  ..pop();
+                                              }
+                                            } catch (e) {
+                                              LoadingDialog.close(context);
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) => AlertDialog(
+                                                  backgroundColor: Colors.blueAccent,
+                                                  title: Text("Error", style: TextStyle(color: Colors.white)),
+                                                  content: Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                                  actions: [
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(context);
+                                                        },
+                                                        child: Text('OK', style: TextStyle(color: Colors.white)))
+                                                  ],
+                                                ),
+                                              );
+                                            }
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                           ],
                         ),
                       ),
                 //Tap2
-                controller.quotationDetail == null
+                controller.quotationDetailLogistic == null
                     ? Center(child: CircularProgressIndicator())
                     : SingleChildScrollView(
                         child: Column(
@@ -210,18 +348,18 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                             ),
                             Container(
                               padding: EdgeInsets.all(15),
-                              child: controller.quotationDetail?.quotations?.isEmpty ?? true
+                              child: controller.quotationDetailLogistic?.quotations?.isEmpty ?? true
                                   ? SizedBox.shrink()
                                   : ListView.builder(
                                       controller: _controller,
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: controller.quotationDetail!.quotations!.length,
+                                      itemCount: controller.quotationDetailLogistic!.quotations!.length,
                                       itemBuilder: (_, index) {
-                                        // final String? selectedFile = controller.quotationDetail!.quotations![index].path;
+                                        // final String? selectedFile = controller.quotationDetailLogistic!.quotations![index].path;
                                         // final File path = selectedFile as File;
-                                        // if (index < controller.quotationDetail!.quotations!.length) {
+                                        // if (index < controller.quotationDetailLogistic!.quotations!.length) {
                                         return Padding(
                                           padding: const EdgeInsets.all(5),
                                           child: InkWell(
@@ -229,12 +367,13 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                               Navigator.push(context, MaterialPageRoute(builder: (context) {
                                                 return ApproveQuotationPage(
                                                   page: 'Logistic',
-                                                  company:
-                                                      controller.quotationDetail!.quotations![index].parther!.name!,
-                                                  id: controller.quotationDetail!.quotations![index].id!,
-                                                  titer: controller.quotationDetail!.quotations![index].title!,
-                                                  remark: controller.quotationDetail!.quotations![index].remark!,
-                                                  file: controller.quotationDetail!.quotations![index].path!,
+                                                  company: controller
+                                                      .quotationDetailLogistic!.quotations![index].parther!.name!,
+                                                  id: controller.quotationDetailLogistic!.quotations![index].id!,
+                                                  titer: controller.quotationDetailLogistic!.quotations![index].title!,
+                                                  remark:
+                                                      controller.quotationDetailLogistic!.quotations![index].remark!,
+                                                  file: controller.quotationDetailLogistic!.quotations![index].path!,
                                                 );
                                               }));
                                             },
@@ -258,9 +397,9 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                                   children: [
                                                     // Expanded(
                                                     //   flex: 2,
-                                                    //   child: controller.quotationDetail!.quotations![index].image != null
+                                                    //   child: controller.quotationDetailLogistic!.quotations![index].image != null
                                                     //       ? Image.network(
-                                                    //           "${controller.quotationDetail!.quotations![index].image}",
+                                                    //           "${controller.quotationDetailLogistic!.quotations![index].image}",
                                                     //           height: size.height / 17,
                                                     //           errorBuilder: (context, error, stackTrace) =>
                                                     //               Image.asset('assets/No_Image_Available.jpg'),
@@ -276,7 +415,7 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Text(
-                                                            "บริษัท:${controller.quotationDetail?.quotations?[index].parther?.name ?? ''}",
+                                                            "บริษัท:${controller.quotationDetailLogistic?.quotations?[index].parther?.name ?? ''}",
                                                             style: TextStyle(
                                                                 fontWeight: FontWeight.bold,
                                                                 fontSize: appFontSize?.body),
@@ -290,16 +429,16 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Text(
-                                                                    controller.quotationDetail!.quotations![index]
-                                                                            .title ??
+                                                                    controller.quotationDetailLogistic!
+                                                                            .quotations![index].title ??
                                                                         '',
                                                                     style: TextStyle(
                                                                         fontWeight: FontWeight.bold,
                                                                         fontSize: appFontSize?.body),
                                                                   ),
                                                                   Text(
-                                                                    controller.quotationDetail!.quotations![index]
-                                                                            .remark ??
+                                                                    controller.quotationDetailLogistic!
+                                                                            .quotations![index].remark ??
                                                                         '',
                                                                     style: TextStyle(fontSize: appFontSize?.body2),
                                                                     overflow: TextOverflow.ellipsis,
@@ -311,8 +450,10 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                                                       Text('ดาวน์โหลด'),
                                                                       InkWell(
                                                                           onTap: () {
-                                                                            final url = controller.quotationDetail!
-                                                                                .quotations![index].path;
+                                                                            final url = controller
+                                                                                .quotationDetailLogistic!
+                                                                                .quotations![index]
+                                                                                .path;
 
                                                                             openBrowserURL(url: url!, inApp: false);
                                                                           },

@@ -21,6 +21,9 @@ Purchase _$PurchaseFromJson(Map<String, dynamic> json) => Purchase(
       quotations: (json['quotations'] as List<dynamic>?)
           ?.map((e) => Quotation.fromJson(e as Map<String, dynamic>))
           .toList(),
+      services: (json['services'] as List<dynamic>?)
+          ?.map((e) => ServiceOrder.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$PurchaseToJson(Purchase instance) => <String, dynamic>{
@@ -34,4 +37,5 @@ Map<String, dynamic> _$PurchaseToJson(Purchase instance) => <String, dynamic>{
       'No': instance.No,
       'images': instance.images,
       'quotations': instance.quotations,
+      'services': instance.services,
     };

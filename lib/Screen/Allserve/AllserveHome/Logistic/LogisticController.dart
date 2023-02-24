@@ -18,7 +18,7 @@ class LogisticController extends ChangeNotifier {
   bool hasmore = true;
   int page = 0;
   List<Vendor> listCompanyLogistic = [];
-  Logistic? quotationDetail;
+  Logistic? quotationDetailLogistic;
   List<DetailVendor> detailLogistic = [];
 
   // DetailScrapCompany
@@ -57,10 +57,10 @@ class LogisticController extends ChangeNotifier {
   Future<void> detailQuotation(
     int id,
   ) async {
-    quotationDetail = null;
+    quotationDetailLogistic = null;
     pref = await SharedPreferences.getInstance();
     token = pref?.getString('token');
-    quotationDetail = await LogisticSrevice.getQuotatianLogistic(itemId: id);
+    quotationDetailLogistic = await LogisticSrevice.getQuotatianLogistic(itemId: id);
 
     notifyListeners();
   }

@@ -67,7 +67,7 @@ class _ScceedQuotationLogisticState extends State<ScceedQuotationLogistic> with 
               body: SafeArea(
                   child: TabBarView(controller: _tabController, children: [
                 //Tap1
-                controller.quotationDetail == null
+                controller.quotationDetailLogistic == null
                     ? Center(child: CircularProgressIndicator())
                     : SingleChildScrollView(
                         scrollDirection: Axis.vertical,
@@ -125,61 +125,62 @@ class _ScceedQuotationLogisticState extends State<ScceedQuotationLogistic> with 
                                       Divider(
                                         thickness: 3,
                                       ),
-                                      Text(controller.quotationDetail?.name ?? ' ',
+                                      Text(controller.quotationDetailLogistic?.name ?? ' ',
                                           style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('คำอธิบาย: ${controller.quotationDetail?.description ?? ' '}',
+                                      Text('คำอธิบาย: ${controller.quotationDetailLogistic?.description ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('จำนวน: ${controller.quotationDetail?.qty ?? ' '}',
+                                      Text('จำนวน: ${controller.quotationDetailLogistic?.qty ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('สถานที่รับ: ${controller.quotationDetail?.start_location ?? ' '}',
+                                      Text('สถานที่รับ: ${controller.quotationDetailLogistic?.start_location ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('สถานที่ส่ง: ${controller.quotationDetail?.end_location ?? ' '}',
+                                      Text('สถานที่ส่ง: ${controller.quotationDetailLogistic?.end_location ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('ประเภทการขนส่ง: ${controller.quotationDetail?.transport_type ?? ' '}',
+                                      Text(
+                                          'ประเภทการขนส่ง: ${controller.quotationDetailLogistic?.transport_type ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('ความกว้าง: ${controller.quotationDetail?.width ?? ' '}',
+                                      Text('ความกว้าง: ${controller.quotationDetailLogistic?.width ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('ความสูง: ${controller.quotationDetail?.height ?? ' '}',
+                                      Text('ความสูง: ${controller.quotationDetailLogistic?.height ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text('น้ำหนัก: ${controller.quotationDetail?.weight ?? ' '}',
+                                      Text('น้ำหนัก: ${controller.quotationDetailLogistic?.weight ?? ' '}',
                                           style: TextStyle(
                                             fontSize: 15,
                                           )),
@@ -193,7 +194,7 @@ class _ScceedQuotationLogisticState extends State<ScceedQuotationLogistic> with 
                         ),
                       ),
                 //Tap2
-                controller.quotationDetail == null
+                controller.quotationDetailLogistic == null
                     ? Center(child: CircularProgressIndicator())
                     : SingleChildScrollView(
                         child: Column(
@@ -203,16 +204,17 @@ class _ScceedQuotationLogisticState extends State<ScceedQuotationLogistic> with 
                             ),
                             Container(
                               padding: EdgeInsets.all(15),
-                              child: controller.quotationDetail?.quotations?.isEmpty ?? true
+                              child: controller.quotationDetailLogistic?.quotations?.isEmpty ?? true
                                   ? SizedBox.shrink()
                                   : ListView.builder(
                                       controller: _controller,
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: controller.quotationDetail!.quotations!.length,
+                                      itemCount: controller.quotationDetailLogistic!.quotations!.length,
                                       itemBuilder: (_, index) {
-                                        return controller.quotationDetail?.quotations?[index].status != 'Approve'
+                                        return controller.quotationDetailLogistic?.quotations?[index].status !=
+                                                'Approve'
                                             ? SizedBox.shrink()
                                             : Padding(
                                                 padding: const EdgeInsets.all(5),
@@ -247,22 +249,22 @@ class _ScceedQuotationLogisticState extends State<ScceedQuotationLogistic> with 
                                                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                               children: [
                                                                 Text(
-                                                                  "บริษัท:${controller.quotationDetail?.quotations?[index].parther?.name ?? ''}",
+                                                                  "บริษัท:${controller.quotationDetailLogistic?.quotations?[index].parther?.name ?? ''}",
                                                                   style: TextStyle(
                                                                       fontWeight: FontWeight.bold, fontSize: 20),
                                                                   overflow: TextOverflow.fade,
                                                                   maxLines: 5,
                                                                 ),
                                                                 Text(
-                                                                  controller
-                                                                          .quotationDetail!.quotations![index].title ??
+                                                                  controller.quotationDetailLogistic!.quotations![index]
+                                                                          .title ??
                                                                       '',
                                                                   style: TextStyle(
                                                                       fontWeight: FontWeight.bold, fontSize: 20),
                                                                 ),
                                                                 Text(
-                                                                  controller
-                                                                          .quotationDetail!.quotations![index].remark ??
+                                                                  controller.quotationDetailLogistic!.quotations![index]
+                                                                          .remark ??
                                                                       '',
                                                                   style: TextStyle(fontSize: 15),
                                                                   overflow: TextOverflow.ellipsis,
@@ -275,7 +277,9 @@ class _ScceedQuotationLogisticState extends State<ScceedQuotationLogistic> with 
                                                                     InkWell(
                                                                         onTap: () {
                                                                           final url = controller
-                                                                              .quotationDetail!.quotations![index].path;
+                                                                              .quotationDetailLogistic!
+                                                                              .quotations![index]
+                                                                              .path;
 
                                                                           openBrowserURL(url: url!, inApp: false);
                                                                         },

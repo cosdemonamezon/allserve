@@ -166,44 +166,44 @@ class _AddPurchasePageState extends State<AddPurchasePage> {
                                           SizedBox(
                                             height: size.height * 0.01,
                                           ),
-                                          Row(
-                                            children: [
-                                              Text('ความต้องการ'),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: size.height * 0.01,
-                                          ),
-                                          SizedBox(
-                                            child: ListView.builder(
-                                                // controller: _controller,
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                physics: NeverScrollableScrollPhysics(),
-                                                itemCount: controller.detailPurchase.length,
-                                                itemBuilder: (_, index) {
-                                                  return CheckboxListTile(
-                                                    controlAffinity: ListTileControlAffinity.leading,
-                                                    value: controller.detailPurchase[index].isChecked,
-                                                    onChanged: (bool? value) {
-                                                      setState(() {
-                                                        controller.detailPurchase[index].isChecked = value!;
-                                                        print(controller.detailPurchase[index].isChecked);
-                                                        if (controller.detailPurchase[index].isChecked == true) {
-                                                          // 'รถกระบะ';
-                                                          ListChacked.add(controller.detailPurchase[index].name!);
-                                                          print(ListChacked);
-                                                        } else if (controller.detailPurchase[index].isChecked ==
-                                                            false) {
-                                                          ListChacked.remove(controller.detailPurchase[index].name!);
-                                                          print(ListChacked);
-                                                        }
-                                                      });
-                                                    },
-                                                    title: Text(controller.detailPurchase[index].name!),
-                                                  );
-                                                }),
-                                          ),
+                                          // Row(
+                                          //   children: [
+                                          //     Text('ความต้องการ'),
+                                          //   ],
+                                          // ),
+                                          // SizedBox(
+                                          //   height: size.height * 0.01,
+                                          // ),
+                                          // SizedBox(
+                                          //   child: ListView.builder(
+                                          //       // controller: _controller,
+                                          //       shrinkWrap: true,
+                                          //       scrollDirection: Axis.vertical,
+                                          //       physics: NeverScrollableScrollPhysics(),
+                                          //       itemCount: controller.detailPurchase.length,
+                                          //       itemBuilder: (_, index) {
+                                          //         return CheckboxListTile(
+                                          //           controlAffinity: ListTileControlAffinity.leading,
+                                          //           value: controller.detailPurchase[index].isChecked,
+                                          //           onChanged: (bool? value) {
+                                          //             setState(() {
+                                          //               controller.detailPurchase[index].isChecked = value!;
+                                          //               print(controller.detailPurchase[index].isChecked);
+                                          //               if (controller.detailPurchase[index].isChecked == true) {
+                                          //                 // 'รถกระบะ';
+                                          //                 ListChacked.add(controller.detailPurchase[index].name!);
+                                          //                 print(ListChacked);
+                                          //               } else if (controller.detailPurchase[index].isChecked ==
+                                          //                   false) {
+                                          //                 ListChacked.remove(controller.detailPurchase[index].name!);
+                                          //                 print(ListChacked);
+                                          //               }
+                                          //             });
+                                          //           },
+                                          //           title: Text(controller.detailPurchase[index].name!),
+                                          //         );
+                                          //       }),
+                                          // ),
                                           Row(
                                             children: [
                                               Text('รูป'),

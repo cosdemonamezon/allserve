@@ -1,12 +1,17 @@
 import 'dart:developer';
 
+import 'package:allserve/Models/addService.dart';
 import 'package:allserve/Models/imagesCpmpanie/imagesScrap.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/Scrap/ScrapSrevice.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../appTheme.dart';
+import '../../../../Widgets/ButtonRounded.dart';
+import '../../../../Widgets/LoadingDialog.dart';
 import '../../ApproveQuotation/ApproveQuotationPage.dart';
 import '../ScrapController.dart';
 
@@ -36,8 +41,26 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
 
   Future _loadItem() async {
     await context.read<ScrapController>().detailScrapQuotation(widget.id);
+    await context.read<ScrapController>().loadDetailVendorScrap();
+    // Scrap
+    final allScrap = context.read<ScrapController>().detailScrap;
+    final vendorScrap = context.read<ScrapController>().quotationScrapDetail!.services;
+    final Scrapselected = vendorScrap!.where((element) => allScrap.contains(element.service_id));
+    for (var scrapDetail in vendorScrap) {
+      for (var scrap in allScrap) {
+        print("${scrapDetail.service_id} = ${scrap.id}");
+        if (scrapDetail.service_id == scrap.id.toString()) {
+          final dataScrap = AddService(service_type: 'scrap', service_id: int.parse(scrapDetail.service_id!));
+          setState(() {
+            scrap.isChecked = true;
+            ListChacked.add(dataScrap);
+          });
+        }
+      }
+    }
   }
 
+  List<AddService> ListChacked = [];
   late TabController _tabController;
   final _controller = ScrollController();
   @override
@@ -145,7 +168,120 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                         fontSize: 15,
                                       )),
                                 ]),
-                              ))
+                              )),
+                          SizedBox(
+                            child: controller.detailScrap.isEmpty
+                                ? Center(child: CircularProgressIndicator())
+                                : ListView.builder(
+                                    // controller: _controller,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: controller.detailScrap.length,
+                                    itemBuilder: (_, index) {
+                                      return CheckboxListTile(
+                                        controlAffinity: ListTileControlAffinity.leading,
+                                        value: controller.detailScrap[index].isChecked,
+                                        onChanged: (bool? value) {
+                                          final dataScrap = AddService(
+                                              service_id: controller.detailScrap[index].id!, service_type: 'scrap');
+                                          setState(() {
+                                            controller.detailScrap[index].isChecked = value!;
+                                            print(controller.detailScrap[index].isChecked);
+                                            if (value) {
+                                              // 'รถกระบะ';
+                                              ListChacked.add(dataScrap);
+                                              inspect(ListChacked);
+                                            } else {
+                                              // ListChacked.remove(controller.detailScrap[index].name!);
+                                              ListChacked.removeWhere(
+                                                (element) =>
+                                                    element.service_id == dataScrap.service_id &&
+                                                    element.service_type == 'scrap',
+                                              );
+                                              inspect(ListChacked);
+                                            }
+                                          });
+                                        },
+                                        title: Text(controller.detailScrap[index].name!),
+                                      );
+                                    }),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.03,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: ButtonRounded(
+                              text: 'บันทึก',
+                              color: Colors.blue,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                showCupertinoDialog(
+                                  context: context,
+                                  builder: (context) => CupertinoAlertDialog(
+                                    title: Text(
+                                      'ดำเนินการเรียบร้อย',
+                                      //style: TextStyle(fontFamily: fontFamily),
+                                    ),
+                                    content: Text(
+                                      'ต้องการออกจากหน้านี้หรือไม่',
+                                      //style: TextStyle(fontFamily: fontFamily),
+                                    ),
+                                    actions: <CupertinoDialogAction>[
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'ยกเลิก',
+                                        ),
+                                        onPressed: () => Navigator.pop(context),
+                                      ),
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'ตกลง',
+                                        ),
+                                        onPressed: () async {
+                                          try {
+                                            LoadingDialog.open(context);
+                                            await ScrapSrevice().setServiceOrder(
+                                              order_id: widget.id,
+                                              order_type: 'scrap',
+                                              services: ListChacked,
+                                            );
+                                            // await context
+                                            //     .read<ProfileController>()
+                                            //     .vendorDetailService(user.partner_detail!.id!);
+                                            if (mounted) {
+                                              LoadingDialog.close(context);
+                                              Navigator.of(context)
+                                                ..pop()
+                                                ..pop();
+                                            }
+                                          } catch (e) {
+                                            LoadingDialog.close(context);
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                backgroundColor: Colors.blueAccent,
+                                                title: Text("Error", style: TextStyle(color: Colors.white)),
+                                                content: Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text('OK', style: TextStyle(color: Colors.white)))
+                                                ],
+                                              ),
+                                            );
+                                          }
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     ),

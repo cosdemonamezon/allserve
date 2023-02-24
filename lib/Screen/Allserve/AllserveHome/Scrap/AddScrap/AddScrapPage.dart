@@ -167,43 +167,43 @@ class _AddScrapPageState extends State<AddScrapPage> {
                                           SizedBox(
                                             height: size.height * 0.01,
                                           ),
-                                          Row(
-                                            children: [
-                                              Text('ความต้องการ'),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: size.height * 0.01,
-                                          ),
-                                          SizedBox(
-                                            child: ListView.builder(
-                                                // controller: _controller,
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                physics: NeverScrollableScrollPhysics(),
-                                                itemCount: controller.detailScrap.length,
-                                                itemBuilder: (_, index) {
-                                                  return CheckboxListTile(
-                                                    controlAffinity: ListTileControlAffinity.leading,
-                                                    value: controller.detailScrap[index].isChecked,
-                                                    onChanged: (bool? value) {
-                                                      setState(() {
-                                                        controller.detailScrap[index].isChecked = value!;
-                                                        print(controller.detailScrap[index].isChecked);
-                                                        if (controller.detailScrap[index].isChecked == true) {
-                                                          // 'รถกระบะ';
-                                                          ListChacked.add(controller.detailScrap[index].name!);
-                                                          print(ListChacked);
-                                                        } else if (controller.detailScrap[index].isChecked == false) {
-                                                          ListChacked.remove(controller.detailScrap[index].name!);
-                                                          print(ListChacked);
-                                                        }
-                                                      });
-                                                    },
-                                                    title: Text(controller.detailScrap[index].name!),
-                                                  );
-                                                }),
-                                          ),
+                                          // Row(
+                                          //   children: [
+                                          //     Text('ความต้องการ'),
+                                          //   ],
+                                          // ),
+                                          // SizedBox(
+                                          //   height: size.height * 0.01,
+                                          // ),
+                                          // SizedBox(
+                                          //   child: ListView.builder(
+                                          //       // controller: _controller,
+                                          //       shrinkWrap: true,
+                                          //       scrollDirection: Axis.vertical,
+                                          //       physics: NeverScrollableScrollPhysics(),
+                                          //       itemCount: controller.detailScrap.length,
+                                          //       itemBuilder: (_, index) {
+                                          //         return CheckboxListTile(
+                                          //           controlAffinity: ListTileControlAffinity.leading,
+                                          //           value: controller.detailScrap[index].isChecked,
+                                          //           onChanged: (bool? value) {
+                                          //             setState(() {
+                                          //               controller.detailScrap[index].isChecked = value!;
+                                          //               print(controller.detailScrap[index].isChecked);
+                                          //               if (controller.detailScrap[index].isChecked == true) {
+                                          //                 // 'รถกระบะ';
+                                          //                 ListChacked.add(controller.detailScrap[index].name!);
+                                          //                 print(ListChacked);
+                                          //               } else if (controller.detailScrap[index].isChecked == false) {
+                                          //                 ListChacked.remove(controller.detailScrap[index].name!);
+                                          //                 print(ListChacked);
+                                          //               }
+                                          //             });
+                                          //           },
+                                          //           title: Text(controller.detailScrap[index].name!),
+                                          //         );
+                                          //       }),
+                                          // ),
                                           SizedBox(
                                             height: size.height * 0.01,
                                           ),

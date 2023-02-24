@@ -2,22 +2,25 @@ import 'package:allserve/Models/imagesCpmpanie/imagesPurchase.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../Quotation/quotation.dart';
+import '../ServiceOrder/serviceOrder.dart';
 
 part 'purchase.g.dart';
 
 @JsonSerializable()
 class Purchase {
-  Purchase(
-      {this.id,
-      this.user_id,
-      this.name,
-      this.qty,
-      this.description,
-      this.expire_hour,
-      this.status,
-      this.No,
-      this.images,
-      this.quotations});
+  Purchase({
+    this.id,
+    this.user_id,
+    this.name,
+    this.qty,
+    this.description,
+    this.expire_hour,
+    this.status,
+    this.No,
+    this.images,
+    this.quotations,
+    this.services,
+  });
 
   int? id;
   String? user_id;
@@ -29,6 +32,7 @@ class Purchase {
   int? No;
   List<ImagesPurchase>? images;
   List<Quotation>? quotations;
+  List<ServiceOrder>? services;
 
   factory Purchase.fromJson(Map<String, dynamic> json) => _$PurchaseFromJson(json);
 

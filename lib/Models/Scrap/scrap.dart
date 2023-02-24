@@ -1,3 +1,4 @@
+import 'package:allserve/Models/ServiceOrder/serviceOrder.dart';
 import 'package:allserve/Models/imagesCpmpanie/imagesScrap.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -18,6 +19,7 @@ class Scrap {
     this.No,
     this.images,
     this.quotations,
+    this.services,
   });
 
   int? id;
@@ -30,6 +32,7 @@ class Scrap {
   int? No;
   List<ImagesScrap>? images;
   List<Quotation>? quotations;
+  List<ServiceOrder>? services;
 
   factory Scrap.fromJson(Map<String, dynamic> json) => _$ScrapFromJson(json);
 

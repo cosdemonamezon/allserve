@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:allserve/Models/addService.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
@@ -158,7 +159,7 @@ class ScrapSrevice {
   static Future<Scrap?> getQuotatianScrap({required int itemId}) async {
     final pref = await SharedPreferences.getInstance();
     final token = pref.getString('token');
-    final url = Uri.parse('$baseUrl/api/get_scrap_quotation_by_order/$itemId');
+    final url = Uri.parse('$baseUrl/api/scrap/$itemId');
 
     final response =
         await http.get(url, headers: {'Authorization': 'Bearer ${token}', 'Content-Type': 'application/json'});
@@ -190,6 +191,34 @@ class ScrapSrevice {
     } else {
       final data = convert.jsonDecode(response.body);
       throw Exception(data['message']);
+    }
+  }
+
+  //เพิ่มความต้องการ Order
+  Future<Scrap?> setServiceOrder({
+    required int order_id,
+    required String order_type,
+    required List<AddService> services,
+  }) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final token = pref.getString('token');
+    final url = Uri.parse('$baseUrl/api/order_services');
+    final response = await http.post(url,
+        body: jsonEncode({
+          "order_id": order_id,
+          "order_type": order_type,
+          "services": services,
+        }),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+          'Content-Type': 'application/json',
+        });
+    if (response.statusCode == 200) {
+      final responseString = jsonDecode(response.body);
+      return Scrap.fromJson(responseString["data"]);
+    } else {
+      final responseString = jsonDecode(response.body);
+      throw responseString['message'];
     }
   }
 }

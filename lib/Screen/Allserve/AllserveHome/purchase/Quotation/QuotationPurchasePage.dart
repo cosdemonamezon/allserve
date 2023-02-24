@@ -1,13 +1,17 @@
 import 'dart:developer';
 
 import 'package:allserve/Screen/Allserve/AllserveHome/purchase/purchaseController.dart';
+import 'package:allserve/Screen/Allserve/AllserveHome/purchase/purchaseService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../Models/addService.dart';
 import '../../../../../Models/imagesCpmpanie/imagesPurchase.dart';
 import '../../../../../appTheme.dart';
+import '../../../../Widgets/ButtonRounded.dart';
+import '../../../../Widgets/LoadingDialog.dart';
 import '../../ApproveQuotation/ApproveQuotationPage.dart';
 
 class QuotationPurchasePage extends StatefulWidget {
@@ -36,8 +40,26 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
 
   Future _loadItem() async {
     await context.read<PurchaseController>().detailQuotationPurchase(widget.id);
+    await context.read<PurchaseController>().loadDetailVendorPurchase();
+    // Purchase
+    final allpurchase = context.read<PurchaseController>().detailPurchase;
+    final vendorpurchase = context.read<PurchaseController>().quotationPurchaseDetail!.services;
+    final purchaseselected = vendorpurchase!.where((element) => allpurchase.contains(element.service_id));
+    for (var purchaseDetail in vendorpurchase) {
+      for (var purchase in allpurchase) {
+        print("${purchaseDetail.service_id} = ${purchase.id}");
+        if (purchaseDetail.service_id == purchase.id.toString()) {
+          final datapurchase = AddService(service_type: 'purchase', service_id: int.parse(purchaseDetail.service_id!));
+          setState(() {
+            purchase.isChecked = true;
+            ListChacked.add(datapurchase);
+          });
+        }
+      }
+    }
   }
 
+  List<AddService> ListChacked = [];
   late TabController _tabController;
   final _controller = ScrollController();
   @override
@@ -151,7 +173,121 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                                       ),
                                     ],
                                   ),
-                                ))
+                                )),
+                            SizedBox(
+                              child: controller.detailPurchase.isEmpty
+                                  ? Center(child: CircularProgressIndicator())
+                                  : ListView.builder(
+                                      // controller: _controller,
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: controller.detailPurchase.length,
+                                      itemBuilder: (_, index) {
+                                        return CheckboxListTile(
+                                          controlAffinity: ListTileControlAffinity.leading,
+                                          value: controller.detailPurchase[index].isChecked,
+                                          onChanged: (bool? value) {
+                                            final dataPurchase = AddService(
+                                                service_id: controller.detailPurchase[index].id!,
+                                                service_type: 'purchase');
+                                            setState(() {
+                                              controller.detailPurchase[index].isChecked = value!;
+                                              print(controller.detailPurchase[index].isChecked);
+                                              if (value) {
+                                                // 'รถกระบะ';
+                                                ListChacked.add(dataPurchase);
+                                                inspect(ListChacked);
+                                              } else {
+                                                // ListChacked.remove(controller.detailPurchase[index].name!);
+                                                ListChacked.removeWhere(
+                                                  (element) =>
+                                                      element.service_id == dataPurchase.service_id &&
+                                                      element.service_type == 'purchase',
+                                                );
+                                                inspect(ListChacked);
+                                              }
+                                            });
+                                          },
+                                          title: Text(controller.detailPurchase[index].name!),
+                                        );
+                                      }),
+                            ),
+                            SizedBox(
+                              height: size.height * 0.03,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: ButtonRounded(
+                                text: 'บันทึก',
+                                color: Colors.blue,
+                                textColor: Colors.white,
+                                onPressed: () {
+                                  showCupertinoDialog(
+                                    context: context,
+                                    builder: (context) => CupertinoAlertDialog(
+                                      title: Text(
+                                        'ดำเนินการเรียบร้อย',
+                                        //style: TextStyle(fontFamily: fontFamily),
+                                      ),
+                                      content: Text(
+                                        'ต้องการออกจากหน้านี้หรือไม่',
+                                        //style: TextStyle(fontFamily: fontFamily),
+                                      ),
+                                      actions: <CupertinoDialogAction>[
+                                        CupertinoDialogAction(
+                                          child: Text(
+                                            'ยกเลิก',
+                                          ),
+                                          onPressed: () => Navigator.pop(context),
+                                        ),
+                                        CupertinoDialogAction(
+                                          child: Text(
+                                            'ตกลง',
+                                          ),
+                                          onPressed: () async {
+                                            try {
+                                              LoadingDialog.open(context);
+                                              await PurchaseSrevice().setServiceOrder(
+                                                order_id: widget.id,
+                                                order_type: 'purchase',
+                                                services: ListChacked,
+                                              );
+                                              // await context
+                                              //     .read<ProfileController>()
+                                              //     .vendorDetailService(user.partner_detail!.id!);
+                                              if (mounted) {
+                                                LoadingDialog.close(context);
+                                                Navigator.of(context)
+                                                  ..pop()
+                                                  ..pop();
+                                              }
+                                            } catch (e) {
+                                              LoadingDialog.close(context);
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) => AlertDialog(
+                                                  backgroundColor: Colors.blueAccent,
+                                                  title: Text("Error", style: TextStyle(color: Colors.white)),
+                                                  content: Text(e.toString(), style: TextStyle(color: Colors.white)),
+                                                  actions: [
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(context);
+                                                        },
+                                                        child: Text('OK', style: TextStyle(color: Colors.white)))
+                                                  ],
+                                                ),
+                                              );
+                                            }
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                           ],
                         ),
                       ),

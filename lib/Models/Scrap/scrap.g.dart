@@ -21,6 +21,9 @@ Scrap _$ScrapFromJson(Map<String, dynamic> json) => Scrap(
       quotations: (json['quotations'] as List<dynamic>?)
           ?.map((e) => Quotation.fromJson(e as Map<String, dynamic>))
           .toList(),
+      services: (json['services'] as List<dynamic>?)
+          ?.map((e) => ServiceOrder.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ScrapToJson(Scrap instance) => <String, dynamic>{
@@ -34,4 +37,5 @@ Map<String, dynamic> _$ScrapToJson(Scrap instance) => <String, dynamic>{
       'No': instance.No,
       'images': instance.images,
       'quotations': instance.quotations,
+      'services': instance.services,
     };
