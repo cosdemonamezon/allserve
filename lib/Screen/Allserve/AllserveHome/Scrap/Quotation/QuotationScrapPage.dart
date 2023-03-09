@@ -296,14 +296,14 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                           ),
                           Container(
                             padding: EdgeInsets.all(15),
-                            child: controller.quotationScrapDetail?.quotations?.isEmpty ?? true
+                            child: controller.quotationScrapDetail?.qoutations?.isEmpty ?? true
                                 ? SizedBox.shrink()
                                 : ListView.builder(
                                     controller: _controller,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
                                     physics: NeverScrollableScrollPhysics(),
-                                    itemCount: controller.quotationScrapDetail!.quotations!.length,
+                                    itemCount: controller.quotationScrapDetail!.qoutations!.length,
                                     itemBuilder: (_, index) {
                                       // final String? selectedFile = controller.quotationScrapDetail!.quotations![index].path;
                                       // final File path = selectedFile as File;
@@ -315,12 +315,12 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                             Navigator.push(context, MaterialPageRoute(builder: (context) {
                                               return ApproveQuotationPage(
                                                 page: 'Scrap',
-                                                company:
-                                                    controller.quotationScrapDetail!.quotations![index].parther!.name!,
-                                                id: controller.quotationScrapDetail!.quotations![index].id!,
-                                                titer: controller.quotationScrapDetail!.quotations![index].title!,
-                                                remark: controller.quotationScrapDetail!.quotations![index].remark!,
-                                                file: controller.quotationScrapDetail!.quotations![index].path!,
+                                                // company: controller
+                                                //     .quotationScrapDetail!.qoutations![index].vendor![index].name!,
+                                                id: controller.quotationScrapDetail!.qoutations![index].id!,
+                                                titer: controller.quotationScrapDetail!.qoutations![index].title!,
+                                                remark: controller.quotationScrapDetail!.qoutations![index].remark!,
+                                                file: controller.quotationScrapDetail!.qoutations![index].path!,
                                               );
                                             }));
                                           },
@@ -360,13 +360,13 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                                     flex: 8,
                                                     child: Column(
                                                       children: [
-                                                        Text(
-                                                          "บริษัท:${controller.quotationScrapDetail?.quotations?[index].parther?.name ?? ''}",
-                                                          style: TextStyle(
-                                                              fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
-                                                          overflow: TextOverflow.fade,
-                                                          maxLines: 5,
-                                                        ),
+                                                        // Text(
+                                                        //   "บริษัท:${controller.quotationScrapDetail?.qoutations?[index].vendor?[index].name ?? ''}",
+                                                        //   style: TextStyle(
+                                                        //       fontWeight: FontWeight.bold, fontSize: appFontSize?.body),
+                                                        //   overflow: TextOverflow.fade,
+                                                        //   maxLines: 5,
+                                                        // ),
                                                         Row(
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
@@ -374,7 +374,7 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                               children: [
                                                                 Text(
-                                                                  controller.quotationScrapDetail!.quotations![index]
+                                                                  controller.quotationScrapDetail!.qoutations![index]
                                                                           .title ??
                                                                       '',
                                                                   style: TextStyle(
@@ -382,7 +382,7 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                                                       fontSize: appFontSize?.body),
                                                                 ),
                                                                 Text(
-                                                                  controller.quotationScrapDetail!.quotations![index]
+                                                                  controller.quotationScrapDetail!.qoutations![index]
                                                                           .remark ??
                                                                       '',
                                                                   style: TextStyle(fontSize: appFontSize?.body2),
@@ -391,12 +391,13 @@ class _QuotationScrapPageState extends State<QuotationScrapPage> with TickerProv
                                                                 SizedBox(height: 4),
                                                                 // Center(child: buildFille(path)),
                                                                 Column(
+                                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                                   children: [
                                                                     Text('ดาวน์โหลด'),
                                                                     InkWell(
                                                                         onTap: () {
                                                                           final url = controller.quotationScrapDetail!
-                                                                              .quotations![index].path;
+                                                                              .qoutations![index].path;
 
                                                                           openBrowserURL(url: url!, inApp: false);
                                                                         },

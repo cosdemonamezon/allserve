@@ -18,7 +18,7 @@ class Scrap {
     this.expire_hour,
     this.No,
     this.images,
-    this.quotations,
+    this.qoutations,
     this.services,
   });
 
@@ -31,7 +31,7 @@ class Scrap {
   String? expire_hour;
   int? No;
   List<ImagesScrap>? images;
-  List<Quotation>? quotations;
+  List<Quotation>? qoutations;
   List<ServiceOrder>? services;
 
   factory Scrap.fromJson(Map<String, dynamic> json) => _$ScrapFromJson(json);

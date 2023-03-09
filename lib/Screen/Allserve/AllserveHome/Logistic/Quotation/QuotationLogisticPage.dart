@@ -348,18 +348,18 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                             ),
                             Container(
                               padding: EdgeInsets.all(15),
-                              child: controller.quotationDetailLogistic?.quotations?.isEmpty ?? true
+                              child: controller.quotationDetailLogistic?.qoutations?.isEmpty ?? true
                                   ? SizedBox.shrink()
                                   : ListView.builder(
                                       controller: _controller,
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: controller.quotationDetailLogistic!.quotations!.length,
+                                      itemCount: controller.quotationDetailLogistic!.qoutations!.length,
                                       itemBuilder: (_, index) {
-                                        // final String? selectedFile = controller.quotationDetailLogistic!.quotations![index].path;
+                                        // final String? selectedFile = controller.quotationDetailLogistic!.qoutations![index].path;
                                         // final File path = selectedFile as File;
-                                        // if (index < controller.quotationDetailLogistic!.quotations!.length) {
+                                        // if (index < controller.quotationDetailLogistic!.qoutations!.length) {
                                         return Padding(
                                           padding: const EdgeInsets.all(5),
                                           child: InkWell(
@@ -367,13 +367,13 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                               Navigator.push(context, MaterialPageRoute(builder: (context) {
                                                 return ApproveQuotationPage(
                                                   page: 'Logistic',
-                                                  company: controller
-                                                      .quotationDetailLogistic!.quotations![index].parther!.name!,
-                                                  id: controller.quotationDetailLogistic!.quotations![index].id!,
-                                                  titer: controller.quotationDetailLogistic!.quotations![index].title!,
+                                                  // company: controller
+                                                  //     .quotationDetailLogistic!.qoutations![index].vendor![index].name!,
+                                                  id: controller.quotationDetailLogistic!.qoutations![index].id!,
+                                                  titer: controller.quotationDetailLogistic!.qoutations![index].title!,
                                                   remark:
-                                                      controller.quotationDetailLogistic!.quotations![index].remark!,
-                                                  file: controller.quotationDetailLogistic!.quotations![index].path!,
+                                                      controller.quotationDetailLogistic!.qoutations![index].remark!,
+                                                  file: controller.quotationDetailLogistic!.qoutations![index].path!,
                                                 );
                                               }));
                                             },
@@ -397,9 +397,9 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                                   children: [
                                                     // Expanded(
                                                     //   flex: 2,
-                                                    //   child: controller.quotationDetailLogistic!.quotations![index].image != null
+                                                    //   child: controller.quotationDetailLogistic!.qoutations![index].image != null
                                                     //       ? Image.network(
-                                                    //           "${controller.quotationDetailLogistic!.quotations![index].image}",
+                                                    //           "${controller.quotationDetailLogistic!.qoutations![index].image}",
                                                     //           height: size.height / 17,
                                                     //           errorBuilder: (context, error, stackTrace) =>
                                                     //               Image.asset('assets/No_Image_Available.jpg'),
@@ -414,14 +414,14 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                                       child: Column(
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
-                                                          Text(
-                                                            "บริษัท:${controller.quotationDetailLogistic?.quotations?[index].parther?.name ?? ''}",
-                                                            style: TextStyle(
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize: appFontSize?.body),
-                                                            overflow: TextOverflow.fade,
-                                                            maxLines: 5,
-                                                          ),
+                                                          // Text(
+                                                          //   "บริษัท:${controller.quotationDetailLogistic?.qoutations?[index].vendor?[index].name ?? ''}",
+                                                          //   style: TextStyle(
+                                                          //       fontWeight: FontWeight.bold,
+                                                          //       fontSize: appFontSize?.body),
+                                                          //   overflow: TextOverflow.fade,
+                                                          //   maxLines: 5,
+                                                          // ),
                                                           Row(
                                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                             children: [
@@ -430,7 +430,7 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                                                 children: [
                                                                   Text(
                                                                     controller.quotationDetailLogistic!
-                                                                            .quotations![index].title ??
+                                                                            .qoutations![index].title ??
                                                                         '',
                                                                     style: TextStyle(
                                                                         fontWeight: FontWeight.bold,
@@ -438,7 +438,7 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                                                   ),
                                                                   Text(
                                                                     controller.quotationDetailLogistic!
-                                                                            .quotations![index].remark ??
+                                                                            .qoutations![index].remark ??
                                                                         '',
                                                                     style: TextStyle(fontSize: appFontSize?.body2),
                                                                     overflow: TextOverflow.ellipsis,
@@ -446,13 +446,14 @@ class _QuotationLogisticPageState extends State<QuotationLogisticPage> with Tick
                                                                   SizedBox(height: 4),
                                                                   // Center(child: buildFille(path)),
                                                                   Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                                     children: [
                                                                       Text('ดาวน์โหลด'),
                                                                       InkWell(
                                                                           onTap: () {
                                                                             final url = controller
                                                                                 .quotationDetailLogistic!
-                                                                                .quotations![index]
+                                                                                .qoutations![index]
                                                                                 .path;
 
                                                                             openBrowserURL(url: url!, inApp: false);

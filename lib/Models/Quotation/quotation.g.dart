@@ -15,9 +15,9 @@ Quotation _$QuotationFromJson(Map<String, dynamic> json) => Quotation(
       remark: json['remark'] as String?,
       status: json['status'] as String?,
       remark_for_approve: json['remark_for_approve'] as String?,
-      parther: json['parther'] == null
-          ? null
-          : Parther.fromJson(json['parther'] as Map<String, dynamic>),
+      vendor: (json['vendor'] as List<dynamic>?)
+          ?.map((e) => Parther.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$QuotationToJson(Quotation instance) => <String, dynamic>{
@@ -29,5 +29,5 @@ Map<String, dynamic> _$QuotationToJson(Quotation instance) => <String, dynamic>{
       'remark': instance.remark,
       'status': instance.status,
       'remark_for_approve': instance.remark_for_approve,
-      'parther': instance.parther,
+      'vendor': instance.vendor,
     };

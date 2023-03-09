@@ -27,7 +27,7 @@ class Logistic {
     this.status,
     this.No,
     this.images,
-    this.quotations,
+    this.qoutations,
     this.services,
   });
 
@@ -49,7 +49,7 @@ class Logistic {
   String? status;
   int? No;
   List<ImagesLogistic>? images;
-  List<Quotation>? quotations;
+  List<Quotation>? qoutations;
   List<ServiceOrder>? services;
 
   factory Logistic.fromJson(Map<String, dynamic> json) => _$LogisticFromJson(json);

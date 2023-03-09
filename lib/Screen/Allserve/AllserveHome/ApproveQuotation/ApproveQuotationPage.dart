@@ -14,16 +14,17 @@ import '../Widgets/TextFieldWidget.dart';
 import '../purchase/purchaseController.dart';
 
 class ApproveQuotationPage extends StatefulWidget {
-  const ApproveQuotationPage(
-      {super.key,
-      required this.id,
-      required this.titer,
-      required this.remark,
-      required this.file,
-      required this.page,
-      required this.company});
+  const ApproveQuotationPage({
+    super.key,
+    required this.id,
+    required this.titer,
+    required this.remark,
+    required this.file,
+    required this.page,
+    // required this.company,
+  });
   final int id;
-  final String company;
+  // final String company;
   final String titer;
   final String remark;
   final String file;
@@ -65,7 +66,9 @@ class _ApproveQuotationPageState extends State<ApproveQuotationPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('บริษัท: ${widget.company}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            // widget.company == null
+            //     ? Text('')
+            //     : Text('บริษัท: ${widget.company}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

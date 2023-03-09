@@ -162,16 +162,16 @@ class _ScceedQuotationPurchaeState extends State<ScceedQuotationPurchae> with Ti
                             ),
                             Container(
                               padding: EdgeInsets.all(15),
-                              child: controller.quotationPurchaseDetail?.quotations?.isEmpty ?? true
+                              child: controller.quotationPurchaseDetail?.qoutations?.isEmpty ?? true
                                   ? SizedBox.shrink()
                                   : ListView.builder(
                                       controller: _controller,
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: controller.quotationPurchaseDetail!.quotations!.length,
+                                      itemCount: controller.quotationPurchaseDetail!.qoutations!.length,
                                       itemBuilder: (_, index) {
-                                        return controller.quotationPurchaseDetail?.quotations?[index].status !=
+                                        return controller.quotationPurchaseDetail?.qoutations?[index].status !=
                                                 'Approve'
                                             ? SizedBox.shrink()
                                             : Padding(
@@ -207,7 +207,7 @@ class _ScceedQuotationPurchaeState extends State<ScceedQuotationPurchae> with Ti
                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                               children: [
                                                                 Text(
-                                                                  "บริษัท:${controller.quotationPurchaseDetail?.quotations?[index].parther?.name ?? ''}",
+                                                                  "บริษัท:${controller.quotationPurchaseDetail?.qoutations?[index].vendor?[index].name ?? ''}",
                                                                   style: TextStyle(
                                                                       fontWeight: FontWeight.bold, fontSize: 20),
                                                                   overflow: TextOverflow.fade,
@@ -215,14 +215,14 @@ class _ScceedQuotationPurchaeState extends State<ScceedQuotationPurchae> with Ti
                                                                 ),
 
                                                                 Text(
-                                                                  controller.quotationPurchaseDetail!.quotations![index]
+                                                                  controller.quotationPurchaseDetail!.qoutations![index]
                                                                           .title ??
                                                                       '',
                                                                   style: TextStyle(
                                                                       fontWeight: FontWeight.bold, fontSize: 20),
                                                                 ),
                                                                 Text(
-                                                                  controller.quotationPurchaseDetail!.quotations![index]
+                                                                  controller.quotationPurchaseDetail!.qoutations![index]
                                                                           .remark ??
                                                                       '',
                                                                   style: TextStyle(fontSize: 15),
@@ -237,7 +237,7 @@ class _ScceedQuotationPurchaeState extends State<ScceedQuotationPurchae> with Ti
                                                                         onTap: () {
                                                                           final url = controller
                                                                               .quotationPurchaseDetail!
-                                                                              .quotations![index]
+                                                                              .qoutations![index]
                                                                               .path;
 
                                                                           openBrowserURL(url: url!, inApp: false);

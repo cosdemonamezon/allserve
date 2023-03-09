@@ -24,7 +24,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/welcome-screen.jpg'),
+            image: AssetImage('assets/[960x1600]ALLZ.jpg'),
             fit: BoxFit.fill,
           ),
           gradient: LinearGradient(

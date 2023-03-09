@@ -156,16 +156,16 @@ class _ScceedQuotationScrapState extends State<ScceedQuotationScrap> with Ticker
                           ),
                           Container(
                             padding: EdgeInsets.all(15),
-                            child: controller.quotationScrapDetail?.quotations?.isEmpty ?? true
+                            child: controller.quotationScrapDetail?.qoutations?.isEmpty ?? true
                                 ? SizedBox.shrink()
                                 : ListView.builder(
                                     controller: _controller,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
                                     physics: NeverScrollableScrollPhysics(),
-                                    itemCount: controller.quotationScrapDetail!.quotations!.length,
+                                    itemCount: controller.quotationScrapDetail!.qoutations!.length,
                                     itemBuilder: (_, index) {
-                                      return controller.quotationScrapDetail?.quotations?[index].status != 'Approve'
+                                      return controller.quotationScrapDetail?.qoutations?[index].status != 'Approve'
                                           ? SizedBox.shrink()
                                           : Padding(
                                               padding: const EdgeInsets.all(5),
@@ -217,21 +217,21 @@ class _ScceedQuotationScrapState extends State<ScceedQuotationScrap> with Ticker
                                                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                             children: [
                                                               Text(
-                                                                "บริษัท:${controller.quotationScrapDetail?.quotations?[index].parther?.name ?? ''}",
+                                                                "บริษัท:${controller.quotationScrapDetail?.qoutations?[index].vendor?[index].name ?? ''}",
                                                                 style: TextStyle(
                                                                     fontWeight: FontWeight.bold, fontSize: 20),
                                                                 overflow: TextOverflow.fade,
                                                                 maxLines: 5,
                                                               ),
                                                               Text(
-                                                                controller.quotationScrapDetail!.quotations![index]
+                                                                controller.quotationScrapDetail!.qoutations![index]
                                                                         .title ??
                                                                     '',
                                                                 style: TextStyle(
                                                                     fontWeight: FontWeight.bold, fontSize: 20),
                                                               ),
                                                               Text(
-                                                                controller.quotationScrapDetail!.quotations![index]
+                                                                controller.quotationScrapDetail!.qoutations![index]
                                                                         .remark ??
                                                                     '',
                                                                 style: TextStyle(fontSize: 15),
@@ -245,7 +245,7 @@ class _ScceedQuotationScrapState extends State<ScceedQuotationScrap> with Ticker
                                                                   InkWell(
                                                                       onTap: () {
                                                                         final url = controller.quotationScrapDetail!
-                                                                            .quotations![index].path;
+                                                                            .qoutations![index].path;
 
                                                                         openBrowserURL(url: url!, inApp: false);
                                                                       },

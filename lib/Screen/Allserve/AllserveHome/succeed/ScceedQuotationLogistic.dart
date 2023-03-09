@@ -204,16 +204,16 @@ class _ScceedQuotationLogisticState extends State<ScceedQuotationLogistic> with 
                             ),
                             Container(
                               padding: EdgeInsets.all(15),
-                              child: controller.quotationDetailLogistic?.quotations?.isEmpty ?? true
+                              child: controller.quotationDetailLogistic?.qoutations?.isEmpty ?? true
                                   ? SizedBox.shrink()
                                   : ListView.builder(
                                       controller: _controller,
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: controller.quotationDetailLogistic!.quotations!.length,
+                                      itemCount: controller.quotationDetailLogistic!.qoutations!.length,
                                       itemBuilder: (_, index) {
-                                        return controller.quotationDetailLogistic?.quotations?[index].status !=
+                                        return controller.quotationDetailLogistic?.qoutations?[index].status !=
                                                 'Approve'
                                             ? SizedBox.shrink()
                                             : Padding(
@@ -249,21 +249,21 @@ class _ScceedQuotationLogisticState extends State<ScceedQuotationLogistic> with 
                                                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                               children: [
                                                                 Text(
-                                                                  "บริษัท:${controller.quotationDetailLogistic?.quotations?[index].parther?.name ?? ''}",
+                                                                  "บริษัท:${controller.quotationDetailLogistic?.qoutations?[index].vendor?[index].name ?? ''}",
                                                                   style: TextStyle(
                                                                       fontWeight: FontWeight.bold, fontSize: 20),
                                                                   overflow: TextOverflow.fade,
                                                                   maxLines: 5,
                                                                 ),
                                                                 Text(
-                                                                  controller.quotationDetailLogistic!.quotations![index]
+                                                                  controller.quotationDetailLogistic!.qoutations![index]
                                                                           .title ??
                                                                       '',
                                                                   style: TextStyle(
                                                                       fontWeight: FontWeight.bold, fontSize: 20),
                                                                 ),
                                                                 Text(
-                                                                  controller.quotationDetailLogistic!.quotations![index]
+                                                                  controller.quotationDetailLogistic!.qoutations![index]
                                                                           .remark ??
                                                                       '',
                                                                   style: TextStyle(fontSize: 15),
@@ -278,7 +278,7 @@ class _ScceedQuotationLogisticState extends State<ScceedQuotationLogistic> with 
                                                                         onTap: () {
                                                                           final url = controller
                                                                               .quotationDetailLogistic!
-                                                                              .quotations![index]
+                                                                              .qoutations![index]
                                                                               .path;
 
                                                                           openBrowserURL(url: url!, inApp: false);

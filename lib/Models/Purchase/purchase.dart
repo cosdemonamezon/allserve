@@ -18,7 +18,7 @@ class Purchase {
     this.status,
     this.No,
     this.images,
-    this.quotations,
+    this.qoutations,
     this.services,
   });
 
@@ -31,7 +31,7 @@ class Purchase {
   String? status;
   int? No;
   List<ImagesPurchase>? images;
-  List<Quotation>? quotations;
+  List<Quotation>? qoutations;
   List<ServiceOrder>? services;
 
   factory Purchase.fromJson(Map<String, dynamic> json) => _$PurchaseFromJson(json);

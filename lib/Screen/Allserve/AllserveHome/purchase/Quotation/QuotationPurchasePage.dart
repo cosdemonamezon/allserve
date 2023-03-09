@@ -302,16 +302,16 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                             ),
                             Container(
                               padding: EdgeInsets.all(15),
-                              child: controller.quotationPurchaseDetail?.quotations?.isEmpty ?? true
+                              child: controller.quotationPurchaseDetail?.qoutations?.isEmpty ?? true
                                   ? SizedBox.shrink()
                                   : ListView.builder(
                                       controller: _controller,
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemCount: controller.quotationPurchaseDetail!.quotations!.length,
+                                      itemCount: controller.quotationPurchaseDetail!.qoutations!.length,
                                       itemBuilder: (_, index) {
-                                        // if (index < controller.quotationPurchaseDetail!.quotations!.length) {
+                                        // if (index < controller.quotationPurchaseDetail!.qoutations!.length) {
                                         return Padding(
                                           padding: const EdgeInsets.all(5),
                                           child: InkWell(
@@ -319,13 +319,13 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                                               Navigator.push(context, MaterialPageRoute(builder: (context) {
                                                 return ApproveQuotationPage(
                                                   page: 'Purchase',
-                                                  id: controller.quotationPurchaseDetail!.quotations![index].id!,
-                                                  company: controller
-                                                      .quotationPurchaseDetail!.quotations![index].parther!.name!,
-                                                  titer: controller.quotationPurchaseDetail!.quotations![index].title!,
+                                                  id: controller.quotationPurchaseDetail!.qoutations![index].id!,
+                                                  // company: controller
+                                                  //     .quotationPurchaseDetail!.qoutations![index].vendor![index].name!,
+                                                  titer: controller.quotationPurchaseDetail!.qoutations![index].title!,
                                                   remark:
-                                                      controller.quotationPurchaseDetail!.quotations![index].remark!,
-                                                  file: controller.quotationPurchaseDetail!.quotations![index].path!,
+                                                      controller.quotationPurchaseDetail!.qoutations![index].remark!,
+                                                  file: controller.quotationPurchaseDetail!.qoutations![index].path!,
                                                 );
                                               }));
                                             },
@@ -349,9 +349,9 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                                                   children: [
                                                     // Expanded(
                                                     //   flex: 2,
-                                                    //   child: controller.quotationPurchaseDetail!.quotations![index].image != null
+                                                    //   child: controller.quotationPurchaseDetail!.qoutations![index].image != null
                                                     //       ? Image.network(
-                                                    //           "${controller.quotationPurchaseDetail!.quotations![index].image}",
+                                                    //           "${controller.quotationPurchaseDetail!.qoutations![index].image}",
                                                     //           height: size.height / 17,
                                                     //           errorBuilder: (context, error, stackTrace) =>
                                                     //               Image.asset('assets/No_Image_Available.jpg'),
@@ -366,14 +366,20 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                                                       child: Column(
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
-                                                          Text(
-                                                            "บริษัท:${controller.quotationPurchaseDetail?.quotations?[index].parther?.name ?? ''}",
-                                                            style: TextStyle(
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize: appFontSize?.body),
-                                                            overflow: TextOverflow.fade,
-                                                            maxLines: 5,
-                                                          ),
+                                                          // controller.quotationPurchaseDetail!.qoutations![index].vendor!
+                                                          //             .isEmpty &&
+                                                          //         controller.quotationPurchaseDetail?.qoutations?[index]
+                                                          //                 .vendor ==
+                                                          //             null
+                                                          //     ? SizedBox.shrink()
+                                                          //     : Text(
+                                                          //         "บริษัท:${controller.quotationPurchaseDetail?.qoutations?[index].vendor?[index].name}",
+                                                          //         style: TextStyle(
+                                                          //             fontWeight: FontWeight.bold,
+                                                          //             fontSize: appFontSize?.body),
+                                                          //         overflow: TextOverflow.fade,
+                                                          //         maxLines: 5,
+                                                          //       ),
                                                           SizedBox(
                                                             height: 10,
                                                           ),
@@ -385,7 +391,7 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                                                                 children: [
                                                                   Text(
                                                                     controller.quotationPurchaseDetail!
-                                                                            .quotations![index].title ??
+                                                                            .qoutations![index].title ??
                                                                         '',
                                                                     style: TextStyle(
                                                                         fontWeight: FontWeight.bold,
@@ -393,7 +399,7 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                                                                   ),
                                                                   Text(
                                                                     controller.quotationPurchaseDetail!
-                                                                            .quotations![index].remark ??
+                                                                            .qoutations![index].remark ??
                                                                         '',
                                                                     style: TextStyle(fontSize: appFontSize?.body2),
                                                                     overflow: TextOverflow.ellipsis,
@@ -401,13 +407,14 @@ class _QuotationPurchasePageState extends State<QuotationPurchasePage> with Tick
                                                                   SizedBox(height: 4),
                                                                   // Center(child: buildFille(path)),
                                                                   Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                                     children: [
                                                                       Text('ดาวน์โหลด'),
                                                                       InkWell(
                                                                           onTap: () {
                                                                             final url = controller
                                                                                 .quotationPurchaseDetail!
-                                                                                .quotations![index]
+                                                                                .qoutations![index]
                                                                                 .path;
 
                                                                             openBrowserURL(url: url!, inApp: false);
