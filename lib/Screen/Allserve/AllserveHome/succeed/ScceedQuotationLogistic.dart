@@ -248,13 +248,13 @@ class _ScceedQuotationLogisticState extends State<ScceedQuotationLogistic> with 
                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                               children: [
-                                                                Text(
-                                                                  "บริษัท:${controller.quotationDetailLogistic?.qoutations?[index].vendor?[index].name ?? ''}",
-                                                                  style: TextStyle(
-                                                                      fontWeight: FontWeight.bold, fontSize: 20),
-                                                                  overflow: TextOverflow.fade,
-                                                                  maxLines: 5,
-                                                                ),
+                                                                // Text(
+                                                                //   "บริษัท:${controller.quotationDetailLogistic?.qoutations?[index].vendor?[index].name ?? ''}",
+                                                                //   style: TextStyle(
+                                                                //       fontWeight: FontWeight.bold, fontSize: 20),
+                                                                //   overflow: TextOverflow.fade,
+                                                                //   maxLines: 5,
+                                                                // ),
                                                                 Text(
                                                                   controller.quotationDetailLogistic!.qoutations![index]
                                                                           .title ??

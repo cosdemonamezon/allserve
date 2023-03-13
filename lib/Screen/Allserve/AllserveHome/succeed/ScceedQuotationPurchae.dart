@@ -206,13 +206,13 @@ class _ScceedQuotationPurchaeState extends State<ScceedQuotationPurchae> with Ti
                                                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                               children: [
-                                                                Text(
-                                                                  "บริษัท:${controller.quotationPurchaseDetail?.qoutations?[index].vendor?[index].name ?? ''}",
-                                                                  style: TextStyle(
-                                                                      fontWeight: FontWeight.bold, fontSize: 20),
-                                                                  overflow: TextOverflow.fade,
-                                                                  maxLines: 5,
-                                                                ),
+                                                                // Text(
+                                                                //   "บริษัท:${controller.quotationPurchaseDetail?.qoutations?[index].vendor?[index].name ?? ''}",
+                                                                //   style: TextStyle(
+                                                                //       fontWeight: FontWeight.bold, fontSize: 20),
+                                                                //   overflow: TextOverflow.fade,
+                                                                //   maxLines: 5,
+                                                                // ),
 
                                                                 Text(
                                                                   controller.quotationPurchaseDetail!.qoutations![index]
